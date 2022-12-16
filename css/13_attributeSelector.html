@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>속성 선택자</title>
+    <style>
+      /* 태그 뒤에 '[]' 대괄호를 붙이는 경우 */
+      a[target] {
+        font-weight: bold;
+        font-size: 50px;
+      }
+      a {
+        display: inline-block;
+      }
+
+      a[class~="flat"] {
+        font-size: 50px;
+      }
+      /* a태그 안에 class 라는 속성안에 'flat' 단어가 포함 되어 있는 곳에 속성 부여 */
+
+      a[class^="bu"] {
+        box-shadow: 5px 5px 5px 5px gray;
+      }
+      /* a 태그의  class 속성의 값 중에 'bu' 로 시작 하는 곳에 속성 부여 */
+      /* box-shadow = 박스 그림자 표현 */
+      a[class$="ry"] {
+        text-decoration: none;
+      }
+      /* a 태그의 calss 속성의 값이 ry로 끝나는 */
+      /* text-decoration 밑줄 표현 안하는 기능 */
+    </style>
+  </head>
+  <body>
+    <h1>Web Front 기술</h1>
+    <ul class="firstUl">
+      <li><a href="https://namu.wiki/w/HTML" class="flat">html</a></li>
+      <li>
+        <a href="https://namu.wiki/w/CSS" target="_blank" class="flat">css</a>
+      </li>
+      <!-- target = "_blank" 속성을 부여할 경우 그 탭에서 이동하는 것이 아니라 새 탭에서 이동하도록 설정 된다. -->
+      <li>
+        <a href="https://namu.wiki/w/JavaScript?from=Javascript" class="button"
+          >javascript</a
+        >
+      </li>
+      <li><a href="https://namu.wiki/w/CSS" class="ry">jquery</a></li>
+      <li><a href="https://namu.wiki/w/CSS" class="flat">Ajax</a></li>
+    </ul>
+  </body>
+</html>

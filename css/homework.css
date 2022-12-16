@@ -1,0 +1,57 @@
+header {
+  flex-direction: column;
+  font-weight: bolder;
+  margin-top: 50px;
+  height: 50px;
+  text-align: center;
+  align-items: center;
+}
+body {
+  flex-direction: column;
+  margin: 70px;
+}
+#personalTable {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+table {
+  flex-direction: column;
+
+  font-size: 7px;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+.subTitle {
+  padding-bottom: 10px;
+  flex-direction: column;
+  margin-left: 10px;
+
+  flex-direction: column;
+  font-size: 5px;
+  font-weight: bolder;
+}
+tr {
+  border: 1px black;
+  width: 70px;
+  height: 14px;
+}
+td {
+  border: 1px solid black;
+}
+.borderProfile {
+  font-weight: bolder;
+  width: 110px;
+  background-color: darkgrey;
+  text-align: center;
+}
+.borderContents {
+  width: 400px;
+  text-align: center;
+}
+#tridTable {
+  height: 120px;
+}
+#forthTable {
+  width: 100%;
+}

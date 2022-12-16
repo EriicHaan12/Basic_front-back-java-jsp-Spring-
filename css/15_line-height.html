@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>line-height 속성을 이용한 세로 정렬</title>
+    <style>
+      .heading {
+        width: 100%;
+        height: 100px;
+        background-color: #222;
+        color: #ffffff;
+        text-align: center; /*가로 정렬*/
+        line-height: 100px;
+        /* 원래는 중앙 세로 정렬을 하는 속성은 아니지만 픽셀을 조절 하면 중앙 정렬 시킬 수 있다. */
+      }
+      .price {
+        text-decoration: line-through;
+      }
+      .shadow {
+        font-size: 40px;
+        font-weight: bold;
+        text-shadow: 3px 3px rgba(0, 0, 0, 0.9);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="heading">HTML</div>
+    <span class="price">16,000</span>원
+    <div class="shadow">CSS</div>
+  </body>
+</html>

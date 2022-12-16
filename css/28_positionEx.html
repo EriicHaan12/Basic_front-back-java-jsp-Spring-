@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>position 속성</title>
+    <style>
+      p {
+        width: 200px;
+        height: 200px;
+      }
+
+      #static {
+        position: static;
+        top: 50px;
+        background-color: yellow;
+      }
+      /* position : static 을 사용 하면, top, left , right, bottom 값이 무시되고 고정된 위치에 배치된다. */
+
+      #relative-1 {
+        position: relative;
+        /* position 속성을 relative로 사용하더라도,
+        top, left , right, bottom 값을 설정하지 않으면, 원래 출력될 곳에 출력이 된다. */
+        /* top: 100px;
+        left: 500px; */
+        background-color: skyblue;
+      }
+      /* position : relative 으로 잡으면 위치값을 준 곳으로 배치된다  */
+
+      #relative-2 {
+        position: relative;
+        top: 100px;
+        left: 500px;
+        background-color: violet;
+      }
+      #fixed {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <p id="static">position : static</p>
+    <p id="relative-1">position : relative</p>
+    <p id="relative-2">position : relative</p>
+    <div id="fixed">
+      <a href="#static">
+        <img src="img/up-arrow.png" width="50px" />
+      </a>
+    </div>
+  </body>
+</html>

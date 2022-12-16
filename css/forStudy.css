@@ -1,0 +1,15 @@
+nav {
+  display: flex;
+  background-color: gray;
+}
+ul {
+  font-size: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+}
+li {
+  width: 150px;
+}

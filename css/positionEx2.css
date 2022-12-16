@@ -1,0 +1,31 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#contents {
+  position: relative;
+  width: 640px;
+  height: 460px;
+
+  background: url("img/winter.jpg") no-repeat;
+  /* background-image: url("img/abc/snow.jpg"); */
+  /* background-repeat: no-repeat;  백그라운드 이미지에 대한 반복을 안하도록 설정*/
+  
+  margin: 0 auto;
+}
+
+h1 {
+  color: grey;
+  left: 20px;
+  bottom: 40px;
+  position: absolute;
+}
+/* 부모 태그의 기준으로 움직일 뿐이지 부모 태그 바깥으로 못 움직이지 않는다.(즉 부모 태그 바깥으로도 움직일 수 있다.) */
+h5 {
+  position: absolute;
+  color: gray;
+  right: 20px;
+  up: 20px;
+}

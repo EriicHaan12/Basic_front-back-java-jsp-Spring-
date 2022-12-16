@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>자식 선택자</title>
+    <style>
+      div > p {
+        background-color: yellow;
+      }
+      /* 자식 선택자 표현 방법 */
+      div p {
+        text-align: center;
+      }
+      /* /자손 선택자 표현 방법 */
+    </style>
+  </head>
+  <body>
+    <p>자식 선택자로 스타일을 꾸미면 어떻게 될까</p>
+    <div>
+      <p>div 내부 p태그1 (div의 자식)</p>
+      <p>div 내부 p태그2 (div의 자식</p>
+      <p>div 내부 p태그3 (div의 자식</p>
+      <h3>
+        <p>div 내부내부의 p태그1 (p태그의 자식, div의 자손)</p>
+      </h3>
+    </div>
+    <p>div 외부 p태그</p>
+  </body>
+</html>

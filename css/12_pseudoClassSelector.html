@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>의사(가상) 클래스</title>
+    <style>
+      li:hover {
+        background-color: yellow;
+      }
+      a:visited {
+        color: #ff0000;
+      }
+      h1::first-letter {
+        font-size: 40px;
+      }
+      /* ::first-letter= 특정 태그에 첫번째 문자의 스타일을 변경하는 태그 */
+      /*  :hover = 지정 태그에 커서를 올렸을때 반응하는 태그
+      :visited = 링크 태그를 걸었을 때 방문 했을 시 반응하는 태그 */
+      /* li에 마우스를 올리면 취하는 액션 */
+      span {
+        font-size: 40px;
+      }
+      .firstUl li:nth-child(even) {
+        border: 1px dotted tomato;
+      }
+      /* even 짝수 , odd 홀수 
+      즉,' 짝/홀 수 번 째 li에 점선, 파란색의 테두리를 칠해라' 라는 뜻 */
+      input:checked + label {
+        color: red;
+        font-weight: bold;
+      }
+      /* :checked = 체크가 되어진 태그에 속성 부여 */
+    </style>
+  </head>
+  <body>
+    <h1>Web Front 기술</h1>
+    <ul class="firstUl">
+      <li><a href="https://namu.wiki/w/HTML">html</a></li>
+      <li><a href="https://namu.wiki/w/CSS">css</a></li>
+      <li>
+        <a href="https://namu.wiki/w/JavaScript?from=Javascript">javascript</a>
+      </li>
+      <li><a href="https://namu.wiki/w/CSS">jquery</a></li>
+      <li><a href="https://namu.wiki/w/CSS">Ajax</a></li>
+    </ul>
+
+    <ul>
+      <li>
+        <input type="radio" name="room" id="basic" />
+        <label for="basic">기본형(최대 8인)</label>
+      </li>
+      <li>
+        <input type="radio" name="room" id="family" checked />
+        <label for="family">가족형(최대 8인)</label>
+        <!-- input 태그 속성 중에 checked를 부여하면 기본적으로 직접 체크하기 전에 먼저 체크가 되어 있다. -->
+      </li>
+    </ul>
+  </body>
+</html>

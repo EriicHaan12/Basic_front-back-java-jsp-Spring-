@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>자손선택자</title>
+    <style>
+      div {
+        border: 1px solid #cd853f;
+      }
+      div p {
+        background-color: gray;
+      }
+      /* div의 자손인 p 태그에 관한 태그 속성을 표현하고 싶을 때 */
+
+      .secondDiv p {
+        background-color: blueviolet;
+      }
+      /* 두번째 div 태그의 자손인 p 태그에 관한 태그 속성을 표현 하고 싶을 때 , 
+      두번째 div는 일반적인 방법으로는 인식이 어려우므로 class나 id 속성을 부여한 후 p태그랑 엮어 준다. */
+    </style>
+  </head>
+  <body>
+    <h1>자손 선택자</h1>
+    <p>자손 선택자로 스타일을 꾸미면 어떻게 될까</p>
+    <div>
+      <p>div 내부 p태그1</p>
+      <p>div 내부 p태그2</p>
+      <p>div 내부 p태그3</p>
+    </div>
+    <p>div 외부 p태그</p>
+    <div class="secondDiv">
+      <p>2번째 div 내부 p태그</p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>변수와 상수</title>
+    <script>
+      //변수
+      let name; // name 이라는 변수를 선언
+      console.log(name); // undefined : 변수에 값이 대입되지 않은 상태
+
+      name = "둘리"; // "둘리"라는 문자열을 name이라는 변수에 대입 (할당 할 수 있다.)
+      console.log(name);
+      // 변수라고 부르는 이유 얼마든지 할당 해주면 변수 값이 바뀔 수 있다.
+      name = "도우너";
+      conole.log(name);
+
+      // var 키워드의 문제점1.
+      var number = 5;
+      console.log(number);
+      var number = 3; // 재선언이 된다. 협업을 필요로 하는 프로젝트에서는
+      // 변수를 재선언하게 되면 변수명에 대한 혼동이 올 수 있으므로 사용하지 않는 것을 추천.
+      console.log(number);
+
+      //상수
+      const hero = "아이언맨"; //상수를 선언하면서 초기값을 대입할 수는 있으나,
+      console.log(hero); //재할당은 안된다.
+
+      //   hero = "스파이더맨";  상수에 있는 겂을 변경 할 수는 없다.
+      console.log(hero);
+    </script>
+  </head>
+  <body></body>
+</html>

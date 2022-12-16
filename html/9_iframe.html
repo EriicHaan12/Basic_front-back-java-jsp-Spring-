@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iframe : 웹 문서 내에 다른 페이지(텍스트)를 추가한다</title>
+  </head>
+  <body>
+    <h5>iframe의 기능</h5>
+    <iframe src="https://www.daum.net" width="800" height="600"> </iframe>
+    <iframe src="agreement.txt" width="800" height="400"></iframe>
+    <!--텍스트 문서도 불러올 수 있다.-->
+    <div><input type="checkbox" />회원가입 조항에 동의합니다.</div>
+    <div>
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/qSuRQkY9m3k"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </body>
+</html>

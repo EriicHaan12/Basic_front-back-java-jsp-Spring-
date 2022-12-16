@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>일반 동위(이웃) 선택자</title>
+    <style>
+      div ~ P {
+        background-color: blue;
+      }
+      /* 형제 선택자 속성 부여하는 방법, div 태그 안에 있는 p 태그와 동일 선상에 있는 형제 태그들에 대한 속성부여 */
+    </style>
+  </head>
+  <body>
+    <h1>Sibilng 선택자</h1>
+    <p>Sibilng 선택자로 스타일을 꾸미면 어떻게 될까</p>
+    <div>
+      <p>div 내부 p태그1 (div의 자식)</p>
+      <p>div 내부 p태그2 (div의 자식</p>
+      <p>div 내부 p태그3 (div의 자식</p>
+      <h3>
+        <p>div 내부내부의 p태그1 (h3태그의 자식, div의 자손)</p>
+      </h3>
+    </div>
+    <p>div 외부 p태그1</p>
+    <p>div 외부 p태그2</p>
+    <h4>div 외부 h4태그</h4>
+    <p>div 외부 p 태그3</p>
+  </body>
+</html>

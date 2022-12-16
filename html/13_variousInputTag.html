@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>다양한 입력 요소들</title>
+    <script>
+      function changeSal(obj) {
+        console.log(obj.value);
+        document.getElementById("hopeSal").innerHTML =
+          "<strong>" + obj.value + "</strong>";
+        //()의 객체의 id값을 찾아와준다.
+        //inner
+      }
+    </script>
+  </head>
+  <body>
+    <form>
+      <div>
+        이름 :
+        <input type="text" name="userName" placeholder="이름을 입력하세요..." />
+        <!--텍스트 문자열을 입력 받을 수 있는 도구,
+            name: 태그에다 이름으 붙이는 속성 , Back-end를 위해
+            placeholder: input 안에 입력전에 작성한 문구를 띄워주는 역할-->
+      </div>
+      <div>
+        비밀번호 :
+        <input
+          type="password"
+          name="userPassword"
+          placeholder="비밀번호 입력"
+        />
+        <!--암호 같은 비밀 문자열을 입력받는 도구,
+            type password 속성덕분에 입력할 시 문자가 가려진다.
+        -->
+      </div>
+      <div>메모 : <textarea cols="10" rows="4" name="memo"></textarea></div>
+      <!--대량의 문자열을 입력 받는 도구 index 기준 cols 몆 자 입력 받을지 ,
+         rows 몇줄 입력 받을 지-->
+      <div>
+        좋아하는 입식 :
+        <input type="checkbox" name=" favFood" value="jja" /> 짜장면
+        <input type="checkbox" name=" favFood" value="rice" /> 쌀국수
+        <input type="checkbox" name=" favFood" value="kimchi" /> 김치찌개
+        <!--다중 선택이 가능-->
+      </div>
+      <div>
+        취미 :
+        <input type="checkbox" name=" hobby" value="sport" /> 운동
+        <input type="checkbox" name=" hobby" value="sleep" /> 낮잠
+        <input type="checkbox" name=" hobby" value="reading" /> 독서
+        <!--다중 선택이 가능-->
+      </div>
+      <div>
+        성별 :
+        <input type="radio" name="gender" value="female" />여성
+        <input type="radio" name="gender" value="male" />남성
+        <!--단일 선택만 가능
+            (radio 타입을 쓸 때는 name 속성의 값을 맞춰 주어야 한다.)
+        -->
+      </div>
+      <div>
+        통신사 :
+        <select name="comm">
+          <option value="에스케이티">SK</option>
+          <option value="케이티">KT</option>
+          <option value="엘지">LG</option>
+        </select>
+        <!--셀렉트 박스를 생성
+            SELET속성은 객체 속성을 가지고 있으므로 
+            안에 선택지로 받을 option 태그를 같이 써줘야한다.
+        -->
+      </div>
+      <div>
+        <input type="hidden" name="hid" value="10" />
+      </div>
+      <!--유저 눈에는 보이지 않지만, 여러 경우에 데이터를 전송할 필요가 있을 때 사용하는 태그-->
+
+      <div>생년월일 : <input type="date" name="birth" /></div>
+      <!-- date 타입 날짜를 입력 받을 수 있다.-->
+      <div>이메일 : <input type="email" name="userEmail" /></div>
+      <!-- @에 .com 만 채우면 오류 감지를 못해서 잘 쓰이진 않는다.-->
+      <div>파일 업로드 : <input type="file" name="uploadFile" /></div>
+      <!---->
+      <div>좋아하는 색상 : <input type="color" name="favColor" /></div>
+      <!---->
+      <div>
+        나이 : <input type="number" name="age" />
+        <!--string 입력은 안되고 숫자만 입력 가능-->
+      </div>
+      <div>
+        희망 연봉 :
+        <input
+          type="range"
+          min="4000"
+          max="10000"
+          name="annSal"
+          onchange="changeSal(this);"
+        />
+        <!--this는 객체를 의미한다.-->
+        <span id="hopeSal"></span>만원
+      </div>
+      <!--min, max값을 숫자로 지정시 그 사이에 -->
+      <button type="submit">전송</button>
+    </form>
+  </body>
+</html>
