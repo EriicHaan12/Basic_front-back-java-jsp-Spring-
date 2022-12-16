@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>프로그래밍 연습1</title>
+    <script>
+      //문제1) 가로가 3cm, 높이가 6cm인 직사각형의 넓이를 구해 출력하는 프로그램을 만드세요.
+      //가로, 세로 값 지정 - 넓이를 구하는 공식을 이용해서 결과값 구하기, 넓이값 지정 - 화면에 출력
+      let width = 3;
+      let height = 6;
+      let area1 = width * height;
+      console.log(area1 + "cm");
+      document.write(area1 + "cm<sup>2</sup>");
+      //문제2) 반지름이 5cm 인 원의 넓이를 구하고 출력하세요.
+      //원넓이 = 원주율 *반지름*반지름
+
+      let radius = 5,
+        pi = 3.1415926535,
+        area2 = 0;
+      //초기 값을 줄 수 있다.
+      area2 = radius * radius * pi;
+      let circleArea = Math.pow(radius, 2) * pi;
+      let circleArea2 = Math.pow(radius, 2) * Math.PI;
+
+      console.log(area2);
+      console.log(circleArea);
+      console.log(circleArea2);
+
+      document.write("<div>" + area2 + "cm<sup>2</sup>" + "</div>");
+
+      //문제3) num1이라는 변수에 3이 대입되어 있고, num2라는 변수에 5라는 값이 있는데,
+      //두 변수의 값을 바꾸어 저장되도록 하고, 출력하세요.
+      let num1 = 3;
+      let num2 = 5;
+
+      num1 = num1 + 2;
+
+      num2 = num2 - 2;
+
+      console.log(num1);
+      console.log(num2);
+
+      document.write("<div>" + num1 + "</div>");
+      document.write("<div>" + num2 + "</div>");
+
+      //let num1 = 3 , let num2 = 5, let temp = 0;
+      //1) num1의 값을 temp로 복사
+      // temp = num1
+      // console.log(num1, num2, temp) 3, 5, 3
+
+      //2) num2의 값을 num1로 복사
+      //num2 = num1
+      //console.log(num1, num2, temp) 5, 5, 3
+
+      // 3) tempo의 값을 num2에 복사
+      // console.log(num1,num2,temp) 5, 3, 3
+
+      // 문제4) 밑변과 높이를 유저에게 입력받아, 삼각형의 넓이를 구해 출력하는 프로그램을 만드세요.
+      //삼각형의 넓이 = 밑변* 높이 /2
+      let base = 0;
+      let heightTri = 0;
+      let areaTri = 0;
+      base = window.prompt("밑변을 입력하세요", "0");
+      console.log(base);
+
+      heightTri = window.prompt("높이를 입력하세요", "0"); //유저에게 키보드로 입력받는 함수 prompt
+      console.log(heightTri);
+
+      areaTri = (base * heightTri) / 2;
+      console.log(areaTri.toLocaleString());
+      document.write(
+        "<div>" +
+          "삼각형의 넓이는 : " +
+          areaTri.toLocaleString() +
+          "cm<sup>2</sup>" +
+          "입니다" +
+          "</div>"
+      );
+
+      //유저에게 값을 입력 받아 적을 수 있게 해주는 함수 window.promt("창에 띄울 string","default 값")
+      // number .toLocaleString()  -> 화폐 단위 처럼 000 단위로 끊어서 쉼표가 찍히도록 설정.
+       
+    </script>
+  </head>
+  <body></body>
+</html>

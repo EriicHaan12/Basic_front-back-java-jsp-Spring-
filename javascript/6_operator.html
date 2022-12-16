@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>연산자 종류</title>
+  </head>
+  <script>
+    //연산자 우선순위 : 증감연산자 >논리연산자 not> 산술 연산자> 관계 연산자> 논리 연산자(&& ,||)
+    // 산관논...
+
+    //산술 연산자 (+,-,*,/,%(나머지))
+    let a = 3,
+      b = 5;
+    console.log(b % a); //2
+    console.log(a * b - a); //12
+    //증감 연산자
+    //증감 연산자는 연산자의 위치에 따라 우선순위가 달라진다.
+
+    // 전치 연산 (++a): 선증감 후대입   --> 연산자가 변수 앞에 있을 때
+
+    //후치 연산 (a++): 선대입 후 증감  -- > 연산자가 변수 뒤에 있을 때
+    console.log(a++); //3   즉 다음에 a를 넣었을 떄 1를 더해둬라
+    console.log(a); //4
+
+    console.log(b++ * ++a); //5 *5 =25
+    console.log(a, b); // 5 6
+
+    //관계 연산자 (비교 연산자)
+
+    // * 동등 연산자와 일치 연산자 차이
+    // '==' 값만 같으면 true , '===' 값도 같고 데이터 타입도 같아야 true
+
+    console.log(a > b); //false
+    console.log(a !== b); // true
+
+    console.log(++a == b); //true
+    console.log(b % 2 === 0); //true
+
+    //논리 연산자 : 관계 연산자와 관계연산자의 조합을 하는 연산자
+    // and(&&) : 수식이 모두 true일 때만 결과가 true
+    // or(||) : 수식에서 하나라도 true인 값이 있으면 결과가 true / 수식이 모두 false 일때만 결과가 false
+    // not(!) : 수식이 true 면 결과가 false , false 면 결과가 true 로
+
+    console.log(a > b && b !== 3); //false && true -> false
+    console.log(a === 6 && b === 6); //true && true -> true
+    console.log(a > 2 || b != 6); // true || false -> true
+    console.log(a < 0 || b < 0); // false || false  -> false
+    console.log(!(a < b)); // !false -> true
+
+    // 대입 연산자(할당 연산자)
+    // =(일반 대입) , += (더해서 대입), -=(빼서 대입) , /=(나눠서 대입) , %=(나머지 구해서 대입)
+    let result = 0;
+    result += 3; // result = result + 3 과 같은 수식
+    console.log(result); // 3
+
+    result *= 2; // result = result*2
+    console.log(result); //6
+
+    //-----------------------
+    // 아래의 연산자는 2진수 개념으로 연산되는 것.(비트 단위 연산자)
+    // 일반 프로그래밍에서 자주 안쓰지만, 암호 프로토콜, 통신 관련 프로토콜을 만들 때 사용한다.
+
+    //비트 연산자
+
+    // 쉬프트 연산자
+  </script>
+  <body></body>
+</html>
