@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>exerciseIf1</title>
+    <script>
+      // - 연습문제 1
+
+      //  사용자에게 키 (cm)와 몸무게(kg)를 입력 받아 체질량지수(BMI)? 를 출력하고,
+
+      // bmi 지수가 18.5 미만 일 경우 “저체중” 이라 출력,
+
+      // bmi 지수가 18.5 이상 22.9 이하 일 경우  “정상 체중”
+
+      // bmi 지수가 23~24.9 이면 “위험 체중”
+
+      // bmi 지수가 25~29.9 이면 “1단계 비만”
+
+      // bmi 지수가 30이상 이면 “고도 비만”
+
+      // 나의 체질량 지수
+
+      // (BMI)… 체질량 지수
+
+      // 는 자신의 몸무게(kg)를 키의 제곱(m)으로 나눈 값.
+
+      let height = window.prompt("키를 m단위로 입력하세요(예시 1.70)", 0);
+      //아니면 /100 추가
+      let weight = window.prompt("몸무게를 kg단위로 입력하세요(예시 70)", 0);
+
+      let bmi = (Number(weight) / Math.pow(Number(height), 2)).toFixed(2);
+
+      //숫자.toFixed(n) = 소숫점 n 번째 자리까지 표시해줌
+      if (bmi >= 30) {
+        result = "고도비만";
+      } else if (bmi >= 25) {
+        result = "1단계 비만";
+      } else if (bmi >= 23) {
+        result = "위험체중";
+      } else if (bmi >= 18.5) {
+        result = "정상 체중";
+      } else {
+        result = "저체중";
+      }
+      document.write(`당신의 BMI지수는${bmi} ${result} 입니다.`);
+    </script>
+  </head>
+  <body></body>
+</html>

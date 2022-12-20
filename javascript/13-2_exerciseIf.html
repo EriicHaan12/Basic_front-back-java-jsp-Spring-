@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>if 연습문제2</title>
+    <script>
+      //     - 연습문제 2
+
+      // 사용자에게 점수를 입력받아
+
+      // 80~100점: 상
+
+      // 50~80점: 중
+
+      // 50점 미만: 하 라고 출력 하되,
+
+      // 점수가 0점보다 작거나, 100점을 초과하면 긴급메세지로 “잘못된 점수입니다!” 라고 출력하세요
+      let data = Number(window.prompt("점수를 입력하세요", 0));
+
+      let result = "";
+      let error = "잘못된 점수 입니다.";
+
+      if (data < 100 && data >= 80) {
+        result = "상";
+      } else if (data < 80 && data >= 50) {
+        result = "중";
+      } else if (data < 50 && data >= 0) {
+        result = "하";
+      }
+
+      if (0 <= data && data <= 100) {
+        document.write(`당신의 등급은 ${result} 입니다.`);
+      } else {
+        window.alert(error);
+      }
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>연습문제3</title>
+    <script>
+      //연습문제3 (단 학점 계산하는 부분을 switch~case 문을 사용하세요)
+
+      //사용자에게 이름, 국어, 영어, 수학 점수를 입력받아 총점, 평균을 구하고, 학점을 구해 출력하는 프로그램을 작성하세요.
+      // 단 평균이 90점 이상 100점 이하면 A, 89점 이상 90점 미만B ,
+      // 70점이상 80점 미만 C, 60이상 70점 미만이면 D, 나머지 F 학점
+
+      let name = window.prompt("이름을 입력하세요", "찰스");
+      let korean = window.prompt("국어 점수를 입력하세요", 0);
+      let english = window.prompt("영어 점수를 입력하세요", 0);
+      let math = window.prompt("수학 점수를 입력하세요", 0);
+      let dataTotal = (Number(korean) + Number(english) + Number(math)) / 3;
+      let result = "";
+
+      switch (Math.floor(dataTotal / 10)) {
+        case 9:
+          result = "A";
+          break;
+        case 8:
+          result = "B";
+          break;
+        case 7:
+          result = "C";
+          break;
+        case 6:
+          result = "D";
+          break;
+
+        default:
+          result = "F";
+          break;
+      }
+      // 참고용 ) 소숫점 둘째 자리에서 반올림 하기.
+      //Math.round()활용 = 무조건 소숫점 첫번째 자리까지 표출되고 두번째자리에서 첫번째 자리로 반올림 시켜주기 떄문에,
+      //  원하는 자리에서 반올림 되길 원한다면 그만큼 10*n 만큼 나눠주고 (Math.round()/10*n)*10*n 해준다.
+      let avgPerfect = Math.round(dataTotal * 100) / 100;
+
+      document.write(`당신의 평균은${avgPerfect}점으로, ${result}학점 입니다.`);
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>탐색(데이터 탐색): 순차 탐색</title>
+    <script>
+      // 방 50개 짜리 1차원 배열을 만들고, 그 방안에 1~200 까지의 랜덤한 수를 넣고,
+      //유저가 어떤 수를 입력 했을 때, 유저가 입력한 값이 있다면 입력한 곳이 있는 방을 알려주고,
+      // 유저가 입력한 수를 찾지 못했을 경우, "찾지 못했다!" 라고 출력하는 프로그램 작성
+
+      let datas = new Array(50); // value가 50개 가 있는 빈 배열을 만들어라는 함수
+      for (let i = 0; i < 50; i++) {
+        //i가 0~49까지 반복
+        datas[i] = Math.floor(Math.random() * 200) + 1; // 배열의 각 요소(방)에 1~200 까지의 랜덤한 수를 대입
+      }
+      console.log(datas);
+
+      let findNum = Number(window.prompt("찾을 수를 입력하세요", 0));
+      let result = "";
+      let isFind = false;
+      for (let i = 0; i < 50; i++) {
+        if (findNum === datas[i]) {
+          // 찾았을 때
+          result = i + ",";
+          isFind = true;
+        }
+      }
+      if (isFind === false) {
+        document.write(`${findNum}은 없습니다!`);
+      } else {
+        document.write(`${findNum}은 ${result}번째 있습니다.`);
+      }
+    </script>
+  </head>
+  <body></body>
+</html>

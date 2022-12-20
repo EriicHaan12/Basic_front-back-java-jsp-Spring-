@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>연습문제4</title>
+    <script>
+      // 유저에게 (가위= 1, 바위 =2, 보 = 3)중에 하나를 입력 받습니다.
+
+      // 컴퓨터가 (가위= 1, 바위 =2, 보 = 3)중에 하나를 출력합니다.
+
+      // 유저가 낸 것과 컴퓨터가 낸 것을 비교하여, 이겼는지 졌는지 비겼는지 출력하는 프로그램을 작성 하세요. (가급적 if문으 사용하세요)
+
+      //원랜 둘다 랜덤으로 줄 생각이였지만, 만약 유저가 직접 가위, 바위, 보를 내고 싶다면?
+      // 컴퓨터가 낸것만 랜덤으로 돌린다.
+      //고로 짜여진 태그 보다 함수가 밑에 있어야 한다.
+
+      let users = 0;
+
+      //전적을 누적시키고 싶을 떄
+      let win = 0;
+      let draw = 0;
+      let lose = 0;
+
+      // 누적 시키고 싶을 때는 함수 안에 쓰는것이 아니라 '밖에' 써준다.
+
+      function gameStart() {
+        users = Number(document.getElementById("userSelectVal").value);
+        let computers = Math.floor(Math.random() * 3 + 1);
+        //1~3을 묵찌빠로 출력하는 법
+
+        //유저용
+        let userImg = "";
+        switch (users) {
+          case 1:
+            userImg = "<img src='img/muk.png'>";
+            break;
+          case 2:
+            userImg = "<img src='img/jji.png'>";
+            break;
+          default:
+            userImg = "<img src='img/bba.png'>";
+            break;
+        }
+        //컴퓨터가 낸 것 출력
+        let comImg = "";
+        switch (computers) {
+          case 1:
+            comImg = "<img src='img/muk.png'>";
+
+            break;
+          case 2:
+            comImg = "<img src='img/jji.png'>";
+            break;
+          default:
+            comImg = "<img src='img/bba.png'>";
+            break;
+        }
+        document.getElementById("user").innerHTML = userImg;
+        document.getElementById("computer").innerHTML = comImg;
+
+        let result = "";
+        // if (users === computers) {
+        //   result = "비겼습니다.";
+        // } else if (users === 1 && computers === 2) {
+        //   result = "졌습니다.";
+        // } else if (users === 1 && computers === 3) {
+        //   result = "이겼습니다.";
+        // } else if (users === 2 && computers === 1) {
+        //   result = "이겼습니다";
+        // } else if (users === 2 && computers === 3) {
+        //   result = "이겼습니다.";
+        // } else if (users === 3 && computers === 1) {
+        //   result = "졌습니다.";
+        // } else {
+        //   result = "졌습니다.";
+        // }
+
+        if (users === computers) {
+          result = "비겼습니다";
+          draw++;
+        } else if (
+          (users === 1 && computers === 3) ||
+          (users === 2 && computers === 1) ||
+          (users === 3 && computers === 2)
+        ) {
+          //유저가 이긴 경우
+          result = "이겼습니다";
+          win++;
+        } else {
+          result = "졌습니다.";
+          lose++;
+        }
+        document.getElementById("result").innerHTML = `<h4>${result}</h4>`;
+        document.getElementById(
+          "total"
+        ).innerHTML = `<h5 >승 : ${win} 무 : ${draw} 패 : ${lose} <h5>`;
+      }
+    </script>
+    <style>
+      td img {
+        width: 256px;
+        height: 256px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="title">가위, 바위, 보 게임</h1>
+    <div class="userInput">
+      가위, 바위, 보 중에 하나를 선택하시고, 버튼을 누르세요.
+      <select id="userSelectVal">
+        <option value="1">가위</option>
+        <option value="2">바위</option>
+        <option value="3">보</option>
+      </select>
+      <input type="button" value="게임시작" onclick="gameStart();" />
+    </div>
+    <table border="1">
+      <tr>
+        <td>User</td>
+        <td>Computer</td>
+      </tr>
+      <tr>
+        <td id="user"></td>
+        <td id="computer"></td>
+      </tr>
+    </table>
+    <div id="result"></div>
+    <div id="total"></div>
+  </body>
+</html>

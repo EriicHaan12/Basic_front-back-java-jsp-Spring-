@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>점심 뭐 먹지...?</title>
+  </head>
+  <script>
+    //추천 메뉴를 출력하는 프로그램 작성
+    // 1부터 7까지 랜덤한 수 를 출력하고, 그 수가 1 이면
+
+    // 1 : 짜장면
+    // 2 : 김치찌개
+    // 3 : 돈가스
+    // 4 : 햄버거
+    // 5 : 부대찌개
+    // 6 : 쌀국수
+    // 7 : 라면
+
+    //0) 필요한 변수 선언
+    // 난수, random 함수 사용
+    let randNum = 0,
+      foodName = "",
+      foodImg = "";
+    // 1) 1~7 까지의 랜덤한 정수를 구한다.
+
+    randNum = Math.floor(Math.random() * 7) + 1; // 즉 Math.random()은 0~0.9999... 의 난수를 랜덤으로 생성 하기 떄문에
+    //1 - 랜덤한 정수가 나오기 위해서는 math.random() 을 정수로 바꿔주는 math.floor() 감싸준다.
+    //2 - math.random()자체는 0~0.999... 까지 나오기 때문에 원하는 랜덤한 정수의 최대값을 정하기 위해서는 math.random()* 원하는 최대값을 곱해준다.
+    //3- 최소값을 나오게 하기 위해 곱할 최대값에 최솟값을 빼준다.
+    // 4- 곱한 값에 최소 값을 더해주면 원하는 랜덤 값을 얻을 수 있다.
+    // Math.random()*(최대값)+최소값
+    //그리고 맨 작은 값을 기준 잡을려면 최소값
+    //2) 1번에서 나온 랜덤한 수가 어떤 음식인지 비교 판단
+    //3) 음식을 출력한다.
+
+    if (randNum === 1) {
+      foodName = "<a href = 'https://www.hsd.co.kr/'>한솥도시락</a>";
+      foodImg = "<img src ='../css/img/hansot.jpg'>";
+    } else if (randNum === 2) {
+      foodName = "바나나";
+    } else if (randNum === 3) {
+      foodName = "닭가슴살";
+    } else if (randNum === 4) {
+      foodName = "프로틴쉐이크";
+    } else if (randNum === 5) {
+      foodName = "냉동볶음밥";
+    } else if (randNum === 6) {
+      foodName = "간계밥";
+    } else if (randNum === 7) {
+      foodName = "물밥";
+    }
+  </script>
+  <style>
+    .title {
+      text-align: center;
+      padding: 10px;
+      border: 1px solid black;
+    }
+    #foodName {
+      text-align: center;
+    }
+    .food {
+      text-align: center;
+    }
+  </style>
+  <body>
+    <h1 class="title">오늘의 추천 메뉴</h1>
+    <div id="foodName"></div>
+    <div>
+      <img src="foodImg" />
+    </div>
+
+    <script>
+      // document.write(`오늘의 메뉴 : ${foodName}`)
+      // 현재 웹문서에서 id값이 foodName 인 태그를 찾아 innerHTML 속성에  foodName 할당
+      document.getElementById(
+        "foodName"
+      ).innerHTML = `오늘의 메뉴 추천 : ${foodName}`;
+      document.getElementById("foodImg").src = foodImg;
+    </script>
+  </body>
+</html>

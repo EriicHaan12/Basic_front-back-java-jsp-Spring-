@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>전역변수 vs 지역변수</title>
+    <script>
+      let data = 3; //  전역변수
+      if (data > 0) {
+        console.log(data); // 3
+        let tmp = 5;
+        console.log(tmp) // 5
+        var tmp2 = 5 // 마찬가지로 지역변수
+        console.log(tmp2) // 5
+      }
+      console.log(tmp) //지역변수이기 떄문에 undefined 가나온다
+        // 메모리에서 소멸됨.
+        console.log(tmp2) // 5
+        // var 키워드로 선언된 변수는 {} 내에서 선언 되었더라도, 전역 변수 취급을 받아 변수의 범위가 애매모호 해진다. // var를 안쓰는 이유
+    </script>
+  </head>
+
+  <body></body>
+</html>

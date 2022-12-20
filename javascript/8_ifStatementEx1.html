@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>단순 if문</title>
+    <script>
+      //사용자에게 숫자를 입력 받아 숫자이면 '숫자'라고 출력 하는 프로그램 작성
+      // 1)사용자에게 입력 받는다.
+      let data = window.prompt("데이터를 입력하세요", "0");
+      // 2) 1번에서 입력 받은 데이터가 숫자인지 비교
+
+      if (isFinite(data)) {
+        document.write(`${data}는 숫자입니다`);
+      }
+
+      // isFinte()주어진 값이 유한수인지 판별(무한수인지 유한수인지 판별)
+      // 3)숫자이면 숫자라고 출력
+      // 4)끝
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3항연산자</title>
+  </head>
+  <script>
+    let a = 10;
+    // (조건식)? A : B  조건식을 비교하여 조건식이 참이면 A를 수행, 조건식이 거짓이면 B를 수행
+    console.log(a > 5 ? "크다" : "작다"); // "크다"
+    //if문과의 차이점
+    // 3항연산자는 조건식을 비교하여 어떤값을 대입할 때 유리하다.
+    let result = "";
+    // result = (a % 2 ===0)? "짝수": "홀수"
+    if (a % 2 == 0) {
+      //조건식이 참일 때 수행될 문장
+      result = "짝수";
+    } else {
+      // 조건식이 거짓일 때 수행 될 문장
+      result = "홀수";
+    }
+    console.log(result);
+  </script>
+  <body></body>
+</html>
