@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>while 반복문</title>
+    <script>
+      //단을 입력 받아 입력받은 단의 구구단을 출력하세요.
+      let dan = window.prompt("단을 입력 하세요", 0);
+      //if문 과는 다르게 초기값을 밖에다 적어준다.
+      let i = 1;
+
+      while (i < 10) {
+        document.write(`${dan}*${i}=${dan * i} ", "`);
+        i++; // 증감문
+      }
+      document.write("<hr/>");
+
+      // 3*4 별 직사각형 그리기
+      let j = 0;
+      while (j < 3) {
+        let k = 0;
+        while (k < 4) {
+          document.write("*");
+          k++;
+        }
+        document.write("<br/>");
+        j++;
+      }
+      document.write("<hr/>");
+
+      //for문으로 했던 모든 예제를 while문으로 바꿔보기!
+
+      //직사각형 별 (3*4)
+
+      let star = 0;
+      while (star < 3) {
+        let star2 = 0;
+        while (star2 < 4) {
+          document.write("*");
+          star2++;
+        }
+        document.write("<br/>");
+        star++;
+      }
+
+      // 직각 삼각형 별
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -1,15 +1,117 @@
 <!DOCTYPE html>
 <html lang="kr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>중첩 for 문(for 문 안에 다른 for문)</title>
     <script>
-        
+      //중첩 for문의 실행 구조 분석(바깥 쪽 for루프가 1회 수행 될 때 ,
+      // 안쪽의 for루프문이 각각 횟수만큼 수행된다.)
+      for (let i = 0; i < 3; i++) {
+        // i = 0 , 1, 2
+        document.write("☆");
+        for (let j = 0; j < 2; j++) {
+          //j = 0, 1
+          document.write("★");
+        }
+      }
+      //즉, "i" for문을 거쳐서 "j" for문을 실행한 뒤,
+      //다시 for문으로 들어올 떈 j가 초기값(0)에서 부터 다시 시작된다.
+
+      //예제1
+      // 4행 3열 테이블을 만들어보자
+
+      let table = "<table = border='1'>";
+
+      for (let i = 0; i < 4; i++) {
+        table += "<tr>";
+        for (let j = 0; j < 3; j++) {}
+        table += "</tr>";
+      }
+      table += "</table>";
+      document.write(table);
+      document.write("<hr/>");
+
+      //예제2
+      // 구구단을 모두 출력하세요. (1단~9단까지), 단 한단을 출력하고 줄바꿈 하여 출력하세요.
+
+      let gugu = "";
+
+      for (let i = 1; i < 10; i++) {
+        for (let j = 1; j < 10; j++) {
+          gugu += `${i}*${j}=` + j * i + ", ";
+        }
+        gugu += "</br>";
+      }
+      document.write(gugu);
+      document.write("<hr/>");
+
+      //예제3
+      //직사각형 별 (3*4)
+
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 4; j++) {
+          document.write("★");
+        }
+        document.write("<br/>");
+      }
+      document.write("<hr/>");
+
+      //예제4
+      //직각 삼각형 별
+      //*
+      //**
+      //***
+      //****
+      //*****
+      //이렇게 출력 되도록
+
+      let star = "";
+
+      for (let i = 0; i < 5; i++) {
+        for (let j = 0; j <= i; j++) {
+          star += "*";
+        }
+        star += "</br>";
+      }
+      document.write(star);
+      document.write("<hr/>");
+
+      //예제 5
+      // 직각 삼각형 별 2()
+      //*****
+      //****
+      //***
+      //**
+      //*
+
+      for (let i = 0; i < 5; i++) {
+        for (let j = 5; j > i; j--) {
+          document.write(`*`);
+        }
+        document.write(`</br>`);
+      }
+      //예제 6
+      //피라미드
+      //    *
+      //   ***
+      //  *****
+      // *******
+      //*********
+      for (let i = 0; i < 5; i++) {
+        //
+        for (let j = 5; j > i + 1; j--) {
+          document.write("&nbsp");
+        }
+        for (let k = 0; k < 2 * i + 1; k++) {
+          document.write("*");
+        }
+
+        document.write("</br>");
+      }
+      //나비, 모래시계, 다이아몬드 예제도 연습 해보자...
     </script>
-</head>
-<body>
-    
-</body>
+  </head>
+  <body></body>
 </html>
