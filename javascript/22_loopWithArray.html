@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>배열과 함께 쓰면 좋은 반복문</title>
+    <script>
+      let heros = [
+        "아이언맨",
+        "캡틴아메리카",
+        "토르",
+        "헐크",
+        "비전",
+        "나타샤",
+        "블랙팬서",
+      ];
+
+      //1. 일반 for문
+      for (let i = 0; i < heros.length; i++) {
+        document.write(heros[i] + ", ");
+        if ((i = heros.length - 1)) {
+          document.write(heros);
+        }
+      }
+      document.write("<hr>");
+
+      //2. for~in 문법
+      for (let i in heros) {
+        document.write(heros[i] + ", ");
+      }
+      document.write("<hr>");
+      // in 앞의 'i' = 시작할 인덱스 위치
+      // in 뒤 시작할 배열명
+      //{ 실행문}
+      // i 부터 선택한 배열의 length 만큼
+      // {} 절을 실행 시키겠다는 반복문
+
+      //3. for~ of 문법
+      for (let i of heros) {
+        document.write(i + ", ");
+      }
+      document.write("<hr>");
+      // of 앞의 i 는 시작할 인덱스 위치
+      // of 뒤의 배열은 반복 수행 시킬 배열
+      //i 번쨰 인덱스에 있는 요소를 수행시켜줌.
+      // {} 반복 명령 시킬 수행문
+
+      // 즉 for~in 이랑 for of의 차이는
+      //for in 은 배열과 인덱스 값을 모두 기입해 인덱스와 요소 모두 반복,
+      //for of 은 인덱스 값만 입력 해주면 배열 안의 요소만 반복됨.
+
+      //3. forEach문법(배열 뿐 아니라 반복되는 요소에서 모두 사용 가능)
+      //callback 특정 시점에서 혹은 특정 조건이 발동 될 때 함수가 알아서 호출되어 실행되는 함수
+      //
+      heros.forEach(function (item, i) {
+        //이름없는 함수(무명함수)는 지금 당장 돌려지는 함수
+        //i는 인덱스, item은 각 배열의 요소
+        document.write(`${i}번째 요소에 있는 데이터는 : ${item} 입니다 <br/>`);
+        //즉 funtion에서 (요소를 호출할 변수, 인덱스를 호출할 변수) 를 선언해주면
+        // 함수의 실행문'{}' 안에서 둘다 호출해서 쓸 수 있다.
+      });
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로또 번호 생성기</title>
+    <script>
+      // 예제) 1 ~ 45 사이의 랜덤한 수를 6개 출력하되 (배열을 이용하여), 중복된 값은 나오지 않도록 하세요.
+
+      // (단, set 함수는 쓰지 말고 하기.)
+
+      let lotto = [1, 2, 3, 4, 5, 6];
+      for (let i in lotto) {
+        document.write(`${Math.floor(Math.random() * 45) + 1}  `);
+        if (lotto.indexOf(lotto[i], 0) !== -1) {
+          lotto[i] = Math.floor(Math.random() * 45) + 1;
+        }
+      }
+      document.write("<hr>");
+
+
+
+      //풀이
+      let arr = new Array(6);
+      let tmp = 0;
+      for (let i = 0; i < arr.length; i++) {
+        // arr의 인덱스 숫자만큼 반복 (6번 반복)
+        do {
+          tmp = Math.floor(Math.random() * 45) + 1; //tmp에 1~45 까지의 랜덤한 정수를 하나구해서 대입
+        } while (isDuplicate()); //while 반복문의 조건절을 새로운 함수를 대입
+
+        arr[i] = tmp;
+      }
+      document.write(`이번주 로또 1등 번호는 ${arr}`);
+
+      // 새로 만든 isDuplicate 함수는
+      //arr 배열에 tmp 값이 있는지 없는지 판별 해서 있다면 true 없다면 false 가 나오도록 반환
+      function isDuplicate() {
+        // for문을 이용한 검증 방법
+
+        // for (let item of arr)
+        //   if (tmp === item) {
+        //     // 중복이 있다면?
+        //     return true; // return : 반환값을 가지고, 함수를 호출한 곳으로 되돌아감.
+        //   }
+        // return false; // 중복 없음.
+
+        //indexOf 이용한 검증 방법
+
+        let duplicate = false;
+
+        let findPos = arr.indexOf(tmp, 0);
+        if (findPos !== -1) {
+          // 중복이 있다.
+          duplicate = true;
+        }
+        return duplicate;
+      }
+    </script>
+  </head>
+  <body></body>
+</html>

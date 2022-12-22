@@ -27,6 +27,7 @@
 
       function gameStart() {
         users = Number(document.getElementById("userSelectVal").value);
+
         let computers = Math.floor(Math.random() * 3 + 1);
         //1~3을 묵찌빠로 출력하는 법
 
@@ -61,6 +62,7 @@
         document.getElementById("computer").innerHTML = comImg;
 
         let result = "";
+
         // if (users === computers) {
         //   result = "비겼습니다.";
         // } else if (users === 1 && computers === 2) {

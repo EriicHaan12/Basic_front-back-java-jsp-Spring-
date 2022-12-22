@@ -10,7 +10,6 @@
       // 단 평균이 90점 이상 100점 이하면 A, 89점 이상 90점 미만B , 70점이상 80점 미만 C, 60이상 70점 미만이면 D, 나머지 F 학점.
       // 1차원 배열을 이용하여 만드세요.
       let student = ["홍찰찰", 62, 100, 95];
-      let arr = [];
       let totalScore =
         Number(student[1]) + Number(student[2]) + Number(student[3]);
 
@@ -33,13 +32,15 @@
       }
       student.push(grade);
 
-      document.write(`${student[0]}님의</br> 
+      document.write(`${student[0]}님의</br>
       국어점수는 ${student[1]}점</br>
       영어점수는 ${student[2]}점</br>
       수학점수는 ${student[3]}점</br>
       총점은 ${student[4]}점 이며</br>
       평균은 ${student[5]}점 입니다.</br>
       이번 학기 성적은 ${student[6]} 학점 입니다.`);
+
+      //풀이
     </script>
   </head>
   <body></body>

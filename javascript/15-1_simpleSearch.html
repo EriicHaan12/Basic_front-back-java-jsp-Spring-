@@ -23,7 +23,7 @@
       // 'cnt' 를 생성 해놓고 원하는 반복문에
       //  ++을 해주면 반복문이 한 사이클 돌더라도 계속해서 숫자가 올라간다.
       for (let i = 0; i < 5; i++) {
-        table += "<tr>";
+        table += "<tr class='tr'>";
         for (let j = 0; j < 10; j++) {
           table += `<td>${data[cnt++]}</td>`;
         }
@@ -31,11 +31,11 @@
       }
       table += "</table>";
 
-      document.write(table);
+      document.write(table); //테이블 태그가 동적으로 생성
 
       let findNum = Number(window.prompt("찾을 수를 입력하세요", 0));
       let result = "";
-      let isFind = false;
+      let isFind = false; // switch 변수 , flag 변수 (데이터를 찾았다면 true, 찾지 못했다면 false )
       for (let i = 0; i < 50; i++) {
         if (findNum === data[i]) {
           // 찾았을 때
@@ -43,16 +43,26 @@
           isFind = true;
         }
       }
+
       if (isFind === false) {
         document.write(`${findNum}은 없습니다!`);
       } else {
         document.write(`${findNum}은 ${result}번째 있습니다.`);
+        let tds = document.getElementsByTagName("td"); //웹문서에 있는 모든 td태그(배열구조)를 가져와서 tds라는 변수에 넣어준 것
+
+        console.log(tds[0].innerHTML);
+
+        for (let item of tds) {
+          if (findNum === Number(item.innerHTML)) {
+            //찾았을 때
+            item.style.backgroundColor = "yellow";
+            item.innerHTML = "★" + findNum;
+          }
+        }
       }
-
-
-
-      
+      console.log(document.getElementsByClassName("tr"));
     </script>
+    <style></style>
   </head>
   <body></body>
 </html>

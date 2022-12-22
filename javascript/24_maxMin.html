@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>예제2</title>
+    <script>
+      //  예제2) 1~100 까지의 랜덤한 수를 10개 를 배열에 넣어두고,
+      // 그 랜덤한 수 중에 max값, min값을 각각 구해 출력하세요.
+
+      // (max값은 배경색을 빨간색, min값은 배경색을 파란색으로 하세요.)
+
+      let arr = new Array(10);
+
+      let table = "<table border ='1'><tr>";
+      for (let i = 0; i < arr.length; i++) {
+        arr[i] = Math.floor(Math.random() * 100) + 1;
+        table += "<td>" + arr[i] + "</td>";
+      }
+      table += "</tr></table>";
+
+      document.write(table);
+
+      document.write("<hr>");
+
+      //방법1) Number.Min_value, Number. Max_value 를 쓸 수도 있다.
+      //( 자바스크립트가 표현 가능한 정수의 최대값, 최소값을 이용하기)
+      // let max = Number.MIN_VALUE, min = Number.MAX_VALUE
+
+      // for(let i = 0; i <arr.length;i++){
+      //   if(max <arr[i]){
+      //     max =arr[i]
+      //   }
+      //   if(max >arr[i]){
+      //     min =arr[i]
+      //   }
+      // }
+
+      //방법2) math.max(), math.min() 과 스프레드 연산... 을 써도 편하다.
+      let max = Math.max(...arr);
+      document.write(max);
+
+      document.write("<hr>");
+      let min = Math.min(...arr);
+      document.write(min);
+      document.write("<hr>");
+      document.write(`최대값은 : ${max}, 최소값은 : ${min}`);
+
+      // // 배경색 색칠
+      for (let item of document.getElementsByTagName("td")) {
+        if (item.innerHTML == max) {
+          item.style.backgroundColor = "red";
+        }
+        if (item.innerHTML == min) {
+          item.style.backgroundColor = "blue";
+        }
+      }
+    </script>
+  </head>
+  <body></body>
+</html>
