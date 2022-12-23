@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>사용자 정의 함수의 기본 운용법</title>
+    <script>
+      //함수명은 보통 영문 소문자로 시작하고, 함수에서 수행하고자 하는 기능을 동사 형태로 만든다.
+
+      //1) 매개변수도 없고, 반환값도 없는 함수
+      function sayHello() {
+        // 함수는 함수의 위치와 상관없이, 호출 되기 이전에는 절대 실행되지 않는다.
+        document.write("Hello!");
+      }
+
+      //2) 매개변수가 있고 , 반환 값은 없다.
+      function sayHi(times) {
+        for (let i = 0; i < times; i++) {
+          document.write("Hi!");
+        }
+      }
+
+      //3) 매개변수가 두개 있고 , 반환 값은 없다.
+      function addTwoNumber(num1, num2) {
+        document.write(num1 + num2);
+      }
+
+      let times = 3;
+      for (let i = 0; i < times; i++) {
+        sayHello(); // 함수의 호출(함수가 만들어진 형태(prototpe 또는 함수의 정의문을 보고 호출하게 된다.))
+      }
+
+      document.write("<hr/>");
+      sayHi(5);
+      document.write("<hr/>");
+      addTwoNumber(3, 5);
+      //document.write(num1) // num1 은  addTwoNumber() 함수 내에서만 선언된 지역변수이다. 함수가 끝나면 메모리에서 소멸된다.
+
+      let result = addTwoNumberWithReturnValue(30, 40);
+      console.log(result);
+      function addTwoNumberWithReturnValue(num1, num2) {
+        let result = 0; // 지역변수
+        result = num1 + num2;
+        return result; // 함수를 호출한 곳으로 되돌려 줌.
+      }
+
+      //4) 2개의 문자열을 받아 한 문자열로 합쳐(연결하여) 반환 하는 함수 만들되, 이름은 concatStr 으로 하기.
+
+      function concatStr(str1, str2) {
+        let result = "";
+        result = str1 + str2;
+        return result;
+      }
+      //함수 포인터 방식으로 함수를 정의 할 수 도 있다.
+      //concatStr 이라는 함수가 이름없는 (anonymous)함수를 가리키고 (reference) 있기 떄문에,
+      //concatStr 이 마치 함수 명 처럼 사용 되는 방식
+      let concatStr = function (str1, str2) {
+        return str1 + str2;
+      };
+
+      // 인자의 기본값을 줄 수도 있다.
+      function sum(a, b = 20) {
+        //b의 값은 기본값으로 20이 할당 됨.
+        console.log(a, b, a + b); // 10 , 20, 30
+      }
+      sum(10);
+      // 인자를 이미 기본값으로 지정 해줬기 떄문에 b 를 생략하고 작성을 했지만 b=20 으로 인식 된다.
+
+
+      //arguments
+      function sum2(a, b) {
+        
+        console.log(a, b); // 10, 20
+        console.log(arguments); 
+        // 'arguments'를 입력했으면 아무리 매개변수 보다 인자를 많이 기입한다고 하더라도 모든 인자들을 출력해준다.
+      }
+      sum2(10, 20, 30); // Java 에서는 에러로 뜬다...
+    
+    </script>
+  </head>
+  <body></body>
+</html>

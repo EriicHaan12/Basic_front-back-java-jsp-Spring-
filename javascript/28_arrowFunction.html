@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>arrow Function(화살표 함수)</title>
+    <script>
+      // 화살표 함수 (Arrow Function) 쓰는 법
+      // 반환값이 있는 함수에 대해서만 쓸 수 있다.
+
+      //일반 함수 표기법
+      //   function sum(a, b) {
+      //     return a + b;
+      //   }
+      // 포인트 방식
+      //   const sum = function (a, b) {
+      //     return a + b;
+      //   };
+
+      const sum = (a, b) => {
+        return a + b;
+      };
+      console.log(sum("다람쥐", " 초등학교"));
+
+      //   function hi(name) {
+      //     return name + "님 안녕하세요";
+      //   }
+      //
+      //   const hi = (name) => { name + "님 안녕하세요";};
+      // console.log(hi("홍길동"))
+
+      // 인자가 하나 라면 괄호도 생략 될 수 있다.
+      const hi = (name) => name + "님 안녕하세요";
+
+      // function greeting(){
+      //     return "Hello!"
+      // }
+      const greeting = () => "Hello";
+      document.write(greeting());
+    </script>
+  </head>
+  <body></body>
+</html>
