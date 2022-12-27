@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>배열 객체의 함수</title>
+    <script>
+      let arr = ["Hello", "World"];
+      let str = "HelloWorld";
+      console.log(Array.isArray(arr)); // Array.isArray(arr) 배열인지 아닌지..
+      console.log(Array.isArray(str)); //  false
+
+      arr.push("!"); // 배열의 끝에 요소 삽입.
+      console.log(arr);
+
+      arr.pop(); // .pop() 배열의 끝 인덱스의 요소 삭제
+      console.log(arr);
+
+      arr.unshift("chapter1."); // 배열의 0번쨰 인덱스에 요소 삽입.
+      console.log(arr);
+
+      arr.shift(); // 배열의 0번째 요소 삭제
+
+      console.log(arr.includes("hello")); // 배열에 입력한 요소가 있다면 true, 없으면 false
+
+      let arr2 = ["hello", "world", "my", "friend"];
+      let find = arr2.find((value) => value.length > 6); //  find (testing function) : testing function 의 조건에 만족하는 첫번째 요소를 반환.
+      // testing function에 만족하는 값이 없으면 indefined 반환
+      console.log(find);
+
+      let arr3 = [100, 20, 30, 40, 1, 45, 90];
+      console.log(arr3.sort()); // 정렬(유니코드 기준으로 정렬) 그냥 숫자만 쓰고 함수를 쓸 경우 제대로 정렬되지 않는다.
+      console.log(arr2.sort()); // 알파벳 순으로는 정렬이 잘된다.
+      console.log(arr3.sort(compare)); // 정렬 기준을 compare로 함(내림차순 정렬)
+
+      console.log(arr3.sort((a, b) => a - b)); //오름차순 , sort((a, b) => b - a) 내림차순
+
+      function compare(a, b) {
+        // 정렬 기준이 되는 함수
+        if (a < b) {
+          return 1;
+        }
+        if (a > b) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }
+
+      //indexOf(), lastIndexOf()
+      //slice() :  배열을 조각내 새로운 배열로 반환.
+      let arr4 = arr3.slice(1, 3); // 원하는 인덱스 위치~ 지정 인덱스 위치 까지 입력 하면 기존 배열에서 잘라 새로운 배열을 만들 수 있다.
+
+      // map(mapping  사상 함수) : 배열의 모든 요소들에 대해 주어진 함수를 실행 한 뒤 새로운 배열을 반환
+
+      let newAr = arr3.map(function (value) {
+        return value * 0;
+      });
+      console.log(newAr);
+
+      let newArr = arr3.map((value) => {
+        return value * 0.5;
+      });
+      // 각각의 요소에 *0.1를 한뒤 그 결과값으로 이루어진 새로운 배열 반환. // 반환값이 정해짐
+
+      let arr5 = [100, 20, 30, 40, 1, 45, 90];
+
+      arr5.forEach((value, index) => {
+        return arr[index] + 5;
+      });
+      // forEach는 원본 배열 자체를 수정하는 것이고 , map() 함수는 원본 배열을 그대로 놔둔체 새로운 배열을 반환. // forEach는 반환이 void라 새로운 변수로 생성이 안됨.
+      console.log(arr5);
+
+      console.log(newArr);
+    </script>
+  </head>
+  <body></body>
+</html>

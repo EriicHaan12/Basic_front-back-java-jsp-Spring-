@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>내장함수</title>
+    <script>
+      // 1.eval() : evaluation의 약자로써, 자바스크립트의 명령어를 실행하는 함수.
+      let result = eval("2*3+5"); //
+      document.write(result); // 11
+      document.write("<br/>");
+      // 2. parseInt(): 문자열을 정수로 변환이 되는 부분을 변환하여 반환
+      //즉, 문자열로 이루어진 숫자들을 인식하여 그 중 정수의 부분만 반환 시켜준다.
+      // 정수로 변환 할 수 없다면 NaN(Not A Number)을 반환
+      document.write(parseInt("3.14")); // 3
+      document.write("<br/>");
+      document.write(parseInt("가나다")); // NaN
+      document.write(parseInt("3.14 입니다")); // 3
+      // parseFloat(): 문자열을 실수로 변환이 되는 부분을 변환하여 반환
+      // 즉, 문자열로 이루어진 숫자 중 , 실수 (정수+실수)를 추출하여 반환
+
+      document.write(parseInt("3.141592 쩜쩜쩜")); // 3.141592
+      document.write("<br/>");
+      //비교) Number() : 매개변수 안에 있는 값을 Number타입의 객체로 만드는 생성자(constructor)
+
+      // 3. isNan() : 숫자인지 아닌지. 숫자가 아니면 true 반환
+      document.write(isNaN(3)); // false
+      
+      //4. isFinite(): 유한(숫자) 냐? 숫자 면 true 반환
+      document.write("<br/>");
+      document.write(isFinite("끝")) // false 
+    </script>
+  </head>
+  <body></body>
+</html>

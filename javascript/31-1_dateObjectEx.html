@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>지정일로부터 몇일이나 지났는가?</title>
+    <script>
+      //사용자에게 날짜를 입력받아 현재 시간이 입력 받은 날짜로 부터 얼마나 지났는지 계산해보자.
+      function calDate() {
+        // input tye = "date" 객체로 부터 사용자가 입력한 날짜를 얻어옴.
+        //Date() 생성자에게 문자열을 매개변수로 주면, 문자열 기반의 날짜 객체(Date)가 반환된다. (날짜 끼리만 연산)
+        let usersDate = new Date(
+          document.getElementsByTagName("input")[0].value
+        );
+        console.log(usersDate); 
+        //getElementsbyTagname("tagName")[i].value  = 불러올 태그 이름 === 'tagName' , i === 현재 페이지에서 불러올 태그가 몇번쨰로 쓰인지, .value === 앞서 불러온 태그의 value값을 추출
+        // 그냥쓰면 String 타입 으로 저장 되기 떄문에 timestamp 로 바꿀려면 다시 new Date() 로 감싸줘야함.
+
+        let now = new Date(); // 현재 시간 날짜를 얻어옴.
+        let tmp = now - usersDate;
+        console.log(tmp);
+
+        let result = Math.floor(tmp / 1000 / 60 / 60 / 24); //  ms / sec / min / hour
+        document.getElementById("result").innerHTML = result + "일 지났습니다.";
+      }
+    </script>
+  </head>
+  <body>
+    <div id="calendar">
+      지정일을 입력하고, 확인 버튼을 누르세요. <input type="date" />
+      <button type="button" onclick="calDate()">확인</button>
+    </div>
+    <div id="result"></div>
+  </body>
+</html>

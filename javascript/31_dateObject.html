@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Date 객체</title>
+  </head>
+  <script>
+    // JavaScript Date 객체는 시간의 한 점을 플랫폼에 종속되지 않는 형태로 나타냅니다.
+    // Date 객체는 1970년 1월 1일 UTC(협정 세계시) 자정과의 시간 차이를 밀리초로 나타내는 정수 값(Timestamp)을 담습니다.
+    // 날짜 시간의 연산을 편하게 하기 위해 Timestamp 를 쓴다.
+
+    let date = new Date(); // 현재 (날짜 시간) 객체를 생성
+    document.write("현재 : " + date);
+    document.write("<br/>");
+
+    document.write(`연도 : ${date.getFullYear()}`); // 내장객체로 부터 내장객체가 가지고 있는 메소드를 상속 해줄 수 있다. (내장객체 + '.'(맴버접근 연산자) + 내장 객체가 가지고 있는 메소드 )
+    document.write("<br/>");
+    document.write("월 : " + (date.getMonth() + 1)); // 월은 이상하게 0부터 시작하기 때문에 1을 더해줘야 우리가 쓰는 것과 비슷하다.
+    document.write("<br/>");
+    document.write("일 : " + date.getMonth());
+
+    let day = [
+      "일요일",
+      "월요일",
+      "화요일",
+      "수요일",
+      "목요일",
+      "금요일",
+      "토요일",
+    ];
+    document.write("<br/>");
+    document.write("일 : " + day[date.getDay()]); // 일요일(0)~토요일(6)
+    document.write("<br/>");
+    document.write("요일 :" + day[date.getDay()]);
+    document.write("<br/>");
+    document.write("시 : " + date.getHours());
+    document.write("<br/>");
+    document.write("분 : " + date.getMinutes());
+    document.write("<br/>");
+    document.write("초 : " + date.getSeconds());
+
+    console.log(Date.now()); // Timestamp 값 출력
+
+    let date2 = new Date(); // 현재 (날짜 시간) 객체 생성
+    console.log(date2);
+    date2.setDate(25); //set...()으로 시작하는 setter 함수는 시작하는 날짜 객체함수들을 이용하여 원하는 날짜, 시간으로 바꿀 수 있다.
+    console.log(date2);
+    date2.setHours(1, 10, 10);
+    console.log(date2);
+  </script>
+  <body>
+    <div id="time"></div>
+    <script>
+      setInterval(function () {
+        let now = new Date();
+        document.getElementById("time").innerHTML = now;
+      }, 1000);
+      //setInterval(callback, interval)
+      // 콜백함수를 인터벌 간격으로 계속 실행하는 함수 이다. 인터벌의 단위는 밀리세컨드(ms)
+    </script>
+  </body>
+</html>

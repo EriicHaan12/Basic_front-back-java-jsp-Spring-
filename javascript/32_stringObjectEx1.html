@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>문자열 객체</title>
+    <script>
+      // 문자열 객체의 생성
+      // new String() 안에 든 문자열을 하나하나 쪼갠 후 하나의 배열에 다 넣음
+      // 원래 문자열 객체도 new 연산자와 생성자를 이용하여 객체를 만들어야 하나,
+      // 문자열 타입은 사람이 가장 많이 쓰는 타입이므로, 간략하게 코딩(let str ='') 해도 되도록 배려 한 것이다.
+      let str = "대한민국";
+      console.log(str);
+
+      // let str1 = "대한민국";
+      // console.log(str1);
+      // console.log(str1.length); // 문자열의 길이
+
+      str = "대한민국 우리나라 좋은나라";
+      document.write(str);
+      document.write("<br>");
+      document.write(str.charAt(2)); //민 (내부에서 한문자 한문자를 배열로 취급) //배열안의 지정 인덱스에 어떤 문자열이 있는지 확인
+      document.write("<br>");
+      document.write(str.concat("는 헬조선이 아니다?")); // 문자열과 문자열 합침
+      document.write("<br>");
+      //indextOf : 왼쪽부터 검색
+      document.write(str.indexOf("나", 8)); // 지정한 문자열이 몇번째 인덱스에 위치하고 있는지 , 두번째 인자는 지정하게 되면 지정한 숫자의 인덱스 위치부터 찾기 시작.
+      //찾을시엔 찾은 문자열의 인덱스 위치 12
+      document.write("<br>");
+      document.write(str.indexOf("나다")); //찾을 문자열이 없을 때는  -1
+      document.write("<br>");
+      //lastIndexof() : 오른쪽 부터 검색  // 없으면 -1 반환
+      document.write(str.lastIndexOf("민국")); // 2 (오른쪽 끝에서부터 검색하되, 셀때는 0번쨰 부터)
+      document.write("<br>");
+      document.write(str.lastIndexOf("나")); //12
+      //
+      // substr : 문자열 자르기(부분 문자열)   (~부터, 글자수)
+      document.write(str.substr(5, 4)); // 우리나라  substr(a,b) a === 자를 인덱스 위치,b 남길 문자열 길이
+      document.write("<br>");
+      document.write(str.substring(10, 2)); //좋은
+
+      // substring : 문자열 자르기 (~부터, ~ 까지) : 부터는 이상이고, 까지는 미만
+      document.write(str.substring(5, 9));
+      document.write("<br>");
+      let statement = "I am a Student";
+      document.write(statement.toLowerCase()); // 소문자로 변환
+      document.write("<br>");
+      document.write(statement.toUpperCase()); // 대문자 변환
+      document.write("<br>");
+      //statement 에서 Student 라는 단어를 추출하여 대문자로 변환 하여 출력
+
+      let student = statement.substr(7, 7).toUpperCase(); // 메서드 체인 방식 (method chain 방식으로 코딩 가능)
+      document.write(student);
+      document.write("<br>");
+      document.write(
+        statement
+          .substr(statement.indexOf("Student"), "Student".length)
+          .toUpperCase()
+      );
+      // 한자한자 세어서 활용하기 보다는 문자열 함수를 총 망라 하여 아래와 같이 코딩하는 것이 현명하다...?
+
+      let statement2 = " 홍 길 동 ";
+      document.write(statement2.trim()); // 앞 뒤 공백 제거 (trimStart() : 앞 공백만 제거 , trimEnd() : 뒤 공백만 제거)
+      document.write("<br>");
+
+      console.log("홍길동" === "홍 길 동"); //false
+      let tmp = "";
+      for (let i = 0; i < statement2.length; i++) {
+        if (statement2.charAt(i) !== " ") {
+          // 공백이 아니라면
+          tmp += statement2.charAt(i);
+        }
+      }
+      console.log(tmp);
+      console.log(statement2.replace(" ", "")); // 첫번째 공백 제거
+
+      //모든 공백 제거 하고 싶다면? .. 정규 표현식을 쓰는 것이 가장 빠르다.
+      document.write(statement2.replace(/\s/gi, ""));
+
+      let statement3 = "ab c def ghi";
+      let ar = statement3.split(" ");
+      console.log(ar); // 특정 문자를 기준으로 분리하여 배열로 반환. 여기서는 "공백"을 기준으로 분리.
+    </script>
+  </head>
+  <body></body>
+</html>

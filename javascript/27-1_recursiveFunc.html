@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>함수의 재귀 호출 방식</title>
+    <script>
+      // 재귀 호출 : 자기 자신의 함수를 재호출 하는 것.
+
+      // n!(팩토리얼) 구하기
+      function factorial(n) {
+        if (n <= 1) {
+          return 1;
+        } else {
+          return n * factorial(n - 1);
+        }
+      }
+
+      console.log(factorial(3)); // 3*2*1
+    </script>
+  </head>
+  <body></body>
+</html>
