@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      생성자함수(prototype funcntion)를 이용하여 객체 생성 및 사용하기
+    </title>
+    <script>
+      //prototype 만들기
+      function Account(owner, accNum, balance) {
+        // 객체에 속성 부여
+        this.owner = owner; // this. 쓰는 이유 지금 만들어 지는 객체의 owner 에 owner 속성을 부여하겠다는 뜻.
+        this.accNum = accNum;
+        this.balance = balance;
+        this.bankName = "우리은행";
+        this.name = "직장인 비과세 예금";
+
+        // 객체에 기능부여
+        this.inquiry = function () {
+          return this.balance;
+        };
+        
+
+        this.deposit = function (money) {
+          // 예금하기
+          this.balance += money;
+        };
+        this.withDraw = function (money) {
+          // 인출하기
+          if (this.balance >= money) {
+            this.balance -= money;
+          } else {
+            window.alert("잔액이 부족합니다!");
+          }
+        };
+      }
+
+      let acc1 = new Account("홍찰찰", "1234-100-00-123456", 1000);
+
+      console.log(acc1);
+
+      document.write(`예금주 : ${acc1.owner} <br/>`);
+      document.write(`은행명 : ${acc1.bankName}<br/>`);
+      document.write(`잔액 : ${acc1.balance}<br/>`);
+      acc1.deposit(2000000); // 예금
+
+      document.write(`잔액 : ${acc1.inquiry()}<br/>`);
+
+      acc1.withDraw(1000000); // 잔액조회
+      document.write(`잔액 : ${acc1.inquiry()}<br/>`);
+
+      acc1.withDraw(10000); // 잔액조회
+      //----------------------------
+      let acc2 = new Account("도우너", "000444-1234-09", 0);
+      console.log(acc2);
+
+      acc2.deposit(1000000);
+      document.write(`잔액 : ${acc2.inquiry()}<br/>`);
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>객체를 shortHand 표현하기</title>
+    <script>
+      let acc = {
+        owner: "홍길동",
+        accNum: "1234-100-00-123456",
+        balance: 500,
+        bankName: "우리은행",
+        name: "직장인 비과세 예금",
+        // 객체에 기능부여
+
+       // 
+        inquiry: function () {
+          return this.balance;
+        }, // 잔액 조회
+
+        deposit: function (money) {
+          // 예금하기
+          this.balance += money;
+        },
+        withDraw: function (money) {
+          // 인출하기
+          if (this.balance >= money) {
+            this.balance -= money;
+          } else {
+            window.alert("잔액이 부족합니다!");
+          }
+        },
+      };
+
+      console.log(acc);
+      console.log(acc.inquiry());
+
+      let clients = [
+        {
+          owner: "홍길동",
+          accNum: "1234-100-00-123456",
+          balance: 500,
+          bankName: "우리은행",
+          name: "직장인 비과세 예금",
+        },
+        {
+          owner: "홍길동",
+          accNum: "1234-100-00-123456",
+          balance: 500,
+          bankName: "우리은행",
+          name: "직장인 비과세 예금",
+        },
+      ];
+
+      console.log(clients);
+    </script>
+  </head>
+  <body></body>
+</html>

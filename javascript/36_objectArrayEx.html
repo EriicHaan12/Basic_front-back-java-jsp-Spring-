@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="js/accout.js">
+      // 외부 js 파일 import 하는 방법
+    </script>
+    <title>배열에 객체 담아 관리하기</title>
+    <script>
+      let acc1 = new Account("홍찰찰", "1234-100-00-123456", 1000);
+      console.log(acc1);
+
+      let acc2 = new Account("도우너", "000444-1234-09", 0);
+      console.log(acc2);
+
+      let clients = [];
+      clients.push(acc1);
+      clients.push(acc2);
+      console.log(clients);
+
+      let output = "<ul>";
+      //   for (let i = 0; i < clients.length; i++) {
+      //     output += `<li>예금주 : ${clients[i].owner}</li>
+      //                 <li>계좌번호: ${clients[i].accNum}</li>
+      //                 <li>은행이름: ${clients[i].bankName}</li>
+      //                 <li>이름: ${clients[i].bankName}</li></br> `;
+      //   }
+      //   output += "</ul>";
+
+      //   document.write(output);
+
+      for (let acc of clients) {
+        output += `<li>예금주 : ${acc.owner}</li>`;
+      }
+      output += `</ul>`;
+      document.write(output);
+
+      document.write("<hr>");
+
+      document.write(JSON.stringify(clients));
+    </script>
+  </head>
+  <body></body>
+</html>
