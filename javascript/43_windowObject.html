@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>window 내장 객체</title>
+    <script>
+      //  window는 최상위 객체이므로 생략 가능;
+      //alert("!")
+
+      //window.setInterval (a,n) n 밀리세컨드 마다 a를 반복 실행
+
+      //   window.setTimeout(function () {
+      //     location.href = "https://www.naver.com"; //페이지 이동
+      //   }, 3000);
+      // .setTimeout(a, n) n 밀리세컨드 이 후 a 를 실행
+      //
+      console.log(window.innerWidth); // 윈도우 웹 브라우저의 가로 크기 창 너비
+      console.log(window.innerHeight); // 윈도우 웹 브라우저의 세로 크기 창 너비
+
+      //새창 띄우기
+      window.open(
+        "39_scoreV5.html",
+        "myPage",
+        "top=300, left=20, width=400, height= 300"
+      );
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>원거리 접근 방식</title>
+    <script>
+      onload = function () {
+        console.log(document.getElementById("td5").innerHTML); //객체 형태로 뽑아 내기 때문에 요소를 뽑아낼려면 .innerHTML을 써줘야함
+        document.getElementById("td9").innerHTML = `<b>여기!</b>`;
+        // 기존에 들어있던 텍스트 9 를 입력한 태그 및 컨텐츠 `<b>여기!</b>` 로 변경
+        console.log(document.getElementsByClassName("tr")); // 배열 형태로 추출함.
+        console.log(document.getElementsByTagName("tr")[2]);
+        console.log(document.getElementsByTagName("td")[8]); // '여기!' 추출
+
+        console.log(document.getElementsByName("gender")); //배열구조로 추출
+        document.getElementsByName("gender")[0].value = "Female"; // name이 gender인 태그를 배열 구조로 찾아와서 
+        // value 값을 F에서 Female 로 변경. 
+      };
+    </script>
+  </head>
+  <body>
+    <table border="1">
+      <tr class="tr">
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+      </tr>
+      <tr class="tr">
+        <td>4</td>
+        <td id="td5">5</td>
+        <td>6</td>
+      </tr>
+      <tr class="tr">
+        <td>7</td>
+        <td>8</td>
+        <td id="td9">9</td>
+      </tr>
+    </table>
+    <div>
+      <input type="radio" name="gender" value="F" /> Female
+      <input type="radio" name="gender" value="M" /> Male
+    </div>
+  </body>
+</html>

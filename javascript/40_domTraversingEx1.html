@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM 운행을 하기 위해 알아야 할, 태그의 기본 속성</title>
+    <script>
+
+        // 태그가 가지고 있는 모든 속성들에 접근 할 수 있다.
+      onload = function () {
+        let p = document.getElementById("firstP");
+        console.log(p);
+
+        document.write(`p.tagName : ${p.tagName} <br/>`);
+        document.write(`p.id : ${p.id} <br/>`);
+        document.write(`p.class : ${p.className} <br/>`);
+        document.write(`p.innerHTML : ${p.innerHTML} <br/>`); // p태그의 안에 있는 태그 까지 포함한 내용
+        document.write(`p.innerText : ${p.innerText} <br/>`); // p태그 안에 있는 태그를 뺀 순수한 내용 / text
+        document.write(`p.style.color : ${p.style.color} <br/>`); // p태그 안에 style 객체가 있고 스타일 객체 안에 있는 속성(요소) 까지 볼 수 있다.
+        document.write(`p.style.border : ${p.style.border} <br/>`); //
+        document.write(`p.children : ${p.children} <br/>`); // 자식 태그가 뭐가 있는지 보여줌
+        console.log(p.children);    //자식 태그가 어떤게 있는지 보여줌
+        document.write(`p.childElementCount: ${p.childElementCount}<br/>`); // 자식 태그의 갯수를 세어줌
+        document.write(`p.childNodes: ${p.childNodes}<br/>`); //
+        console.log(p.childNodes); // p태그의 자식 태그 및 모든 요소들 (텍스트 포함) 한 것들을 보여줌.
+      };
+    </script>
+  </head>
+  <body>
+    <h1>DOM 객체 p 태그의 프로퍼티, 스타일, 이벤트리스너, ....</h1>
+    <p
+      id="firstP"
+      class="groupP"
+      style="color: blue; border: 1px dotted red"
+      onclick="this.style.backgroundColor='yellow';"
+    >
+      이것은 <span>문단 태그</span> <b> 입니다.</b>
+    </p>
+  </body>
+</html>

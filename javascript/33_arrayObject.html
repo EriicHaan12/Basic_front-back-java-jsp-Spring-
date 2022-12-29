@@ -83,7 +83,7 @@
 
       // 그 남은 수가 어떤 수인지 확인하는 프로그램을 작성하세요.
 
-      let ar = new Array(98);
+      let ar = new Array(99);
 
       let tmp = 0;
       let answer = 0;
@@ -104,23 +104,27 @@
         return duplicate;
       }
 
-      console.log(ar);
-
       newAr = ar.sort((a, b) => a - b);
-
+      // newAr 배열은 98개의 요소로 이루어 져있고 1~100까지 수가 들어가 있지만 하나가 비어있다.
       let numArr = [];
       for (let i = 1; i < 100; i++) {
         numArr.push(i);
       }
-      console.log(numArr); //1~98 까지
 
+      console.log(newAr);
+      // numArr 배열은 98개의 요소로 이루어져 있고 안에는 1~99 까지 수 들어가 있다.
+      console.log(numArr); //
+      let answerNum = 0;
       for (let i = 0; i < numArr.length; i++) {
-        if (newAr[i] - numArr[i] !== 1) {
-          answerNum = numArr[i];
+        let result = 0;
+        if (numArr[i] - newAr[i] === 0) {
+          result = newArr[i];
         } else {
+          result = 100;
         }
+        answerNum = result;
       }
-      document.write(newAr);
+      console.log(answerNum);
       let num = 0;
       // for (let i = 1 <= newArr.length; i++; ) {}
       document.write("<br/>");
