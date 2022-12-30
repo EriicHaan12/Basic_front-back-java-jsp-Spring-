@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>location 객체, history객체</title>
+    <script>
+      //location 객체는 현재 웹문서의 주소를 얻어올 때도 쓰고, 이동 시킬 페이지 주소를 기입할 때도 쓴다.
+      // URL 주소를 표현하는 객체
+      console.log("현재 페이지의 URL 주소 : " + location.href);
+      //원래 이동하라는 기능으로 만들어진 객체가 아니였지만, 새로운 주소를 주면 그 페이지 주소로 전환되는 속성 떄문에 이동시킬 때도 많이 사용된다.
+
+      const goSite = () => {
+        let url = document.getElementById("site").value;
+        location.href = url;
+        //url은 문자열로 줄수도 있다.
+      };
+
+      //history 객체 : user가 방문했던 페이지 기록을 통해 방문 했던 페이지에 다시 이동 하도록 하는 것.
+    </script>
+  </head>
+  <body>
+    <div>이동할 페이지를 선택하고 이동 버튼을 누르세요</div>
+    <select id="site">
+      <option value="http://www.naver.com">네이버</option>
+      <option value="https://www.daum.net">다음</option>
+      <option value="https://www.google.com">구글</option>
+    </select>
+    <button onclick="goSite()">이동</button>
+    <button onclick="history.back()">1 이전 페이지</button>
+    <button onclick="history.forward()">1 다음 페이지</button>
+    <button onclick="hitory.go(2)">
+      go함수 안의 매개변수 만큼 페이지 이동
+    </button>
+
+    <!-- history 객체 사용법
+        history.back() : 한페이지 뒤로 가기
+        history.forward() : 한페이지 앞으로 가기
+        history.go(n) : n 만큼 페이지 이동 , n은 음수, 양수 모두 가능
+        ex) n이 2일 때는 2페이지 앞으로 이동
+            n이 -2d일 떄는 2페이지 뒤로 이동.
+    -->
+  </body>
+</html>

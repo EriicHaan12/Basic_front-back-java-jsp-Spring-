@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>접속환경이 pc인지 모바일인지</title>
+    <script>
+      let pcFilter = ["win16", "win32", "win64", "mac", "macintel"]; // pc로 접속 할 때 navigator.platform의 값이 배열에 기입한 요소들 중 하나이다.
+
+      let isPc = false;
+      console.log(navigator.platform.toLowerCase());
+      // 웹에서 접속
+      for (let pc of pcFilter) {
+        if (navigator.platform.toLocaleLowerCase().indexOf(pc) !== 1) {
+          //indexOf()가 -1이면 값이 없을 떄라는 뜻
+          isPc = true;
+          location.href = "https://www.google.com";
+        }
+      }
+      // 모바일에서 접속
+      if (!ispc) {
+        location.href = "https://www.google.com";
+      }
+    </script>
+  </head>
+  <body></body>
+</html>

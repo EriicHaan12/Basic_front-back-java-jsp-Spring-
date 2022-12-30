@@ -105,30 +105,28 @@
       }
 
       newAr = ar.sort((a, b) => a - b);
-      // newAr 배열은 98개의 요소로 이루어 져있고 1~100까지 수가 들어가 있지만 하나가 비어있다.
+      // newAr 배열은 99개의 요소로 이루어 져있고 1~100까지 수가 들어가 있지만 하나가 비어있다.
       let numArr = [];
-      for (let i = 1; i < 100; i++) {
+      for (let i = 1; i <= 100; i++) {
         numArr.push(i);
       }
 
       console.log(newAr);
-      // numArr 배열은 98개의 요소로 이루어져 있고 안에는 1~99 까지 수 들어가 있다.
+      // numArr 배열은 99개의 요소로 이루어져 있고 안에는 1~99 까지 수 들어가 있다.
       console.log(numArr); //
-      let answerNum = 0;
+
       for (let i = 0; i < numArr.length; i++) {
-        let result = 0;
-        if (numArr[i] - newAr[i] === 0) {
-          result = newArr[i];
-        } else {
-          result = 100;
+        for (let j = 0; j < newAr.length; j++) {
+          if (numArr[i] == newAr[j]) {
+            numArr.splice(i, 1);
+          }
         }
-        answerNum = result;
       }
-      console.log(answerNum);
-      let num = 0;
-      // for (let i = 1 <= newArr.length; i++; ) {}
+      console.log(numArr);
+
+      document.write("<hr>");
+      document.write(`빠진 숫자는 : ${numArr[0]}`);
       document.write("<br/>");
-      document.write(num);
     </script>
   </head>
   <body></body>

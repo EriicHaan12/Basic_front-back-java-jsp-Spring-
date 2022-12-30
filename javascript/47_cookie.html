@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>쿠키의 일반적인 운용</title>
+    <script>
+      const saveCookie = () => {
+        //쿠키 저장 형식(문자열)
+        // "쿠키 이름 = 값; expires = 쿠키 만료일  domain = 도메인명(생략 가능); path =쿠키 저장경로(생략 가능)"
+        let now = new Date(); // 현재 시간, 날짜 객체 생성
+        now.setDate(now.getDate() + 1); // 만료일 생성 = 가져온 now(날짜, 시간) 객체에서 일(date)를 뽑아와 +day 만료일을 설정 해준다. => 쿠키 데이터도 1일 후에 만료
+        let myCook = "";
+        myCook = "myCook=EH; expires=" + now.toUTCString();
+        console.log(myCook);
+        document.cookie = myCook; // 쿠키 저장하는 법
+
+        let now2 = new Date();
+        now2.setMinutes(now2.getMinutes() + 1);
+        let myCook2 = "myCook2=ericHan;expires=" + now2.toUTCString(); // 라이브 서버에서는 toLocaleString() 은 안먹을 수 있기 떄문에 , toUTCString() 써주는게 낫다.
+        document.cookie = myCook2;
+      };
+      
+      
+
+      const readCookie = () => {
+        let cook = document.cookie;
+        console.log(cook); // 문자열
+
+        let isFind = false;
+
+        //쿠키 문자열을 ;(세미콜론) 기준을 자른다. => 쿠키를 분리하기 위해서
+        let cookAr = cook.split(";");
+        console.log(cookAr);
+        //myCook2 라는 이름의 쿠키 값을 찾는다면...
+        for (let i = 0; i < cookAr.length; i++) {
+          let cookName = cookAr[i].split("=")[0]; // 쿠키 이름 분리
+
+          if (cookName === "myCook") {
+            //
+            // mycook2가 있다
+            //myCook2= 값;
+            isFind = true;
+            alert("찾았다 내사랑 : " + cookAr[i].split("=")[1]);
+          }
+        }
+        if (!isFind) {
+          // 찾는 쿠키가 없을 경우
+          alert("그런 쿠키 또 없습니다...");
+        }
+      };
+
+      const delCookie = () => {
+        //  코드를 통해 직접적으로 쿠키를 삭제하는 명령어나 함수는 없기 때문에,
+        // 삭제할 쿠키의 expires 값을 현재 날짜, 현재 시간으로 재설 정하여 다시 저장 시킨다.
+        let now = new Date();
+        let cookie = "myCook=; expires=" + now.toUTCString();
+        document.cookie = cookie;
+      };
+    </script>
+  </head>
+  <body>
+    <input type="button" value="쿠키저장" onclick="saveCookie()" />
+    <input type="button" value="쿠키읽기" onclick="readCookie()" />
+    <input type="button" value="쿠키삭제" onclick="delCookie()" />
+  </body>
+</html>

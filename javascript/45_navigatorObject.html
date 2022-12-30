@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>navigator 객체</title>
+    <script>
+      window.onload = function () {
+        let text = `appCodeName : ${navigator.appCodeName}<br/>`;
+        text += `appName : ${navigator.appName}<br/>`;
+        text += `appVersion : ${navigator.appVersion}<br/>`;
+        text += `platform : ${navigator.platform}<br/>`;
+        text += `uerAgent : ${navigator.userAgent}<br/>`;
+        //유저가 접속한 경로에 따라(모바인인지 웹인지, 안드로이드인지 MacOs인지) 플랫폼이 변경된다.
+        document.getElementById("output").innerHTML = text;
+      };
+    </script>
+  </head>
+  <body>
+    <div id="output"></div>
+  </body>
+</html>

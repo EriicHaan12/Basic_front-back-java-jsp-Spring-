@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>navigator 객체의 geoLocation 객체</title>
+    <script>
+        //현재 위치 정보를 뽑아오는 법
+      const getLocation = () => {
+        if (!navigator.geolocation) {
+          // geoLocation 객체가 null 이냐? 라고 묻는거임 =>즉, '웹 브라우저가 geolocation을 지원하지 않는냐?' 라는 의미
+          document.getElementById("output").innerHTML =
+            "이 브라우저는 위치정보를 지원하지 않습니다!";
+        } else {
+          // 브라우저가 위치정보를 지원한다는 의미
+          navigator.geolocation.getCurrentPosition(showPosition, outputError);
+        }
+      };
+      // callback 어떤 조건이 충족 되면 그 때 호출 되는 함수, 그전엔 가만히 있다...
+      // 성공하면 showPosition, 에러뜨면, outputError 콜백 함수가 실행 되도록.
+      const showPosition = (pos) => {
+        console.log(pos);
+        let lat = pos.coords.latitude; // 위도
+        let lng = pos.coords.longitude; // 경도
+        let date = new Date(pos.timestamp).toLocaleString(); //.toUTCString() = UTC 기준으로 바꾼 뽑은 일자   / .toLocaleString() = 그지역 기준 시간
+        let acc = pos.coords.accuracy;
+
+        document.getElementById(
+          "output"
+        ).innerHTML = `당신의 위치는 <br/>  위도 : ${lat}, 경도 : ${lng} 입니다. <br/>
+            시간 : ${date} <br/>
+            정확도 : ${acc}`;
+      };
+      const outputError = () => {
+        document.getElementById("output").innerHTML =
+          "위치 정보를 가져오는데 실패 했습니다.!";
+      };
+    </script>
+  </head>
+  <body>
+    <button type="button" onclick="getLocation();">Try it</button>
+    <div id="output"></div>
+  </body>
+</html>

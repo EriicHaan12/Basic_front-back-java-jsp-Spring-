@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>계산기</title>
+    <script>
+      //
+      let result = "";
+      const numClick9 = () => {
+        (document.getElementById("fistResultNum").innerHTML += 9),
+          (result += 9);
+      };
+      const numClick8 = () => {
+        (document.getElementById("fistResultNum").innerHTML += 8),
+          (result += 8);
+      };
+      const numClick7 = () => {
+        (document.getElementById("fistResultNum").innerHTML += 7),
+          (result += 7);
+      };
+      const numClick6 = () => {
+        (document.getElementById("fistResultNum").innerHTML += 6),
+          (result += 6);
+      };
+      const numClick5 = () => {
+        (document.getElementById("fistResultNum").innerHTML += 5),
+          (result += 5);
+      };
+      const numClick4 = () => {
+        (document.getElementById("fistResultNum").innerHTML += 4),
+          (result += 4);
+      };
+      const numClick3 = () => {
+        (document.getElementById("fistResultNum").innerHTML += 3),
+          (result += 3);
+      };
+      const numClick2 = () => {
+        (document.getElementById("fistResultNum").innerHTML += 2),
+          (result += 2);
+      };
+      const numClick1 = () => {
+        (document.getElementById("fistResultNum").innerHTML += 1),
+          (result += 1);
+      };
+
+      const numClick0 = () => {
+        (document.getElementById("fistResultNum").innerHTML += 0),
+          (result += 0);
+      };
+      const plusClick = () => {
+        document.getElementById("fistResultNum").innerHTML += "+";
+        result += "+";
+      };
+      const subtractClick = () => {
+        document.getElementById("fistResultNum").innerHTML += "-";
+        result += "-";
+      };
+      const multiClick = () => {
+        document.getElementById("fistResultNum").innerHTML += "*";
+        result += "*";
+      };
+      const divisionClick = () => {
+        document.getElementById("fistResultNum").innerHTML += "/";
+        result += "/";
+      };
+
+      let finalNum = 0;
+      const calculateClick = () => {
+        if (result.includes("+") === true) {
+          let newArr = result.split("+");
+
+          finalNum = Number(newArr[0]) + Number(newArr[1]);
+        } else if (result.includes("-") === true) {
+          let newArr = result.split("-");
+          finalNum = Number(newArr[0]) - Number(newArr[1]);
+        } else if (result.includes("*") === true) {
+          let newArr = result.split("*");
+          finalNum = Number(newArr[0]) * Number(newArr[1]);
+        } else if (result.includes("/") === true) {
+          let newArr = result.split("/");
+          finalNum = Number(newArr[0]) / Number(newArr[1]);
+        } else {
+          window.alert("입력을 똑바로 해주세요");
+        }
+
+        console.log(result);
+        document.getElementById("fistResultNum").innerHTML = finalNum;
+        console.log(finalNum);
+      };
+
+      const numClickC = () => {
+        (document.getElementById("fistResultNum").innerHTML = ""), (result = 0);
+      };
+
+      //.split()
+      //.includes()
+    </script>
+  </head>
+  <body>
+    <div id="fistResultNum"></div>
+    <div id="ResultOperator"></div>
+    <div id="fistResultNum"></div>
+
+    <table border="1">
+      <tr>
+        <td class="num" onclick="numClick7()">7</td>
+        <td class="num" onclick="numClick8()">8</td>
+        <td class="num" onclick="numClick9()">9</td>
+        <td id="multi" onclick="multiClick()">*</td>
+      </tr>
+      <tr>
+        <td class="num" onclick="numClick4()">4</td>
+        <td class="num" onclick="numClick5()">5</td>
+        <td class="num" onclick="numClick6()">6</td>
+        <td id="subtract" onclick="subtractClick()">-</td>
+      </tr>
+      <tr>
+        <td class="num" onclick="numClick1()">1</td>
+        <td class="num" onclick="numClick2()">2</td>
+        <td class="num" onclick="numClick3()">3</td>
+        <td id="plus" onclick="plusClick()">+</td>
+      </tr>
+      <tr>
+        <td class="division" onclick="divisionClick()">/</td>
+        <td class="num" onclick="numClick0()">0</td>
+        <td id="reset" onclick="numClickC()">c</td>
+        <td id="calculate" onclick="calculateClick()">=</td>
+      </tr>
+    </table>
+  </body>
+</html>
