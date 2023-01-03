@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>마우스 관련 이벤트</title>
+
+    <style>
+      .big {
+        display: none;
+      }
+    </style>
+
+    <script>
+      const display = () => {
+        document.getElementsByClassName("big")[0].style.display = "block";
+      };
+      const hide = () => {
+        document.getElementsByClassName("big")[0].style.display = "none";
+      };
+    </script>
+  </head>
+  <body>
+    <div>
+      <img
+        src="img/tico.jpg"
+        width="25%"
+        onmouseover="display()"
+        onmouseout="hide()"
+      />
+    </div>
+    <div>
+      <img src="img/tico.jpg" width="50%" class="big" />
+    </div>
+  </body>
+</html>

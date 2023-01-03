@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GET방식으로 데이터 주고 받기(main)</title>
+    <script>
+      const send = () => {
+        let base = document.getElementById("base").value;
+        let height = document.getElementById("height").value;
+        console.log(base, height);
+        location.href = `48-2_sub.html?base=${base}&height=${height}`;
+        // 쿼리스트링으로 데이터 전달하며, 적은 주소로 페이지 이동 시키기.
+        // 쿼리 스트링 작성법 : 페이지url 이후 ? 로 시작해서 보내줄 데이터명 = "보내줄 값"& 보내줄 데이터명2 = "보내줄 값2"&....
+      };
+    </script>
+  </head>
+  <body>
+    <div>밑변 : <input type="text" id="base" /></div>
+    <div>높이 : <input type="text" id="height" /></div>
+    <div><button type="button" onclick="send()">전송</button></div>
+  </body>
+</html>

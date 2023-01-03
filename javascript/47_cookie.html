@@ -21,8 +21,6 @@
         let myCook2 = "myCook2=ericHan;expires=" + now2.toUTCString(); // 라이브 서버에서는 toLocaleString() 은 안먹을 수 있기 떄문에 , toUTCString() 써주는게 낫다.
         document.cookie = myCook2;
       };
-      
-      
 
       const readCookie = () => {
         let cook = document.cookie;

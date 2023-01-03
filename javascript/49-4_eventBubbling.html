@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>이벤트 버블링</title>
+    <style>
+      div {
+        width: 100px;
+        height: 100px;
+      }
+      .div3 {
+        border: 1px solid red;
+      }
+      .div2 {
+        border: 1px solid blue;
+        position: relative;
+        left: 50px;
+        top: 50px;
+      }
+      .div1 {
+        border: 1px solid green;
+        position: relative;
+        left: 50px;
+        top: 50px;
+      }
+    </style>
+    <script>
+      // 태그에 동적으로 이벤트를 할당 할 수 있다.
+
+      onload = function () {
+        let divs = document.getElementsByTagName("div");
+        console.log(divs);
+        for (let d of divs) {
+          d.addEventListener("click", function (e) {
+            if (e.target.className == "div1") {
+              e.stopPropagation(); // 이벤트가 전파 되는 것을 중지
+            }
+            console.log(e.target.className);
+          });
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <div class="div3">
+      <div class="div2">
+        <div class="div1"></div>
+      </div>
+    </div>
+  </body>
+</html>

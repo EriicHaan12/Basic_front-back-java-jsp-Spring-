@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>키보드 관련 이벤트</title>
+    <script>
+      const check = (obj) => {
+        console.log(obj.value);
+        if (event.keyCode == 13) {
+          // 엔터키가 눌려졌을 때
+          alert(obj.value);
+        }
+        document.getElementsByTagName("span")[0].innerHTML = obj.value.length;
+      };
+    </script>
+  </head>
+  <body>
+    <div><span></span>자 입력중...</div>
+    <input
+      type="text"
+      id="txt1"
+      onkeyup="check(this);"
+      placeholder="10자 이내로 입력하세요."
+    />
+  </body>
+</html>

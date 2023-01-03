@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>onChange 이벤트</title>
+  </head>
+  <script>
+    // onChange 이벤트 : 값이 입력이 완료되어서 값이 변했을 때 실행된다.
+
+    const mySelect = (obj) => {
+      console.log(obj.value);
+    };
+
+    //다른 방법으로 select 태그에서 유저가 선택한 값 얻어오기
+    const select2 = () => {
+      let city2 = document.getElementById("city2");
+      //options 속성 : select 태그 안에 있는 option 태그들 (배열 처럼 운용)
+      //selectedIndex 속성 : 유저가 선택한 option 태그 번째
+      console.log(city2.options[city2.selectedIndex].value);
+    };
+  </script>
+  <body>
+    <div><span></span>자 입력중...</div>
+    <input
+      type="text"
+      id="txt1"
+      onchange="alert(`!`)"
+      placeholder="10자 이내로 입력하세요."
+    />
+    <select onchange="mySelect(this);" id="city">
+      <option>서울</option>
+      <option>도쿄</option>
+      <option>뉴욕</option>
+    </select>
+    <select onchange="select2(this);" id="city2">
+      <option>붓싼</option>
+      <option>머구</option>
+      <option>마계</option>
+    </select>
+  </body>
+</html>
