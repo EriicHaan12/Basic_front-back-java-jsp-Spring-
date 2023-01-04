@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>키보드 관련 이벤트</title>
     <script>
-      const check = (obj) => {
+      const check = obj => {
         console.log(obj.value);
         if (event.keyCode == 13) {
           // 엔터키가 눌려졌을 때
@@ -18,11 +18,6 @@
   </head>
   <body>
     <div><span></span>자 입력중...</div>
-    <input
-      type="text"
-      id="txt1"
-      onkeyup="check(this);"
-      placeholder="10자 이내로 입력하세요."
-    />
+    <input type="text" id="txt1" onkeyup="check(this);" placeholder="10자 이내로 입력하세요." />
   </body>
 </html>

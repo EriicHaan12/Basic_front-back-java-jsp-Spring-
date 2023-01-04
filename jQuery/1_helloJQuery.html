@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="js/jquery-3.6.3.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // window.onload= function(){} 와 같은 문장.. 웹문서가 로딩 되면... 이라는 의미
+
+        $("h1").css("color", "pink");
+        // 일반JS 썼을 떄 :  document.getElementsByTagName("h1")[0].style.color ="pink"
+
+        $("div").click(function () {
+          $(this).html("참 쉽죠?");
+        });
+        $(".small").mouseover(() => {
+          $(".big").show(1000, function () {
+            alert("나타났죠?");
+          });
+        });
+
+        $(".small").mouseout(() => {
+          $(".big").hide(2000);
+        });
+      });
+      //   const justDo = obj => {
+      //     obj.innerHTML = "이렇게 바뀐다니";
+      //   };
+    </script>
+    <title>Hello, JQuery</title>
+  </head>
+  <body>
+    <h1>Hello, JQuery!</h1>
+    <!-- <div onclick="justDo(this);">jQuery는 자바스크립트 코딩을 좀 더 빠르고 편하게 사용 할 수 있도록 하는 라이브러리 입니다.</div> -->
+    <div>jQuery는 자바스크립트 코딩을 좀 더 빠르고 편하게 사용 할 수 있도록 하는 라이브러리 입니다.</div>
+    <div>
+      <img src="../javascript/img/tico.jpg" width="25%" class="small" />
+    </div>
+    <div>
+      <img src="../javascript/img/tico.jpg" width="50%" class="big" style="display: none" />
+    </div>
+  </body>
+</html>

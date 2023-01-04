@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <!-- 구글 CDN을 이용해 jQuery 라이브러리 사용 -->
+    <title>jquery를 이용해 태그를 탐색 및 조작해 보자</title>
+    <script>
+      $(function () {
+        // $(document).ready(function(){}); 의 축약형
+        $("#list1 li:odd").css("background-color", "yellow");
+        // :odd 홀수번째 것만
+        $("#list1 li:even").css("background-color", "gray");
+        $("#list1 li:first").css("color", "red");
+        $("#list1 li:last").css("color", "green");
+
+        $("#list1 li").eq(1).css("font-style", "italic"); // eq(index): 요소 i 번째
+        $("#list2 li").find("a").css("text-decoration", "none");
+
+        //jquery에서는 함수 안에 매개변수의 값을 주면 setter역할,
+        // 매개변수를 생략하면 getter 역할을 하는 함수들이 존재한다.
+
+        //setter = 수정, 변형 , getter = 값만 얻어오는?
+
+        //html() = innerHTML, text() = innerText, val() = value 함수 안에 매개변수가 있으면 값을 셋팅하게 되고,
+        //함수 안에 매개변수를 생략하면, 값을 얻어온다.
+        $(".theTitle").html("jquery 재미있어!"); // setting
+        console.log($("#list2 li").eq(2).html()); //getter
+
+        //속성 부여
+        console.log($("ul").eq(0).attr("id")); // 0번쨰 ul 태그의 id속성값을 getter
+        $("#list2 li").eq(1).attr("class", "THEOBJ"); // list2의 1번째 li태그의 class 속성값을 THEOBJ로 바꿈
+        $("#list1 li").eq(0).attr("id", "one"); // 없던 속성의 id 값 추가 // 즉, id값이 없던 태그에 id값 부여도 가능하다.
+
+        $("div").removeAttr("id"); //  id 속성값 지우기
+
+        //class='THEOBJ'인 텍스트 영역의 값을 "배고프다"로 바꾸세요.
+        $(".THEOBJ").text("배고프다");
+
+        $("#list3").append("<li>새로운 리스트 추가</li>"); //끝에 새로운 요소 추가
+        $("#list3").prepend("<li>역시 새로운 태그 추가</li>"); // 0번째 인덱스에 추가
+        $("<li>새로운태그3.5</li>").insertBefore($("#list3 li").eq(4));
+        $("#list li").eq(1).remove(); // 태그 삭제
+
+        // 태그 삭제 할 때 비교해 보세요.
+        $("#list1").remove(); //자식 태그 까지 모두 삭제
+        $("#list2").empty(); // 안에 있는 하위 태그만 삭제, 껍데기는 남아 있다 , 활용도가 높다
+
+        myFunc(); //inner : 같은 영역에서는 호출 가능
+
+        function myFunc() {
+          //jquery의 ready 함수 내부에 있는 일종의 inner 함수
+          alert("myFunc");
+        }
+      });
+
+      function myFun2() {
+        //jquey ready 함수 외부에 있는 함수
+        alert("myFunc2");
+      }
+    </script>
+  </head>
+  <body>
+    <div id="wrap">
+      <h1>탐색 및 조작</h1>
+      <h2>탐색을 위해 css3 선택자를 이용한다</h2>
+      <ul id="list1">
+        <li>리스트1</li>
+        <li>리스트2</li>
+        <li>리스트3</li>
+        <li>리스트4</li>
+        <li>리스트5</li>
+        <li>리스트6</li>
+        <li>리스트7</li>
+      </ul>
+      <ul id="list2">
+        <li>리스트8</li>
+        <li class="theObj">리스트9</li>
+        <li><span>리스트10</span></li>
+        <li>리스트11</li>
+        <li><a href="#">리스트12</a></li>
+        <li>리스트13</li>
+        <li>리스트14</li>
+      </ul>
+      <h2 class="theTitle">html 조각</h2>
+      <ul id="list3">
+        <li>리스트_1</li>
+        <li class="obj1"><b>리</b>스트_2</li>
+        <li>리스트_3</li>
+        <li>리스트_4</li>
+        <li>리스트_5</li>
+      </ul>
+      <button type="button" onclick="myFunc()">클릭(외부에서는 inner함수가 보이지 않는다)</button>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <title>jQuery DOM 운행</title>
+    <script>
+      $(() => {
+        //.next() : nextElementSibilng
+        console.log($(".tr td").eq(0).next().next().html());
+        // .prev() : previusElementSibling
+        console.log($("#td5").next().prev().prev().html());
+        //.parent() : 부모태그로 go
+        //.children() : 자식태그로 go
+        console.log($("#td5").next().parent().next().children().eq(2).html());
+
+        console.log($(".tr td").eq(0).parent().next().children().eq(0).html());
+
+      });
+    </script>
+  </head>
+  <body>
+    <table border="1">
+      <tr class="tr">
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+      </tr>
+      <tr class="tr">
+        <td>4</td>
+        <td id="td5">5</td>
+        <td>6</td>
+      </tr>
+      <tr class="tr">
+        <td>7</td>
+        <td>8</td>
+        <td id="td9">9</td>
+      </tr>
+    </table>
+  </body>
+</html>
