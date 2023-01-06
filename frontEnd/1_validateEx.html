@@ -34,7 +34,7 @@
           let userId = $("#userId").val();
           console.log(userId);
 
-          if (userId.length <= 8 && userId.length >= 4) {
+          if (userId.length <= 8 || userId.length >= 4) {
             data.userId = userId.toLowerCase();
           } else {
             data.userId = "";
@@ -77,14 +77,19 @@
           //성별
           //   $('input[name=list]:checked')
           let gender = "";
-          if ($("input[name=gender1]:checked") === true) {
-            data.gender = "여성";
-          } else if ($("input[name=gender2]:checked") === true) {
-            data.gender = "남성";
-          } else {
-            alert("성별을 선택해 주세요");
-          }
+
+          $("input:radio[name=gender]").each(function (index) {
+            if ($(this).is(":checked") == true) {
+              data.gender = $(this).val();
+            } else if (!$(this).is(":checked").length < 1) {
+              alert("성별을 선택해 주세요");
+            }
+          });
           console.log(data);
+          // 취미
+          let hobby =[]
+          $("input:checkbox[]")
+         
         });
       });
     </script>
@@ -115,7 +120,7 @@
     </div>
 
     <div class="container">
-      <form method="get" action="">
+      <form method="get" action="1-1_sub.html">
         <div class="mb-3 mt-3">
           <label for="userId">아이디 : </label>
           <input type="text" class="form-control" id="userId" placeholder="Enter your Id" name="userId" />
@@ -145,11 +150,11 @@
         <fieldset>
           <legend>성별</legend>
           <div class="form-check gender">
-            <input type="radio" class="form-check-input" name="gender1" value="female" />
+            <input type="radio" class="form-check-input" name="gender" value="female" />
             <label class="form-check-label" for="check1">여성</label>
           </div>
           <div class="form-check gender">
-            <input type="radio" class="form-check-input" name="gender2" value="male" />
+            <input type="radio" class="form-check-input" name="gender" value="male" />
             <label class="form-check-label" for="check2">남성</label>
           </div>
         </fieldset>
@@ -166,7 +171,7 @@
           </div>
 
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="check3" name="travel" value="music" />
+            <input class="form-check-input" type="checkbox" id="check3" name="hobby" value="travel" />
             <label class="form-check-label">여행</label>
           </div>
         </fieldset>
