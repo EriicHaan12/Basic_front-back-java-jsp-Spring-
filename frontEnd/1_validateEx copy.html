@@ -58,6 +58,7 @@
         let idCheck = validUserId($("#userId").val());
         let pwdCheck = validPwd($("#pwd1").val(), $("#pwd2").val());
         let emailCheck = validEmail($("#email").val());
+        let phoneNumCheck = validPhoneNum($("#phoneNum").val());
         let genderCheck = validGender();
         let hobbies = getHobby(); // 문자열
         let job = getJob();
@@ -72,8 +73,8 @@
         }
 
         let valid = false;
-        if (idCheck && pwdCheck && emailCheck && gencderCheck && job && isAgree) {
-          //아이디, 비밀번호, 이메일, 성별, 직업, 가입 조항  모든 입력 데이터가 유효할 때만 true
+        if (idCheck && pwdCheck && emailCheck && phoneNumCheck && genderCheck && job && isAgree) {
+          //아이디, 비밀번호, 이메일, 휴대폰 번호, 성별, 직업, 가입 조항  모든 입력 데이터가 유효할 때만 true
           // submit 버튼이 제대로 작동되도록...
           valid = true;
         }
@@ -150,6 +151,16 @@
         return isValid;
       }
       //휴대폰 저장
+      function phoneNumCheck(phoneNum) {
+        let isValid = false;
+        let pattern = /01[016789]-[^0][0-9]{2,3}-[0-9]{3,4}/;
+        if (!phoneNum.match(pattern)) {
+          outputError("휴대폰 번호 형식이 아니에요", $("#phoneNum"));
+        } else {
+          isValid = true;
+        }
+        return isFinite;
+      }
 
       //성별
       function validGender() {
