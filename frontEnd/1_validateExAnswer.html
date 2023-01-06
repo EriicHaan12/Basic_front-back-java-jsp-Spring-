@@ -55,6 +55,8 @@
         // form 태그 안에 있는 모든 입력 데이터를 회원가입 조건이 맞는지를 비교해서
         //모든 조건에 다 부합이 되면 true 반환
         //하나라도 조건에 만족하지 않는 데이터가 있다면 false 반환
+        // let nameCheck = validUserName($("#userName").val().split(" ").join(""));
+        
         let idCheck = validUserId($("#userId").val());
         let pwdCheck = validPwd($("#pwd1").val(), $("#pwd2").val());
         let emailCheck = validEmail($("#email").val());
@@ -88,6 +90,20 @@
         $(tagObj).focus();
         $(".errMsg").hide(3000);
       }
+      //유저 이름
+      // function validUserName(userName) {
+      //   // str.split(' ').join('');
+      //   let isValid = false;
+      //   if (userName == "" || userName.length < 1) {
+      //     outputError("이름을 입력하세요", $("#userName"));
+      //   } else if (userName.typeof() !== "string") {
+      //     outputError("이름을 똑바로 입력하세요", $("#userName"));
+      //   } else {
+      //     isValid = true;
+      //   }
+
+      //   return isValid;
+      // }
 
       //유저 아이디
       function validUserId(userId) {
@@ -220,6 +236,11 @@
 
     <div class="container">
       <form method="get" action="1-1_sub.html">
+        <div class="mb-3 mt-3">
+          <label for="userName">이름 : </label>
+          <input type="text" class="form-control" id="userName" placeholder="Enter your name" name="userName" />
+        </div>
+
         <div class="mb-3 mt-3">
           <label for="userId">아이디 : </label>
           <input type="text" class="form-control" id="userId" placeholder="Enter your Id" name="userId" />
