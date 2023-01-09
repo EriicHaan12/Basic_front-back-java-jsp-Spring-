@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <title>비동기 데이터 통신을 이용해 xml을 얻어와 parsing 해 보자</title>
+    <script>
+      const xmlLoad = () => {
+        $.ajax({
+          url: "http://gottclass6.cafe24.com/hjw/accounts.xml", // 데이터가 송수신될 서버의 주소
+          type: "GET", // 통신 방식(GET,POST, PUT, DELETE)
+          dataType: "xml", // 수신 받을 데이터 타입(MINE TYPE)
+          success: function (data) {
+            console.log(data);
+          }, //통신이 성공하면 수행할 함수(콜백 함수)
+          error: function () {}, // 통신이 실패 했을 때 수행할 함수()
+          complete: function () {}, // 통신이 끝났을 때 수행할 함수()
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <input type="button" value="로딩" onclick="xmlLoad()" />
+    <div id="output"></div>
+  </body>
+</html>

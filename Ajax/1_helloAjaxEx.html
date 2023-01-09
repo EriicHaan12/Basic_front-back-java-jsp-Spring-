@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>비동기 통신(vanilla JS를 이용한 비동기 통신 예제)</title>
+    <script>
+      //로딩 버튼을 누르면 서버에 있는 hello.txt 파일을 비동기 통신방식으로 얻어와 div 영역에 그 내용을 출력하자.
+      function txtLoad() {
+        let xhttp = new XMLHttpRequest();
+        //새로운 XMLHttpRequest 객체(ajax 객체)를 생성
+        if (xhttp != null) {
+          //ajax가 지원 된다면...
+          xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+              //통신이 성공(완료) 되었다면
+              document.getElementById("output").innerHTML = this.responseText;
+            }
+          };
+        } else {
+          alert("웹 브라우저가 비동기 통신 방식을 지원하지 않습니다.");
+        }
+        xhttp.open("get", "http://gottclass6.cafe24.com/hjw/hello.txt"); // 요청
+        xhttp.send(); //통신 시작
+      }
+    </script>
+  </head>
+  <body>
+    <input type="button" value="로딩" onclick="txtLoad()" />
+    <div id="output"></div>
+  </body>
+</html>

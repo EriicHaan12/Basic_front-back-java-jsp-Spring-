@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <script>
+      let scores = [];
+      scores[0] = ["이름", "국어", "영어", "수학", "총점", "평균"];
+
+      $(function () {
+        $("#btnResult").click(function () {
+          drawChart();
+          inputData();
+        });
+        function inputData() {
+          $("tr").each(function (i, student) {
+            if (i > 0) {
+              let stuName = $(student).find(".stuName").val();
+              let stuKor = Number($(student).find(".stuKor").val());
+              let stuEng = Number($(student).find(".stuEng").val());
+              let stuMath = Number($(student).find(".stuMath").val());
+              let stuTot = stuKor + stuEng + stuMath;
+              let stuAvg = stuTot / 3;
+              scores[i] = [stuName, stuKor, stuEng, stuMath, stuTot, stuAvg];
+            }
+          });
+          console.log(scores);
+        }
+
+        function drawChart() {
+          google.charts.load("current", {packages: ["corechart"]});
+          google.charts.setOnLoadCallback(drawVisualization);
+
+          function drawVisualization() {
+            // Some raw data (not necessarily accurate)
+            var data = google.visualization.arrayToDataTable(scores);
+
+            var options = {
+              title: "성적표V6",
+              vAxis: {title: "점수"},
+              hAxis: {title: "개요"},
+              seriesType: "bars",
+              series: {5: {type: "line"}},
+            };
+
+            var chart = new google.visualization.ComboChart(document.getElementById("resultChart"));
+            chart.draw(data, options);
+          }
+        }
+      });
+    </script>
+
+    <title>성적표 V6</title>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td>이름</td>
+        <td>국어</td>
+        <td>영어</td>
+        <td>수학</td>
+        <td>총점</td>
+        <td>평균</td>
+      </tr>
+      <tr>
+        <td><input type="text" class="stuName" /></td>
+        <td><input type="text" class="stuKor" /></td>
+        <td><input type="text" class="stuEng" /></td>
+        <td><input type="text" class="stuMath" /></td>
+        <td><input type="text" class="stuTot" /></td>
+        <td><input type="text" class="stuAvg" /></td>
+      </tr>
+      <tr>
+        <td><input type="text" class="stuName" /></td>
+        <td><input type="text" class="stuKor" /></td>
+        <td><input type="text" class="stuEng" /></td>
+        <td><input type="text" class="stuMath" /></td>
+        <td><input type="text" class="stuTot" /></td>
+        <td><input type="text" class="stuAvg" /></td>
+      </tr>
+    </table>
+    <div>
+      <input type="button" value="결과보기" id="btnResult" />
+    </div>
+    <div id="resultChart"></div>
+  </body>
+</html>

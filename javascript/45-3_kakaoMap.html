@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>카카오 맵</title>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=토큰키를 입력할 영역..."></script>
+  </head>
+  <body>
+    <!-- div 영역에 지도를 넣을 것이기 떄문에 div 밑에다 script를 넣어준다. 그러기 싫으면 script를 onload 함수로 감싸면 된다. -->
+    <div id="map" style="width: 500px; height: 400px"></div>
     <script>
       //      카카오에서 발급받은 Javascript 키 가 필요하다.
       let container = document.getElementById("map");
@@ -14,16 +19,6 @@
       };
 
       let map = new kakao.maps.Map(container, options);
-      let token = process.env.KAKAO_TOKEN;
-      console.log(token);
     </script>
-  </head>
-  <body>
-    <!-- div 영역에 지도를 넣을 것이기 떄문에 div 밑에다 script를 넣어준다. 그러기 싫으면 script를 onload 함수로 감싸면 된다. -->
-    <div id="map" style="width: 500px; height: 400px"></div>
-    <script
-      type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey= 발급 받은 키 입력하는 곳... "
-    ></script>
   </body>
 </html>

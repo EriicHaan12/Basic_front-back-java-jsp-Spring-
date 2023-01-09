@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jQuery plugIn ex1 - lightbox</title>
+    <link rel="stylesheet" href="dist/css/lightbox.min.css" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="dist/js/lightbox-plus-jquery.min.js"></script>
+    <script>
+      lightbox.option({
+        resizeDuration: 200,
+        wrapAround: true,
+        maxWidth: 100,
+      });
+    </script>
+  </head>
+  <body>
+    <div>
+      <a href="dist/images/hwangMa.jpg" data-lightbox="image-1" data-title="황금마티즈">
+        <img src="dist/images/hwangMa.jpg" alt="" />
+      </a>
+    </div>
+
+    <a href="dist/images/hwangMa.jpg" data-lightbox="image-1" data-title="황금마티즈">황마</a>
+
+    <div>
+      <a href="dist/images/k8.jpg" data-lightbox="roadtrip">k8</a>
+      <a href="dist/images/tico.jpg" data-lightbox="roadtrip">tico</a>
+      <a href="dist/images/toyota.jpg" data-lightbox="roadtrip">toyota</a>
+      <!-- 여러개의 이미지 박스를 한 이름의 data-lightbox로 묶어두면 하나의 그룹으로 묶여서 옆으로 넘길 수 있게 된다. -->
+    </div>
+  </body>
+</html>

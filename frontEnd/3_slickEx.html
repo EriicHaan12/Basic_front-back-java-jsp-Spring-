@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>jQuery plugIn ex2 - Slick</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $(".slider1").slick({
+          autoplay: true,
+          autoplaySpeed: 2000,
+        });
+      });
+    </script>
+    <style>
+      img {
+        width: 400px;
+        height: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slider1">
+      <div><img src="dist/images/alex-kristanas-DJ0GCN4Hzvo-unsplash.jpg" /></div>
+      <div><img src="dist/images/insung-yoon-eknZ087NjtM-unsplash.jpg" /></div>
+      <div><img src="dist/images/mahdis-mousavi-c1-fN5TZ-CQ-unsplash (1).jpg" /></div>
+    </div>
+  </body>
+</html>

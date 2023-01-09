@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <title>비동기 데티터 통신을 이용해 xml을 얻어와 parsing 해 보자</title>
+    <script>
+      function xmlLoad() {
+        //= XMLHttpRequest
+        $.ajax({
+          url: "http://gottclass6.cafe24.com/hjw/accounts.xml", // 데이터가 송수신될 서버의 주소
+          type: "GET", // 통신 방식 (get, post, put , delete)
+          dataType: "xml", // 수신받을 데이터 타입(MIME TYPE)
+          success: function (data) {
+            // 통신이 성공하면 콜백함수 호출
+            console.log(data);
+            parsingXML(data);
+            // $("#output").html(data);
+          },
+          error: function () {
+            // 통신이 제대로 수행 되지 않았을 때의 콜백 함수
+          },
+          complete: function () {
+            //통신이 끝났을 때 콜백함수
+          },
+        });
+      } 
+      function parsingXML(xml) {
+        let accounts = xml.getElementsByTagName("account");
+        console.log(accounts);
+        let output = `<table border ='1'><tr>
+                        <td>예금주</td>
+                        <td>계좌번호</td>
+                        <td>잔액</td>
+                        <td>은행명</td>
+                        <td>통장명</td>
+                        </tr>`;
+        $.each(accounts, function (i, account) {
+          output += `<tr><td>${$(account).children().eq(0).html()}</td>`;
+          output += `<td>${$(account).children().eq(1).html()}</td>`;
+          output += `<td>${$(account).children().eq(2).html()}</td>`;
+          output += `<td>${$(account).children().eq(3).html()}</td>`;
+          output += `<td>${$(account).children().eq(4).html()}</td></tr>`;
+        });
+        output += "</table>";
+        $("#output").html(output);
+      }
+    </script>
+  </head>
+  <body>
+    <input type="button" value="로딩" onclick="xmlLoad();" />
+    <div id="output"></div>
+  </body>
+</html>
