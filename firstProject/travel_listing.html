@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>여행 Listing Page</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css" />
+    <link rel="stylesheet" href="assets/css/templatemo-plot-listing.css" />
+    <link rel="stylesheet" href="assets/css/animated.css" />
+    <link rel="stylesheet" href="assets/css/owl.css" />
+  
+  </head>
+<script>
+ //qvEOTIicBtTaAfcpq7GMlTRRJNizust39C9zt8aZGwJEBaYqrMkXwYdU72yADNtSx7g%2BoqNuyFNl2HV3fDxEzg%3D%3D
+ let numOfRows = 10;
+      let totalCount = 0;
+      let pageNo = 1; // 현재 페이지 번호를 저장 할 변수
+      let totalPage = 0;
+      $(function () {
+        getTravelData();
+
+        if (numOfRows != 0) {
+          if (totalCount % numOfRows == 0) {
+            totalPage = totalCount / numOfRows;
+          } else {
+            totalPage = totalCount / numOfRows + 1;
+          }
+        } else {
+          numOfRows = 10;
+        }
+
+        $("#morePage").click(function () {
+          // 다음 페이지로 버튼 클릭시
+
+          if (pageNo < totalPage) {
+            pageNo++; // 1 페이지 증가
+            getTravelData();
+          }
+          if (numOfRows < 10) {
+            $(this).attr("disabled", true); // 버튼 비활성화
+          }
+        });
+      });
+function getTravelData() {
+        let baseUrl = `http://apis.data.go.kr/B551011/KorService/areaBasedList?MobileOS=ETC&MobileApp=AppTest&serviceKey=qvEOTIicBtTaAfcpq7GMlTRRJNizust39C9zt8aZGwJEBaYqrMkXwYdU72yADNtSx7g%2BoqNuyFNl2HV3fDxEzg%3D%3D&_type=json&pageNo=${pageNo}&ContentTypeId=25`;
+        $(".loading").show();
+        $.ajax({
+          url: baseUrl,
+          //데이터가 송수신될 서버의 주소
+          type: "GET", //통신 방식(get, post, put, delete)
+          dataType: "json", // 수신 받을 데이터 타입(MIME 타입으로 줘야함)
+          async: false, // 동기 통신방식으로 하겠다 (defult : true)
+          success: function (data) {
+            // 통신이 성공하면 수행할 함수(콜백 함수)
+            console.log(data);
+            parsingTravelData(data);
+          },
+          complete: function () {
+            $(".loading").hide();
+          },
+        });
+      }
+      function parsingTravelData(json) {
+        let tourAr = json.response.body.items.item;
+        console.log(tourAr);
+
+        totalCount = Number(json.response.body.totalCount);
+        numOfRows = Number(json.response.body.numOfRows);
+
+        let output = ``;
+
+        $.each(tourAr, function (i, e) {
+          output += `<div class="item">
+                                <div class="row">
+                                  
+                                    <div class="listing-item"><div class="left-image"><a href="areaDetail.html?contentid=${e.contentid}">`;
+
+          if (e.firstimage == "" || e.firstimage == null) {
+            output += `<img src="img/noimage.png" alt=""/></a><div class="hover-content"><div class="main-white-button"><a href="contact.html"><i class="fafa-eye"></i> Contact Now</a>
+                                          </div>
+                                        </div>
+                                      </div></div></div></div>`;
+          } else {
+            output += `<img src="${e.firstimage}" alt=""/></a><div class="hover-content"><div class="main-white-button"><a href="contact.html"><i class="fafa-eye"></i> Contact Now</a>
+                                          </div>
+                                        </div>
+                                      </div></div></div></div>`;
+          }
+          output += `<div class='tourTitle'>${e.title}</div>`;
+        });
+        
+
+        $("#tourInfo").append(output);
+      }
+</script>
+<style>
+  
+</style>
+  <body>
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+      <div class="preloader-inner">
+        <span class="dot"></span>
+        <div class="dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <!-- ***** Header Area Start ***** -->
+    <header
+      class="header-area header-sticky wow slideInDown"
+      data-wow-duration="0.75s"
+      data-wow-delay="0s"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <nav class="main-nav">
+              <!-- ***** Logo Start ***** -->
+              <a href="index.html" class="logo"> </a>
+              <!-- ***** Logo End ***** -->
+              <!-- ***** Menu Start ***** -->
+              <ul class="nav">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="category.html">Category</a></li>
+                <li><a href="listing.html" >Listing</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li>
+                  <div class="main-white-button">
+                    <a href="#"><i class="fa fa-plus"></i> Add Your Listing</a>
+                  </div>
+                </li>
+              </ul>
+              <a class="menu-trigger">
+                <span>Menu</span>
+              </a>
+              <!-- ***** Menu End ***** -->
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    <div class="page-heading">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="top-text header-text">
+              
+              <h2>관광 정보 List page</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="listing-page">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="naccs">
+              <div class="grid">
+                <div class="row">
+                  <div class="col-lg-3">
+                    <div class="menu">
+                      <div class="first-thumb active">
+                        <div class="thumb">
+                          <a href="index.html">
+                            <span class="icon"
+                              ><img
+                                src="assets/images/search-icon-01.png"
+                                alt=""
+                            /></span>
+                            홈</a
+                          >
+                        </div>
+                      </div>
+                      <div>
+                        <div class="thumb">
+                          <a href="visit_listing.html">
+                            <span class="icon"
+                              ><img
+                                src="assets/images/search-icon-02.png"
+                                alt=""
+                            /></span>
+                          </a>
+                          관광지
+                        </div>
+                      </div>
+                      <div>
+                        <div class="thumb">
+                          <a href="culture_listing.html">
+                            <span class="icon"
+                              ><img
+                                src="assets/images/search-icon-03.png"
+                                alt=""
+                            /></span>
+                            문화시설
+                          </a>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="thumb">
+                          <a href="party_listing.html">
+                            <span class="icon"
+                              ><img
+                                src="assets/images/search-icon-03.png"
+                                alt=""
+                            /></span>
+                            축제공연행사
+                          </a>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="thumb">
+                          <a href="travel_listing.html">
+                            <span class="icon"
+                              ><img
+                                src="assets/images/search-icon-03.png"
+                                alt=""
+                            /></span>
+                            여행코스
+                          </a>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="thumb">
+                          <a href="leports_listing.html">
+                            <span class="icon"
+                              ><img
+                                src="assets/images/search-icon-03.png"
+                                alt=""
+                            /></span>
+                            레포츠
+                          </a>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="thumb">
+                          <a href="stay_listing.html">
+                            <span class="icon"
+                              ><img
+                                src="assets/images/search-icon-03.png"
+                                alt=""
+                            /></span>
+                            숙박
+                          </a>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="thumb">
+                          <a href="shopping_listing.html">
+                            <span class="icon"
+                              ><img
+                                src="assets/images/search-icon-03.png"
+                                alt=""
+                            /></span>
+                            쇼핑
+                          </a>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="thumb">
+                          <a href="food_listing.html">
+                            <span class="icon"
+                              ><img
+                                src="assets/images/search-icon-03.png"
+                                alt=""
+                            /></span>
+                            음식점
+                          </a>
+                        </div>
+                      </div>
+                      <div class="last-thumb">
+                        <div class="thumb">
+                          <a href="wish_listing.html">
+                            <span class="icon"
+                              ><img
+                                src="assets/images/search-icon-04.png"
+                                alt=""
+                            /></span>
+                            찜
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-9">
+                    
+                      <!-- first category listing of items -->
+                      
+                     
+                          <div class="col-lg-12">
+                            <div class="owl-carousel owl-listing" id="tourInfo">
+                              <!-- <div class="item">
+                                <div class="row">
+                                  
+                                    <div class="listing-item" id="tourInfo" >
+
+                                      <div class="left-image" >
+                                        <a href="#"
+                                          ><img
+                                            src="assets/images/listing-01.jpg"
+                                            alt=""
+                                        /></a>
+                                        <div class="hover-content">
+                                          <div class="main-white-button">
+                                            <a href="contact.html"
+                                              ><i class="fa fa-eye"></i> Contact
+                                              Now</a
+                                            >
+                                          </div>
+                                        </div>
+                                      </div>
+
+
+                                      <div class="right-content align-self-center">
+                                        <a href="#"><h4>
+                                            Sunshine Paradise Apartment
+                                          </h4></a>
+                                        <h6>by: Real ESTATE Agent</h6>
+                                        <span class="price"
+                                          ><div class="icon">
+                                            <img
+                                              src="assets/images/listing-icon-01.png"
+                                              alt=""
+                                            />
+                                          </div>
+                                          $600 / month included tax</span
+                                        >
+                                        <span class="details"
+                                          >Details: <em>860 sq ft</em></span
+                                        >
+                                        <span class="info"
+                                          ><img
+                                            src="assets/images/listing-icon-02.png"
+                                            alt=""
+                                          />
+                                          2 Bedrooms<br /><img
+                                            src="assets/images/listing-icon-03.png"
+                                            alt=""
+                                          />
+                                          3 Bathrooms</span
+                                        >
+                                      </div>
+
+
+                                    </div>
+                                  
+                                 
+                                 
+                                </div>
+                              </div> -->
+                              
+                             
+                          </div>
+                       
+                     
+
+                      
+
+                     
+
+                             
+                          
+                      
+                              
+
+                              
+                            
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="d-grid">
+        <button type="button" id="morePage" class="btn btn-primary btn-block">
+          다음 페이지로
+        </button>
+      </div>
+    </div>
+    <footer>
+      
+          <div class="col-lg-12">
+            <div class="sub-footer">
+              <p>
+                Copyright © 2021 Plot Listing Co., Ltd. All Rights Reserved.
+                <br />
+                Design:
+                <a
+                  rel="nofollow"
+                  href="https://templatemo.com"
+                  title="CSS Templates"
+                  >TemplateMo</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/owl-carousel.js"></script>
+    <script src="assets/js/animation.js"></script>
+    <script src="assets/js/imagesloaded.js"></script>
+    <script src="assets/js/custom.js"></script>
+  </body>
+</html>
