@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
     <title>지역 기반 상세 페이지</title>
     <meta charset="utf-8" />
@@ -15,12 +15,79 @@
         if (contentId == null) {
           location.href = "areaBasedList.html";
         } else {
-          getTourData(contentId);
+          getTourData(contentId); //contentId의 추가 정보
+          getAdditionalImage(contentId); // contentId의 추가 이미지 데이터를 ajax로 호출 하기 위한 함수
         }
       });
+      //관광지의 추가 이미지를 얻어오기 위한 함수
+      function getAdditionalImage(contentId) {
+        let url = `https://apis.data.go.kr/B551011/KorService/detailImage?MobileOS=ETC&MobileApp=AppTest&serviceKey=cAKnXcHeeWN56X3sUwC0xqS8irJTLJNQqMoB0w5%2BMo6em7MpRpNt0yOIt9o3oPiJbLAZ3tF1wI6JVXddRjxupA%3D%3D&_type=json&contentId=${contentId}&imageYN=Y&subImageYN=Y`;
+
+        $(".loading").show();
+        $.ajax({
+          url: url,
+          type: "get",
+          dataType: "json",
+          async: false,
+          success: function (data) {
+            console.log(data);
+            makeImgSlider(data);
+          },
+          complete: function (data) {
+            $(".loading").toggle();
+          },
+        });
+        function makeImgSlider(data) {
+          let arr = data.response.body.items.item;
+          if (data.response.body.items !== "") {
+            // 추가 이미지가 있을 때
+            //Indicators/dots 시작
+            let output = `<div class="carousel-indicators">`;
+
+            for (let i in arr) {
+              if (i === 0) {
+                output += `<button type="button" data-bs-target="#demo" data-bs-slide-to=${i} class="active"></button>`;
+              } else {
+                output += `<button type="button" data-bs-target="#demo" data-bs-slide-to=${i}></button>`;
+              }
+            }
+            output += `</div>`;
+            //Indicators/dots 끝
+
+            //The slideshow/carousel 시작
+            output += `<div class="carousel-inner">`;
+            $.each(arr, function (i, addImgs) {
+              if (i === 0) {
+                output += `<div class="carousel-item active">`;
+              } else {
+                output += `<div class="carousel-item">`;
+              }
+
+              output += `<img src=${addImgs.originimgurl} alt=${addImgs.contentid} class="d-block w-100"></div>`;
+            });
+            output += `</div>`;
+
+            //The slideshow/carousel 끝
+
+            //button
+
+            output += `<button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                     <span class="carousel-control-prev-icon"></span>
+                     </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                      <span class="carousel-control-next-icon"></span>
+                      </button>`;
+
+            $("#demo").html(output);
+          } else {
+            $(".demo").remove();
+          }
+        }
+      }
+
       function getTourData(contentId) {
         let baseUrl = `http://apis.data.go.kr/B551011/KorService/detailCommon?MobileOS=ETC&MobileApp=AppTest&serviceKey=cAKnXcHeeWN56X3sUwC0xqS8irJTLJNQqMoB0w5%2BMo6em7MpRpNt0yOIt9o3oPiJbLAZ3tF1wI6JVXddRjxupA%3D%3D&_type=json&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y
-&overviewYN=Y&contentId=${contentId}`;
+      &overviewYN=Y&contentId=${contentId}`;
         $(".loading").show();
         $.ajax({
           url: baseUrl,
@@ -29,12 +96,15 @@
           async: false,
           success: function (data) {
             console.log(data);
+            makeImgSlider();
           },
           complete: function (data) {
             $(".loading").toggle();
           },
         });
       }
+
+      function makeImgSlider() {}
     </script>
     <style>
       .fakeimg {
@@ -68,7 +138,10 @@
       </div>
     </nav>
 
-    <div class="container mt-5"></div>
+    <div class="container mt-5">
+      <!-- Carousel -->
+      <div id="demo" class="carousel slide" data-bs-ride="carousel"></div>
+    </div>
 
     <div class="mt-5 p-4 bg-dark text-white text-center">
       <p>Copyright 2023. gootClass6 all right reserved</p>

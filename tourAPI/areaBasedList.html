@@ -8,13 +8,37 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+      let pageNo = 778; // 현재 페이지 번호를 저장할 변수
+      let numOfRows = 10;
+      let totalCount = 0;
+      let totalPage = 0;
       $(function () {
         getTourData();
+        if (numOfRows !== 0) {
+          if (totalCount % numOfRows === 0) {
+            totalPage = parseInt(totalCount / numOfRows);
+          } else {
+            totalPage = parseInt(totalCount / numOfRows);
+            +1;
+          }
+        }
+        $("#morePage").click(function () {
+          // 다음 페이지로 이동 하기 버튼을 눌렀을 때
+
+          if (pageNo < totalPage) {
+            pageNo++; // 1페이지 증가
+            getTourData(); // 다음 페이지 데이터를 가지고 오기 위해 호출
+          } else if (pageNo === totalPage) {
+            alert("마지막 페이지 입니다");
+            $(this).attr("disabled", true); // 버튼 비활성화 시키기
+          }
+        });
       });
 
       function getTourData() {
         //필수 정보 MobileOS, MobileApp,serviceKey
-        let baseUrl = "http://apis.data.go.kr/B551011/KorService/areaBasedList?MobileOS=ETC&MobileApp=AppTest&serviceKey=cAKnXcHeeWN56X3sUwC0xqS8irJTLJNQqMoB0w5%2BMo6em7MpRpNt0yOIt9o3oPiJbLAZ3tF1wI6JVXddRjxupA%3D%3D&_type=json&areaCode=1";
+        let baseUrl =
+          "http://apis.data.go.kr/B551011/KorService/areaBasedList?MobileOS=ETC&MobileApp=AppTest&serviceKey=cAKnXcHeeWN56X3sUwC0xqS8irJTLJNQqMoB0w5%2BMo6em7MpRpNt0yOIt9o3oPiJbLAZ3tF1wI6JVXddRjxupA%3D%3D&_type=json&areaCode=1&pageNo=" + pageNo;
         $(".loading").show();
         $.ajax({
           url: baseUrl,
@@ -31,9 +55,10 @@
       }
 
       function parsing(json) {
+        // console.log(tourAr);
         let tourAr = json.response.body.items.item;
-        console.log(tourAr);
-
+        totalCount = json.response.body.totalCount;
+        numOfRows = json.response.body.numOfRows;
         let output = `<div class="list-group">`;
         $.each(tourAr, function (i, tour) {
           output += `<a href="areaDetail.html?contentid=${tour.contentid}" class="list-group-item list-group-item-action tour">`;
@@ -51,7 +76,7 @@
         });
 
         output += `</div>`;
-        $(".tourInfo").html(output);
+        $(".tourInfo").append(output);
       }
     </script>
 
@@ -108,6 +133,10 @@
     <div class="loading"></div>
 
     <div class="tourInfo"><img src="images/KakaoTalk_20230111_164021685.gif" /></div>
+    <div class="d=grid">
+      <button type="button" class="btn btn-secondary" id="morePage">다음 페이지로</button>
+    </div>
+
     <div class="mt-5 p-4 bg-dark text-white text-center">
       <p>Copyright 2023. gootClass6 all right reserved</p>
     </div>
