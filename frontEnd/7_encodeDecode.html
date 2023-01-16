@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>enCode, deCode</title>
+    <script>
+      let url = "https://www.naver.com?q=날씨";
+      document.write(`기존 문자열 : ${url}<br/>`);
+
+      //웹에서 사용하는 모든 숫자, 문자를 제외한 나머지를 인코딩
+      document.write(`기존 문자열을 encodeURL : ${encodeURI(url)}<br/>`);
+
+      //encode 한 후 decode 하면 다시 안한것과 똑같이 나온다.
+      document.write(`기존 문자열을 decodeURL(encodeURL) : ${decodeURI(encodeURI(url))}<br/>`);
+
+      // 영문자 숫자를 제외한 모든 글자(특수문자까지) 인코딩
+      document.write(`기존 문자열을 encodeURL : ${encodeURIComponent(url)}<br/>`);
+
+      // encodeURLComponent 이후 decodeURLComponent 할 시 마찬가지로 기존 문자열로 url이 돌아온다.
+      document.write(`기존 문자열을 encodeURL : ${decodeURIComponent(encodeURIComponent(url))}<br/>`);
+    </script>
+  </head>
+  <body></body>
+</html>

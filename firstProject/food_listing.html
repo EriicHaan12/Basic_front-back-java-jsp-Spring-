@@ -20,22 +20,41 @@
     <link rel="stylesheet" href="assets/css/owl.css" />
   </head>
   <style>
+    @font-face {
+      font-family: "NanumSquareNeo-Variable";
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2") format("woff2");
+      font-weight: normal;
+      font-style: normal;
+    }
+    body {
+      font-family: "NanumSquareNeo-Variable";
+    }
+
     .mb-5 {
       margin-bottom: 3rem !important;
     }
     body {
       position: relative;
+      font-family: "NanumSquareNeo-Variable";
     }
     .selectRow {
       position: absolute;
-      right: 50px;
-      top: 500px;
+      left: 303px;
       width: 150px;
     }
 
     .badge {
       /* 찜 투명도 */
       opacity: 0.8;
+    }
+    .search {
+      position: relative;
+      left: 780px;
+      width: 650px;
+      height: 100px;
+    }
+    #reset {
+      margin-left: 10px;
     }
   </style>
   <script>
@@ -79,9 +98,45 @@
         if (numOfRows === remainderRows) {
           $(this).attr("disabled", true);
         }
-
-        console.log(pageNo, totalPage, remainderRows, numOfRows);
       });
+
+      //검색하기
+
+      // 워드 파일에 나와있는 주소로 새로 searchKeyword url 딴걸로 파싱 받고
+      //함수에 적용 시키기
+
+      // $("#clickSearch").click(function (element) {
+      //   searchStore($("#searchText").val());
+      //   console.log($("#searchText").val());
+      // });
+      // function searchStore(findStore) {
+      //   $.each(tourAr, function (idx, item) {
+      //     if (item.indexOf(findStore) != -1) {
+      //       if (element.firstimage == "" || element.firstimage == null) {
+      //         output += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=   "img/noimg.png" alt="...">`;
+      //         output += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${element.title}</h5>${element.addr1}</div>`;
+      //         //상세페이지 이동
+      //         output += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+      //       <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세페이지</a></div>`;
+      //         output += `</div></div></div>`;
+      //       } else {
+      //         output += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=${element.firstimage} alt="...">`;
+      //         //음식점 이름, 설명
+      //         output += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${element.title}</h5>${element.addr1}</div>`;
+      //         //상세페이지 이동
+      //         output += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+      //       <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세페이지</a></div>`;
+      //         output += `</div></div></div>`;
+      //       }
+      //     }
+      //   });
+      //   if (title.indexOf(findStore) === -1) {
+      //     alert("그런 음식 또 없습니다.");
+      //   } else {
+      //     $("#storeList").empty();
+      //     $("#storeList").append(output);
+      //   }
+      // }
     });
     function getFoodData() {
       //필수 정보 MobileOS, MobileApp,serviceKey
@@ -93,7 +148,6 @@
 
       // 한페이지당 보여지는 게시물 수
       baseUrl += "&ContentTypeId=39&numOfRows=" + numOfRows;
-      console.log(numOfRows);
       $(".loading").show();
       $.ajax({
         url: baseUrl,
@@ -201,8 +255,26 @@
         </div>
       </div>
     </div>
+    <div class="search">
+      <table class="table-type1">
+        <tbody>
+          <tr>
+            <th><label for="title">검색어</label></th>
+            <td>
+              <div class="mb-3 mt-3">
+                <input type="text" class="form-control" id="searchText" placeholder="검색하실 내용을 입력해주세요." />
+              </div>
+            </td>
+            <td>
+              <button type="button" class="btn btn-secondary" id="clickSearch">검색</button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-secondary" id="reset">선택초기화</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-    <div class="listing-page">
       <div class="selectRow">
         <!-- 한 페이지에 띄울 게시물 갯수 정할 셀렉트 박스 -->
         <select class="form-select">
@@ -213,7 +285,9 @@
           <option value="1000">1000개씩 보기</option>
         </select>
       </div>
+    </div>
 
+    <div class="listing-page">
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
