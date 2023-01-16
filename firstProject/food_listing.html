@@ -75,7 +75,7 @@
         } else if (remainderRows < numOfRows) {
           numOfRows = remainderRows;
         }
-        // 마지막 페이지에서 다음페이지로 넘어가지 
+        // 마지막 페이지에서 다음페이지로 넘어가지 않도록 설정
         if (numOfRows === remainderRows) {
           $(this).attr("disabled", true);
         }
@@ -113,6 +113,8 @@
 
       numOfRows = Number(json.response.body.numOfRows);
       totalCount = Number(json.response.body.totalCount);
+
+      console.log(tourAr);
 
       let output = `<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">`;
       $.each(tourAr, function (i, element) {
