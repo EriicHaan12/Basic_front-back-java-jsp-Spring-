@@ -56,6 +56,20 @@
     #reset {
       margin-left: 10px;
     }
+
+    /* .card-img-top,
+    .p-4,
+    .pt-0 .h-100 {
+      width: 400px;
+    } */
+    .card-img-top {
+      width: 350px;
+      height: 250px;
+    }
+    .mb-5 {
+      margin: 20px;
+      width: max-content;
+    }
   </style>
   <script>
     let pageNo = 1; // 현재 페이지 번호를 저장할 변수
@@ -67,6 +81,91 @@
     $(function () {
       getFoodData();
 
+      //검색하기
+      // 워드 파일에 나와있는 주소로 새로 searchKeyword url 딴걸로 파싱 받고
+      //함수에 적용 시키기
+      let searchData = "";
+      $("#clickSearch").click(function (element) {
+        searchData = $("#searchText").val();
+        console.log($("#searchText").val());
+        getFoodData();
+        searchStoreData();
+      });
+
+      let output2 = "";
+      function searchStoreData() {
+        let baseUurl2 =
+          "http://apis.data.go.kr/B551011/KorService/searchKeyword?MobileOS=ETC&MobileApp=AppTest&serviceKey=cAKnXcHeeWN56X3sUwC0xqS8irJTLJNQqMoB0w5%2BMo6em7MpRpNt0yOIt9o3oPiJbLAZ3tF1wI6JVXddRjxupA%3D%3D&_type=json&areaCode=1&contentTypeId=39";
+        baseUurl2 += "&pageNo=" + pageNo;
+        baseUurl2 += "&ContentTypeId=39&numOfRows=" + numOfRows;
+        //검색 키워드 넣기
+        baseUurl2 += "&keyword=" + searchData;
+        $(".loading").show();
+        $.ajax({
+          url: baseUurl2,
+          type: "get",
+          dataType: "json",
+          async: false,
+          success: function (data) {
+            parsingSearchData(data);
+          },
+          error: function (data) {},
+          complete: function (data) {
+            $(".loading").toggle();
+          },
+        });
+      }
+      function parsingSearchData(json) {
+        console.log(json);
+
+        let storeAr = null;
+        if (json.response != null) {
+          storeAr = json.response.body.items.item;
+        } else {
+          storeAr = json.resultCode;
+        }
+
+        if (storeAr == 11) {
+          getFoodData();
+          parsingFoodData();
+          $("#storeList").empty();
+          $("#storeList").append(output);
+        }
+
+        let findStore = "";
+
+        $.each(storeAr, function (idx, item) {
+          findStore = storeAr[idx].title;
+          console.log(findStore);
+
+          if (findStore.indexOf(searchData) != -1) {
+            if (item.firstimage == "" || item.firstimage == null) {
+              output2 += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=   "img/noimg.png" alt="...">`;
+              output2 += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${item.title}</h5>${item.addr1}</div>`;
+              //상세페이지 이동
+              output2 += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세페이지</a></div>`;
+              output2 += `</div></div></div>`;
+            } else {
+              output2 += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=${item.firstimage} alt="...">`;
+              //음식점 이름, 설명
+              output2 += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${item.title}</h5>${item.addr1}</div>`;
+              //상세페이지 이동
+              output2 += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세페이지</a></div>`;
+              output2 += `</div></div></div>`;
+            }
+          }
+        });
+        if (findStore.indexOf(searchData) === -1) {
+          $("#storeList").empty();
+          alert("그런 음식 또 없습니다.");
+        } else {
+          $("#storeList").empty();
+          $("#storeList").append(output2);
+        }
+      }
+
       // 한 페이지에 선택한 수 만큼 게시물 보이기
       $(".form-select").change(function () {
         numOfRows = Number($(".form-select option:selected").val());
@@ -75,6 +174,8 @@
         // 그냥 기존 데이터 없이 호출할시에는 numOfRows 즉 , 페이지당 호출 할 게시물 수를 찾지 못한다.
         // 또한 기존 데이터에 .empty() 없이 일반 호출 할 시에는, 기존 게시물 수+ 선택한 게시물 페이지 개수가 같이 호출 되기 때문에 empty()를 해서 설정 전 데이터를 비워주도록 하자.
         getFoodData();
+        $("#storeList").empty();
+        searchStoreData();
       });
 
       if (numOfRows !== 0) {
@@ -99,44 +200,6 @@
           $(this).attr("disabled", true);
         }
       });
-
-      //검색하기
-
-      // 워드 파일에 나와있는 주소로 새로 searchKeyword url 딴걸로 파싱 받고
-      //함수에 적용 시키기
-
-      // $("#clickSearch").click(function (element) {
-      //   searchStore($("#searchText").val());
-      //   console.log($("#searchText").val());
-      // });
-      // function searchStore(findStore) {
-      //   $.each(tourAr, function (idx, item) {
-      //     if (item.indexOf(findStore) != -1) {
-      //       if (element.firstimage == "" || element.firstimage == null) {
-      //         output += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=   "img/noimg.png" alt="...">`;
-      //         output += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${element.title}</h5>${element.addr1}</div>`;
-      //         //상세페이지 이동
-      //         output += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-      //       <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세페이지</a></div>`;
-      //         output += `</div></div></div>`;
-      //       } else {
-      //         output += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=${element.firstimage} alt="...">`;
-      //         //음식점 이름, 설명
-      //         output += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${element.title}</h5>${element.addr1}</div>`;
-      //         //상세페이지 이동
-      //         output += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-      //       <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세페이지</a></div>`;
-      //         output += `</div></div></div>`;
-      //       }
-      //     }
-      //   });
-      //   if (title.indexOf(findStore) === -1) {
-      //     alert("그런 음식 또 없습니다.");
-      //   } else {
-      //     $("#storeList").empty();
-      //     $("#storeList").append(output);
-      //   }
-      // }
     });
     function getFoodData() {
       //필수 정보 MobileOS, MobileApp,serviceKey
@@ -163,37 +226,44 @@
       });
     }
     function parsingFoodData(json) {
-      let tourAr = json.response.body.items.item;
+      console.log(json);
+      // 검색창에 아무것도 입력하지 않고 검색했을때, 전체 목록 페이지로 전환
+      //에러 잡는 법 여쭤보기...
+      if (json.response.header.resultCode === "0000" || json.resultCode === "11") {
+        let tourAr = json.response.body.items.item;
 
-      numOfRows = Number(json.response.body.numOfRows);
-      totalCount = Number(json.response.body.totalCount);
+        numOfRows = Number(json.response.body.numOfRows);
+        totalCount = Number(json.response.body.totalCount);
 
-      console.log(tourAr);
-
-      let output = `<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">`;
-      $.each(tourAr, function (i, element) {
-        //음식점 이미지
-        if (element.firstimage == "" || element.firstimage == null) {
-          output += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=   "img/noimg.png" alt="...">`;
-          output += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${element.title}</h5>${element.addr1}</div>`;
-          //상세페이지 이동
-          output += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+        let output = `<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">`;
+        $.each(tourAr, function (i, element) {
+          //음식점 이미지
+          if (element.firstimage == "" || element.firstimage == null) {
+            output += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=   "img/noimg.png" alt="...">`;
+            output += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${element.title}</h5>${element.addr1}</div>`;
+            //상세페이지 이동
+            output += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
             <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세페이지</a></div>`;
-          output += `</div></div></div>`;
-        } else {
-          output += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=${element.firstimage} alt="...">`;
-          //음식점 이름, 설명
-          output += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${element.title}</h5>${element.addr1}</div>`;
-          //상세페이지 이동
-          output += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            output += `</div></div></div>`;
+          } else {
+            output += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=${element.firstimage} alt="...">`;
+            //음식점 이름, 설명
+            output += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${element.title}</h5>${element.addr1}</div>`;
+            //상세페이지 이동
+            output += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
             <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세페이지</a></div>`;
-          output += `</div></div></div>`;
-        }
-      });
+            output += `</div></div></div>`;
+          }
+        });
 
-      output += `</div>`;
+        output += `</div>`;
+        $("#storeList").empty();
+        $("#storeList").append(output);
+      }
+    }
 
-      $("#storeList").append(output);
+    function searchEmpty() {
+      getFoodData;
     }
   </script>
   <body>
