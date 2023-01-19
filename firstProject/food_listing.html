@@ -84,87 +84,85 @@
       //검색하기
       // 워드 파일에 나와있는 주소로 새로 searchKeyword url 딴걸로 파싱 받고
       //함수에 적용 시키기
-      // let searchData = "";
-      // $("#clickSearch").click(function (element) {
-      //   searchData = $("#searchText").val();
-      //   console.log($("#searchText").val());
-      //   searchStoreData();
-      // });
+      let searchData = "";
+      $("#clickSearch").click(function (element) {
+        searchData = $("#searchText").val();
+        console.log(searchData);
+        if (searchData === null || searchData === "") {
+          getFoodData();
+        } else {
+          searchStoreData();
+        }
+        if (findStore.indexOf(searchData) === -1) {
+          //모달창으로 띄워야함
+          alert("그런 음식 또 없습니다.");
+        }
+      });
 
-      // let output2 = "";
-      // function searchStoreData() {
-      //   let baseUurl2 =
-      //     "http://apis.data.go.kr/B551011/KorService/searchKeyword?MobileOS=ETC&MobileApp=AppTest&serviceKey=cAKnXcHeeWN56X3sUwC0xqS8irJTLJNQqMoB0w5%2BMo6em7MpRpNt0yOIt9o3oPiJbLAZ3tF1wI6JVXddRjxupA%3D%3D&_type=json&areaCode=1&contentTypeId=39";
-      //   baseUurl2 += "&pageNo=" + pageNo;
-      //   baseUurl2 += "&ContentTypeId=39&numOfRows=" + numOfRows;
-      //   //검색 키워드 넣기
-      //   baseUurl2 += "&keyword=" + searchData;
-      //   $(".loading").show();
-      //   $.ajax({
-      //     url: baseUurl2,
-      //     type: "get",
-      //     dataType: "json",
-      //     async: false,
-      //     success: function (data) {
-      //       parsingSearchData(data);
-      //     },
-      //     error: function (data) {},
-      //     complete: function (data) {
-      //       $(".loading").toggle();
-      //     },
-      //   });
-      // }
-      // function parsingSearchData(json) {
-      //   console.log(json);
+      let output = "";
+      function searchStoreData() {
+        let baseUrl2 =
+          "http://apis.data.go.kr/B551011/KorService/searchKeyword?MobileOS=ETC&MobileApp=AppTest&serviceKey=cAKnXcHeeWN56X3sUwC0xqS8irJTLJNQqMoB0w5%2BMo6em7MpRpNt0yOIt9o3oPiJbLAZ3tF1wI6JVXddRjxupA%3D%3D&_type=json&areaCode=1&contentTypeId=39";
+        baseUrl2 += "&pageNo=" + pageNo;
+        baseUrl2 += "&ContentTypeId=39&numOfRows=" + numOfRows;
+        //검색 키워드 넣기
+        baseUrl2 += "&keyword=" + searchData;
+        $(".loading").show();
+        $.ajax({
+          url: baseUrl2,
+          type: "get",
+          dataType: "json",
+          async: false,
+          success: function (data) {
+            $("#storeList").empty();
+            parsingSearchData(data);
+          },
+          error: function (data) {},
+          complete: function (data) {
+            $(".loading").toggle();
+          },
+        });
+      }
+      let findStore = "";
+      let storeAr = null;
+      function parsingSearchData(json) {
+        console.log(json);
 
-      //   // let storeAr = null;
-      //   // if (json.response != null) {
+        let storeAr = json.response.body.items.item;
+        numOfRows = Number(json.response.body.numOfRows);
+        totalCount = Number(json.response.body.totalCount);
 
-      //   let storeAr = json.response.body.items.item;
-      //   // } else {
-      //   //   storeAr = json.resultCode;
-      //   // }
+        console.log(numOfRows, totalCount);
+        // $("#storeList").empty();
+        $("#storeList").append(output);
 
-      //   // if (storeAr == 11) {
-      //   getFoodData();
-      //   parsingFoodData();
-      //   $("#storeList").empty();
-      //   $("#storeList").append(output);
-      //   // }
+        $.each(storeAr, function (idx, item) {
+          findStore = storeAr[idx].title;
+          console.log(findStore);
 
-      //   let findStore = "";
+          if (findStore.indexOf(searchData) != -1) {
+            if (item.firstimage == "" || item.firstimage == null) {
+              output += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=   "img/noimg.png" alt="...">`;
+              output += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${item.title}</h5>${item.addr1}</div>`;
+              //상세페이지 이동칸
+              output += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세페이지</a></div>`;
+              output += `</div></div></div>`;
+            } else {
+              output += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=${item.firstimage} alt="...">`;
+              //음식점 이름, 설명 칸
+              output += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${item.title}</h5>${item.addr1}</div>`;
+              //상세페이지 이동칸
+              output += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세페이지</a></div>`;
+              output += `</div></div></div>`;
+            }
+          }
+        });
 
-      //   $.each(storeAr, function (idx, item) {
-      //     findStore = storeAr[idx].title;
-      //     console.log(findStore);
-
-      //     if (findStore.indexOf(searchData) != -1) {
-      //       if (item.firstimage == "" || item.firstimage == null) {
-      //         output2 += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=   "img/noimg.png" alt="...">`;
-      //         output2 += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${item.title}</h5>${item.addr1}</div>`;
-      //         //상세페이지 이동
-      //         output2 += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-      //       <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세페이지</a></div>`;
-      //         output2 += `</div></div></div>`;
-      //       } else {
-      //         output2 += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=${item.firstimage} alt="...">`;
-      //         //음식점 이름, 설명
-      //         output2 += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${item.title}</h5>${item.addr1}</div>`;
-      //         //상세페이지 이동
-      //         output2 += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-      //       <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세페이지</a></div>`;
-      //         output2 += `</div></div></div>`;
-      //       }
-      //     }
-      //   });
-      //   if (findStore.indexOf(searchData) === -1) {
-      //     $("#storeList").empty();
-      //     alert("그런 음식 또 없습니다.");
-      //   } else {
-      //     $("#storeList").empty();
-      //     $("#storeList").append(output2);
-      //   }
-      // }
+        $("#storeList").empty();
+        $("#storeList").append(output);
+      }
 
       // 한 페이지에 선택한 수 만큼 게시물 보이기
       $(".form-select").change(function () {
@@ -174,6 +172,7 @@
         // 그냥 기존 데이터 없이 호출할시에는 numOfRows 즉 , 페이지당 호출 할 게시물 수를 찾지 못한다.
         // 또한 기존 데이터에 .empty() 없이 일반 호출 할 시에는, 기존 게시물 수+ 선택한 게시물 페이지 개수가 같이 호출 되기 때문에 empty()를 해서 설정 전 데이터를 비워주도록 하자.
         getFoodData();
+        searchStoreData();
       });
 
       if (numOfRows !== 0) {
@@ -189,12 +188,14 @@
         //다음 페이지로 넘기기
         if (pageNo < totalPage) {
           pageNo++; // 1페이지 증가
+          searchStoreData();
           getFoodData();
         } else if (remainderRows < numOfRows) {
           numOfRows = remainderRows;
         }
         // 마지막 페이지에서 다음페이지로 넘어가지 않도록 설정
         if (numOfRows === remainderRows) {
+          alert("마지막 페이지 입니다.");
           $(this).attr("disabled", true);
         }
       });
@@ -223,13 +224,13 @@
         },
       });
     }
-    let tourAr = null;
+
     function parsingFoodData(json) {
       console.log(json);
 
       // 검색창에 아무것도 입력하지 않고 검색했을때, 전체 목록 페이지로 전환
       //에러 잡는 법 여쭤보기...
-      // if (json.response.header.resultCode === "0000" || json.resultCode === "11") {
+
       let tourAr = json.response.body.items.item;
 
       numOfRows = Number(json.response.body.numOfRows);
