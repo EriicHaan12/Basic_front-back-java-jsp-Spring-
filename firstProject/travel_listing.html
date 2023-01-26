@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
@@ -29,38 +30,151 @@
   </head>
 <script>
  //qvEOTIicBtTaAfcpq7GMlTRRJNizust39C9zt8aZGwJEBaYqrMkXwYdU72yADNtSx7g%2BoqNuyFNl2HV3fDxEzg%3D%3D
- let numOfRows = 10;
-      let totalCount = 0;
-      let pageNo = 1; // 현재 페이지 번호를 저장 할 변수
-      let totalPage = 0;
-      $(function () {
-        getTravelData();
 
-        if (numOfRows != 0) {
-          if (totalCount % numOfRows == 0) {
-            totalPage = totalCount / numOfRows;
-          } else {
-            totalPage = totalCount / numOfRows + 1;
+let numOfRows = 6;
+let totalCount = 0;
+let pageNo = 1; // 현재 페이지 번호를 저장 할 변수
+let totalPage = 0;
+let arrange = 'C';
+
+
+
+  $(function () {
+ 
+         getTravelData();
+         scollPage();
+        // // getTourData(contentId)
+        // if (numOfRows != 0) {
+        //   if (totalCount % numOfRows == 0) {
+        //     totalPage = totalCount / numOfRows;
+        //   } else {
+        //     totalPage = totalCount / numOfRows + 1;
+        //   }
+        // } else {
+        //   numOfRows = 10;
+        // }
+
+        // $("#morePage").click(function () {
+        //   // 다음 페이지로 버튼 클릭시
+
+        //   if (pageNo < totalPage) {
+        //     pageNo++; // 1 페이지 증가
+        //     getTravelData();
+        //   }
+        //   if (numOfRows < 10) {
+        //     $(this).attr("disabled", true); // 버튼 비활성화
+        //   }
+        // });
+   
+
+//--------------------------------------------------------------------
+// $(window).scroll(function () {
+//   if(document.body.clientHeight-$(window).scrollTop() < 1000 && 
+//   pageNo < totalPage){
+//   //  console.log($(window).scrollTop());
+//   //  console.log(document.body.clientHeight-$(window).scrollTop());
+//           pageNo++; // 1 페이지 증가
+//           getTravelData();
+//           console.log("true")
+//    }else if (pageNo > totalPage){
+// alert("마지막 페이지입니다!");
+//    }
+//   });
+//--------------------------------------------------------------------
+
+$("#arrange").change(function () {
+          //유저가 도시를 선택함
+          arrange = $(this).val();
+          console.log(arrange);
+        });
+
+
+});
+
+function likebtnClick(jjimBtn) { // 찜버튼 이미지 토글 함수
+  if($(jjimBtn).hasClass("active") == true){ //active 클래스가 존재하면
+    $(jjimBtn).children().attr("src","img/heart_broken_icon.png");
+    $(jjimBtn).removeClass("active");
+  }else {
+    $(jjimBtn).children().attr("src","img/heart_icon.png");
+    $(jjimBtn).addClass("active"); 
+  }
+}
+   //~ 로 쿠키 나누기
+function likeCheck() {  // 라이크 버튼 체크 함수
+        let cook = document.cookie;
+        console.log(cook); //문자열
+        //쿠키 문자열을 ;(세미콜론) 기준으로 자른다 (쿠키를 분리 하기 위해)
+        let cookAr = cook.split(";");
+        console.log(cookAr);
+        // 쿠키 값을 찾는다
+      let cookName = ``;
+      
+        for (let i = 0; i < cookAr.length; i++) {
+          
+          cookName += cookAr[i].trim().split("=")[0] + "-";
+       
+          } 
+          cookName = cookName.replace(/.$/,""); //맨 끝 단어 제거
+          console.log(cookName);
+          let cookNameAr = cookName.split("-");
+          console.log(cookNameAr);
+         
+      if(cookNameAr[0] != ""){  // if 문 사용하지 않으면 Syntax error 뜸
+          for (let j = 0; j < cookNameAr.length; j++) {
+            $(`#${cookNameAr[j]}`).children().attr("src","img/heart_icon.png");
+            $(`#${cookNameAr[j]}`).addClass("active"); 
           }
-        } else {
-          numOfRows = 10;
         }
 
-        $("#morePage").click(function () {
-          // 다음 페이지로 버튼 클릭시
+}
 
-          if (pageNo < totalPage) {
-            pageNo++; // 1 페이지 증가
-            getTravelData();
-          }
-          if (numOfRows < 10) {
-            $(this).attr("disabled", true); // 버튼 비활성화
-          }
-        });
-      });
-function getTravelData() {
-        let baseUrl = `http://apis.data.go.kr/B551011/KorService/areaBasedList?MobileOS=ETC&MobileApp=AppTest&serviceKey=qvEOTIicBtTaAfcpq7GMlTRRJNizust39C9zt8aZGwJEBaYqrMkXwYdU72yADNtSx7g%2BoqNuyFNl2HV3fDxEzg%3D%3D&_type=json&pageNo=${pageNo}&ContentTypeId=25`;
-        $(".loading").show();
+//  스크롤 이벤트는 1픽셀 마다 이벤트를 발생시켜서 성능 하락 => Intersection Observer API 사용
+function scollPage() { // 무한 스크롤 함수
+	if (numOfRows != 0) {
+	   if (totalCount % numOfRows == 0) {
+	     totalPage = totalCount / numOfRows;
+	     
+	    } else {
+	      totalPage = totalCount / numOfRows + 1;   
+	   }
+	} else {
+	   numOfRows = 6;
+	 }
+	let options = {
+	  root: null,
+	  rootMargin: '0px',
+	  threshold: 1.0
+	}
+	let nextPage = (entries, observer) => {
+	  entries.forEach(entry => {
+	  console.log("1");
+	 
+	  if (pageNo < totalPage) {
+	             pageNo++; // 1 페이지 증가
+	             getTravelData();
+	             console.log(pageNo);
+	             console.log(totalPage);
+	  }else {
+	    $('#myModal').modal('show')   
+	    //forEach 문에는 break를 쓸 수 없다.
+	    window.scrollTo(500,500);
+	  }
+	 
+	});
+};
+	
+	let observer = new IntersectionObserver(nextPage, options);
+	let target = document.querySelector('#footer1');
+	observer.observe(target);
+}
+
+
+
+
+function getTravelData() { 
+        let baseUrl = `http://apis.data.go.kr/B551011/KorService/areaBasedList?MobileOS=ETC&MobileApp=AppTest&serviceKey=qvEOTIicBtTaAfcpq7GMlTRRJNizust39C9zt8aZGwJEBaYqrMkXwYdU72yADNtSx7g%2BoqNuyFNl2HV3fDxEzg%3D%3D&_type=json&pageNo=${pageNo}&numOfRows=${numOfRows}&ContentTypeId=25&arrange=${arrange}`;
+        arrange = $(".arrange").val()
         $.ajax({
           url: baseUrl,
           //데이터가 송수신될 서버의 주소
@@ -69,49 +183,226 @@ function getTravelData() {
           async: false, // 동기 통신방식으로 하겠다 (defult : true)
           success: function (data) {
             // 통신이 성공하면 수행할 함수(콜백 함수)
-            console.log(data);
+            //console.log(data);
+            
             parsingTravelData(data);
+            
           },
           complete: function () {
-            $(".loading").hide();
+            
           },
         });
       }
-      function parsingTravelData(json) {
+      
+function arrangeChange() { //select option 선택 함수
+  let baseUrl = `http://apis.data.go.kr/B551011/KorService/areaBasedList?MobileOS=ETC&MobileApp=AppTest&serviceKey=qvEOTIicBtTaAfcpq7GMlTRRJNizust39C9zt8aZGwJEBaYqrMkXwYdU72yADNtSx7g%2BoqNuyFNl2HV3fDxEzg%3D%3D&_type=json&pageNo=${pageNo}&numOfRows=${numOfRows}&ContentTypeId=25&arrange=${arrange}`;
+        arrange = $(".arrange").val()
+        $.ajax({
+          url: baseUrl,
+          //데이터가 송수신될 서버의 주소
+          type: "GET", //통신 방식(get, post, put, delete)
+          dataType: "json", // 수신 받을 데이터 타입(MIME 타입으로 줘야함)
+          async: false, // 동기 통신방식으로 하겠다 (defult : true)
+          success: function (data) {
+            // 통신이 성공하면 수행할 함수(콜백 함수)
+            //console.log(data);
+            $("#tourInfo").empty();
+            parsingTravelData(data);
+            parsingTravelData(data);
+            
+          },
+          complete: function () {
+            
+          },
+        });
+   
+}
+
+function parsingTravelData(json) { //리스트 페이지 파싱 함수
         let tourAr = json.response.body.items.item;
-        console.log(tourAr);
+    
+        // console.log(tourAr);
 
-        totalCount = Number(json.response.body.totalCount);
-        numOfRows = Number(json.response.body.numOfRows);
+         totalCount = Number(json.response.body.totalCount);
+         numOfRows = Number(json.response.body.numOfRows);
+      
 
-        let output = ``;
+        let output = `<ul class="gallery-list">`;
 
-        $.each(tourAr, function (i, e) {
-          output += `<div class="item">
-                                <div class="row">
-                                  
-                                    <div class="listing-item"><div class="left-image"><a href="areaDetail.html?contentid=${e.contentid}">`;
+        $.each(tourAr, function (i, e) { 
+
+          if(e.title.length > 16){ // 타이틀 길이가 길면 뒷 부분 생략(...)
+            e.title = e.title.substr(0, 16) + "… ";
+            // console.log(e.title);
+          }
+          
+
+          output += `<li class='liObj'><div class="item"><div class="row"><div class="listing-item"><div class="left-image"><a href="travel_Detail.html?contentid=${e.contentid}">`;
 
           if (e.firstimage == "" || e.firstimage == null) {
-            output += `<img src="img/noimage.png" alt=""/></a><div class="hover-content"><div class="main-white-button"><a href="contact.html"><i class="fafa-eye"></i> Contact Now</a>
-                                          </div>
-                                        </div>
-                                      </div></div></div></div>`;
+            output += `<img src="img/noimg.png" alt=""/></a><div class="hover-content"><button type="button" id='${e.contentid}' class="btn likeBtn" onclick="saveCookie('${e.firstimage}','${e.contentid}'); likebtnClick(this);"><img src='img/heart_broken_icon.png'/></button><a href="#" ><i class="fafa-eye"></i></a></div></div></div></div><div id='tourTitle'><a href="travel_Detail.html?contentid=${e.contentid}">${e.title}</a></div></div></li>`;
           } else {
-            output += `<img src="${e.firstimage}" alt=""/></a><div class="hover-content"><div class="main-white-button"><a href="contact.html"><i class="fafa-eye"></i> Contact Now</a>
-                                          </div>
-                                        </div>
-                                      </div></div></div></div>`;
+            output += `<img src="${e.firstimage}" alt=""/></a><div class="hover-content"><button type="button" id='${e.contentid}' class="btn likeBtn btn-light" onclick="saveCookie('${e.firstimage}','${e.contentid}'); likebtnClick(this);"><img src='img/heart_broken_icon.png'/></button><a href="#" ><i class="fafa-eye"></i></a></div></div></div></div><div id='tourTitle'><a href="travel_Detail.html?contentid=${e.contentid}">${e.title}</a></div></div></li>`;
           }
-          output += `<div class='tourTitle'>${e.title}</div>`;
         });
-        
-
+        output += `</ul>`;
         $("#tourInfo").append(output);
-      }
+        likeCheck();
+}
+
+     
+function searchKeyword() { // 키워드 검색 리스트 파싱 함수
+  let searchKeyword = $("#searchKeyword").val();
+  console.log(searchKeyword);
+
+  let baseUrl = `http://apis.data.go.kr/B551011/KorService/searchKeyword?MobileOS=ETC&MobileApp=AppTest&serviceKey=qvEOTIicBtTaAfcpq7GMlTRRJNizust39C9zt8aZGwJEBaYqrMkXwYdU72yADNtSx7g%2BoqNuyFNl2HV3fDxEzg%3D%3D&_type=json&contentTypeId=25&keyword=${searchKeyword}`;
+        
+        $.ajax({
+          url: baseUrl,
+          //데이터가 송수신될 서버의 주소
+          type: "GET", //통신 방식(get, post, put, delete)
+          dataType: "json", // 수신 받을 데이터 타입(MIME 타입으로 줘야함)
+          async: false, // 동기 통신방식으로 하겠다 (defult : true)
+          success: function (data) {
+            // 통신이 성공하면 수행할 함수(콜백 함수)
+            // console.log(data);
+            if(searchKeyword == ""){            
+              $('#searchModal').modal('show');
+            }else{
+            $("#tourInfo").empty();
+            parsingTravelData(data);
+            }
+          },
+          complete: function () {
+           
+          },
+        });
+}
+
+
+function saveCookie(img,conId) {  // 쿠키 저장 함수
+        //쿠키 저장 형식은 문자열이다 "쿠키이름=값; expires=쿠키만료일;(domain=도메인명;path=쿠키저장경로)"
+        console.log(img,conId);
+        let isFind = false;
+        let now = new Date();
+        now.setDate(now.getDate() + 1); //현재 날짜 + 1의 결과를 다시 세팅
+        let myCookie = ``;
+        myCookie = `${conId}=${img};expires=` + now.toUTCString();
+        if(img == ''){
+          myCookie = `${conId}=img/noimg.png;expires=` + now.toUTCString();
+        }
+        console.log(myCookie);
+        readCookie(img,conId); //쿠키가 중복됐는지 아닌지 판별(삭제하기 위해서)
+        
+        if (!isFind) { //찜버튼이 한 번 더 눌렸을 때
+        document.cookie = myCookie; //쿠키 저장
+        }else{
+        delCookie(img,conId); //쿠키 삭제
+        }
+
+  function readCookie(img,conId) {  // 쿠키 읽기 함수
+        let cook = document.cookie;
+        console.log(cook); //문자열
+        //쿠키 문자열을 ;(세미콜론) 기준으로 자른다 (쿠키를 분리 하기 위해)
+        let cookAr = cook.split(";");
+        console.log(cookAr);
+        // 쿠키 값을 찾는다
+      
+        for (let i = 0; i < cookAr.length; i++) {
+          let cookName = cookAr[i].trim().split("=")[0];
+           //쿠키 이름을 분리(cookAr 배열의 [i]번째 인덱스에 있는 요소를 "=" 기준으로 cookName 배열에 저장)
+          //1번째 인덱스부터의 요소는 공백을 .trim() 함수로 제거한다.
+          //   console.log(cookName);
+          let cookImgsrc = cookAr[i].trim().split("=")[1];
+          console.log(cookName);
+          console.log(cookImgsrc);
+
+           if (cookName == conId) {
+          //같은 이름의 쿠키가 있다.
+          isFind = true;
+           }
+        } 
+  }
+}
+
+function delCookie(img,conId) { // 쿠키 삭제 함수
+        //삭제할 쿠키의 expires 값을 현재 날짜, 현재 시간으로 재설정하여 다시 저장
+        let now = new Date();
+        let cookie = `${conId}=${img};expires=` + now.toUTCString();
+        document.cookie = cookie;
+}
+
+
 </script>
 <style>
+   @font-face {
+        font-family: "NanumSquareNeo-Variable";
+        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2")
+          format("woff2");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      * {
+        font-family: "NanumSquareNeo-Variable";
+      }
+  body{
+        font-family: 'NanumSquareNeo-Variable';
+}
+#tourTitle {
+  text-align: center;
+  color: #333;
+}
+.liObj {
+    max-width: 300px;
+    
+    /* margin-left: 5px;
+    margin-right: 5px; */
+    float: left;
+   
+  }
+  .left-image{
+    max-height: 180px;
+    
+  }
+  .listing-page .item .listing-item {
   
+    margin-bottom: 20px;
+}
+  .gallery-list, .liObj {
+    margin-top: 10px;
+    padding: 10px;
+    margin: 3px;
+    list-style: none;
+}
+
+/* 
+.listing-page .naccs .menu div {
+    color: #fff;
+    font-size: 15px;
+    border-radius: 7px;
+    background-color: #8d99af;
+    margin-bottom: 27px;
+    height: 50px;
+    text-align: left;
+    padding: 0px 15px;
+    line-height: 126px;
+    cursor: pointer;
+    position: relative;
+    transition: 1s all cubic-bezier(0.075, 0.82, 0.165, 1);
+} */
+
+.page-heading{
+  padding: 100px 0px 100px 600px;
+}
+.liObj{
+  width: 300px;
+  height: 254px;
+  border: solid 3px rgb(173, 169, 169);
+  border-radius: 7px;
+  margin-bottom: 20px;
+}
+
 </style>
   <body>
     <!-- ***** Preloader Start ***** -->
@@ -183,6 +474,16 @@ function getTravelData() {
             <div class="naccs">
               <div class="grid">
                 <div class="row">
+                  
+          <div style="text-align: right;">
+            <select id="arrange">
+              <option value="C">최신순</option>
+              <option value="A">제목순</option>
+              <option value="D">지역순</option>
+            </select>
+            <input type="button" value="보기" onclick="arrangeChange();">
+            <input id='searchKeyword' type="text"><input type="button" value="검색" onclick="searchKeyword();"></div>
+
                   <div class="col-lg-3">
                     <div class="menu">
                       <div class="first-thumb active">
@@ -229,7 +530,7 @@ function getTravelData() {
                                 src="assets/images/search-icon-03.png"
                                 alt=""
                             /></span>
-                            축제공연행사
+                            축제
                           </a>
                         </div>
                       </div>
@@ -376,7 +677,15 @@ function getTravelData() {
                               
                              
                           </div>
-    
+                       
+                     
+
+                      
+
+                     
+
+                             
+                          
                    
                   </div>
                 </div>
@@ -386,18 +695,67 @@ function getTravelData() {
         </div>
       </div>
     </div>
-
     <div>
-      <div class="d-grid">
+      <!-- <div class="d-grid">
         <button type="button" id="morePage" class="btn btn-primary btn-block">
           다음 페이지로
         </button>
-      </div>
+      </div> -->
     </div>
+    <!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">안내</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        마지막 페이지입니다!
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="searchModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">안내</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        검색어를 입력해주세요!
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
     <footer>
       
           <div class="col-lg-12">
-            <div class="sub-footer">
+            <div class="sub-footer" id="footer1">
               <p>
                 Copyright © 2021 Plot Listing Co., Ltd. All Rights Reserved.
                 <br />

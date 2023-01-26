@@ -72,7 +72,7 @@
     }
   </style>
   <script>
-    let pageNo = 1; // 현재 페이지 번호를 저장할 변수
+    let pageNo = 1;
     let numOfRows = 8;
     let totalCount = 0;
     let totalPage = 0;
@@ -80,129 +80,11 @@
 
     $(function () {
       getFoodData();
-
-      //검색하기
-      // 워드 파일에 나와있는 주소로 새로 searchKeyword url 딴걸로 파싱 받고
-      //함수에 적용 시키기
-      let searchData = "";
-      $("#clickSearch").click(function (element) {
-        searchData = $("#searchText").val();
-        console.log(searchData);
-        if (searchData === null || searchData === "") {
-          getFoodData();
-        } else {
-          searchStoreData();
-        }
-        if (findStore.indexOf(searchData) === -1) {
-          //모달창으로 띄워야함
-          alert("그런 음식 또 없습니다.");
-        }
-      });
-
-      let output = "";
-      function searchStoreData() {
-        let baseUrl2 =
-          "http://apis.data.go.kr/B551011/KorService/searchKeyword?MobileOS=ETC&MobileApp=AppTest&serviceKey=cAKnXcHeeWN56X3sUwC0xqS8irJTLJNQqMoB0w5%2BMo6em7MpRpNt0yOIt9o3oPiJbLAZ3tF1wI6JVXddRjxupA%3D%3D&_type=json&areaCode=1&contentTypeId=39";
-        baseUrl2 += "&pageNo=" + pageNo;
-        baseUrl2 += "&ContentTypeId=39&numOfRows=" + numOfRows;
-        //검색 키워드 넣기
-        baseUrl2 += "&keyword=" + searchData;
-        $(".loading").show();
-        $.ajax({
-          url: baseUrl2,
-          type: "get",
-          dataType: "json",
-          async: false,
-          success: function (data) {
-            $("#storeList").empty();
-            parsingSearchData(data);
-          },
-          error: function (data) {},
-          complete: function (data) {
-            $(".loading").toggle();
-          },
-        });
-      }
-      let findStore = "";
-      let storeAr = null;
-      function parsingSearchData(json) {
-        console.log(json);
-
-        let storeAr = json.response.body.items.item;
-        numOfRows = Number(json.response.body.numOfRows);
-        totalCount = Number(json.response.body.totalCount);
-
-        console.log(numOfRows, totalCount);
-        // $("#storeList").empty();
-        $("#storeList").append(output);
-
-        $.each(storeAr, function (idx, item) {
-          findStore = storeAr[idx].title;
-          console.log(findStore);
-
-          if (findStore.indexOf(searchData) != -1) {
-            if (item.firstimage == "" || item.firstimage == null) {
-              output += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=   "img/noimg.png" alt="...">`;
-              output += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${item.title}</h5>${item.addr1}</div>`;
-              //상세페이지 이동칸
-              output += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세페이지</a></div>`;
-              output += `</div></div></div>`;
-            } else {
-              output += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=${item.firstimage} alt="...">`;
-              //음식점 이름, 설명 칸
-              output += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${item.title}</h5>${item.addr1}</div>`;
-              //상세페이지 이동칸
-              output += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세페이지</a></div>`;
-              output += `</div></div></div>`;
-            }
-          }
-        });
-
-        $("#storeList").empty();
-        $("#storeList").append(output);
-      }
-
-      // 한 페이지에 선택한 수 만큼 게시물 보이기
-      $(".form-select").change(function () {
-        numOfRows = Number($(".form-select option:selected").val());
-
-        $("#storeList").empty();
-        // 그냥 기존 데이터 없이 호출할시에는 numOfRows 즉 , 페이지당 호출 할 게시물 수를 찾지 못한다.
-        // 또한 기존 데이터에 .empty() 없이 일반 호출 할 시에는, 기존 게시물 수+ 선택한 게시물 페이지 개수가 같이 호출 되기 때문에 empty()를 해서 설정 전 데이터를 비워주도록 하자.
-        getFoodData();
-        searchStoreData();
-      });
-
-      if (numOfRows !== 0) {
-        if (totalCount % numOfRows === 0) {
-          totalPage = parseInt(totalCount / numOfRows);
-        } else {
-          totalPage = parseInt(totalCount / numOfRows) + 1;
-        }
-      }
-      $("#nextPage").click(function () {
-        totalPage = parseInt(totalCount / numOfRows) + 1;
-        let remainderRows = totalCount - numOfRows * pageNo;
-        //다음 페이지로 넘기기
-        if (pageNo < totalPage) {
-          pageNo++; // 1페이지 증가
-          searchStoreData();
-          getFoodData();
-        } else if (remainderRows < numOfRows) {
-          numOfRows = remainderRows;
-        }
-        // 마지막 페이지에서 다음페이지로 넘어가지 않도록 설정
-        if (numOfRows === remainderRows) {
-          alert("마지막 페이지 입니다.");
-          $(this).attr("disabled", true);
-        }
-      });
     });
+
+    //음식점 정보 받기
     function getFoodData() {
       //필수 정보 MobileOS, MobileApp,serviceKey
-
       let baseUrl = "http://apis.data.go.kr/B551011/KorService/areaBasedList?MobileOS=ETC&MobileApp=AppTest&serviceKey=cAKnXcHeeWN56X3sUwC0xqS8irJTLJNQqMoB0w5%2BMo6em7MpRpNt0yOIt9o3oPiJbLAZ3tF1wI6JVXddRjxupA%3D%3D&_type=json&areaCode=1";
 
       // 페이지 번호
@@ -224,17 +106,21 @@
         },
       });
     }
+    let findStore = "";
+    let tourAr = null;
 
     function parsingFoodData(json) {
       console.log(json);
-
-      // 검색창에 아무것도 입력하지 않고 검색했을때, 전체 목록 페이지로 전환
-      //에러 잡는 법 여쭤보기...
 
       let tourAr = json.response.body.items.item;
 
       numOfRows = Number(json.response.body.numOfRows);
       totalCount = Number(json.response.body.totalCount);
+
+      $.each(tourAr, function (idx, item) {
+        findStore = tourAr[idx].title;
+        console.log(findStore);
+      });
 
       let output = `<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">`;
       $.each(tourAr, function (i, element) {
@@ -261,6 +147,119 @@
       $("#storeList").empty();
       $("#storeList").append(output);
     }
+
+    //검색하기
+    // 어째서인지 jquery .click 기능을 통한 pasing은  click 이후 데이터 호출이 안되서 JSP onclick() 함수로 전환...
+
+    let searchData = "";
+    function searchStore() {
+      searchData = $("#searchText").val();
+
+      let baseUrl2 =
+        "http://apis.data.go.kr/B551011/KorService/searchKeyword?MobileOS=ETC&MobileApp=AppTest&serviceKey=cAKnXcHeeWN56X3sUwC0xqS8irJTLJNQqMoB0w5%2BMo6em7MpRpNt0yOIt9o3oPiJbLAZ3tF1wI6JVXddRjxupA%3D%3D&_type=json&areaCode=1&contentTypeId=39";
+
+      // baseUrl2 += "&pageNo=" + pageNo;
+      baseUrl2 += "&numOfRows=" + numOfRows;
+
+      //검색 키워드 넣기
+      baseUrl2 += "&keyword=" + searchData;
+      $(".loading").show();
+      $.ajax({
+        url: baseUrl2,
+        type: "get",
+        dataType: "json",
+        async: false,
+        success: function (data) {
+          $("#storeList").empty();
+          parsingFoodData(data);
+          $("#nextPage").attr("disabled", true);
+          $(".form-select").attr("disabled", true);
+        },
+        complete: function (data) {
+          $(".loading").toggle();
+        },
+      });
+
+      console.log(searchData);
+    }
+
+    // if (findStore.indexOf(searchData) === -1) {
+    //   //모달창으로 띄워야함
+    //   alert("그런 음식 또 없습니다.");
+    // }
+
+    // function parsingSearchData(json) {
+    //   console.log(json);
+
+    //   let storeAr = json.response.body.items.item;
+
+    //   console.log(numOfRows, totalCount);
+    //   // $("#storeList").empty();
+    //   $("#storeList").append(output);
+
+    //   $.each(storeAr, function (idx, item) {
+    //     findStore = storeAr[idx].title;
+    //     console.log(findStore);
+
+    //     if (findStore.indexOf(searchData) != -1) {
+    //       if (item.firstimage == "" || item.firstimage == null) {
+    //         output += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=   "img/noimg.png" alt="...">`;
+    //         output += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${item.title}</h5>${item.addr1}</div>`;
+    //         //상세페이지 이동칸
+    //         output += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+    //       <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세페이지</a></div>`;
+    //         output += `</div></div></div>`;
+    //       } else {
+    //         output += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=${item.firstimage} alt="...">`;
+    //         //음식점 이름, 설명 칸
+    //         output += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${item.title}</h5>${item.addr1}</div>`;
+    //         //상세페이지 이동칸
+    //         output += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+    //       <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세페이지</a></div>`;
+    //         output += `</div></div></div>`;
+    //       }
+    //     }
+    //   });
+
+    //   $("#storeList").empty();
+    //   $("#storeList").append(output);
+    // }
+
+    // 한 페이지에 선택한 수 만큼 게시물 보이기
+    $(function () {
+      $(".form-select").change(function (data) {
+        numOfRows = Number($(".form-select option:selected").val());
+
+        $("#storeList").empty();
+        // 그냥 기존 데이터 없이 호출할시에는 numOfRows 즉 , 페이지당 호출 할 게시물 수를 찾지 못한다.
+        // 또한 기존 데이터에 .empty() 없이 일반 호출 할 시에는, 기존 게시물 수+ 선택한 게시물 페이지 개수가 같이 호출 되기 때문에 empty()를 해서 설정 전 데이터를 비워주도록 하자.
+        getFoodData(data);
+      });
+
+      if (numOfRows !== 0) {
+        if (totalCount % numOfRows === 0) {
+          totalPage = parseInt(totalCount / numOfRows);
+        } else {
+          totalPage = parseInt(totalCount / numOfRows) + 1;
+        }
+      }
+      $("#nextPage").click(function () {
+        totalPage = parseInt(totalCount / numOfRows) + 1;
+        let remainderRows = totalCount - numOfRows * pageNo;
+        //다음 페이지로 넘기기
+        if (pageNo < totalPage) {
+          pageNo++; // 1페이지 증가
+          getFoodData();
+        } else if (remainderRows < numOfRows) {
+          numOfRows = remainderRows;
+        }
+        // 마지막 페이지에서 다음페이지로 넘어가지 않도록 설정
+        if (numOfRows === remainderRows) {
+          alert("마지막 페이지 입니다.");
+          $(this).attr("disabled", true);
+        }
+      });
+    });
   </script>
   <body>
     <!-- ***** Preloader Start ***** -->
@@ -332,10 +331,10 @@
               </div>
             </td>
             <td>
-              <button type="button" class="btn btn-secondary" id="clickSearch">검색</button>
+              <button type="button" class="btn btn-secondary" id="clickSearch" onclick="searchStore()">검색</button>
             </td>
             <td>
-              <button type="button" class="btn btn-secondary" id="reset">선택초기화</button>
+              <button type="button" class="btn btn-secondary" id="reset">검색초기화</button>
             </td>
           </tr>
         </tbody>
