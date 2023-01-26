@@ -2,6 +2,7 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
@@ -15,7 +16,7 @@
 
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="assets/css/fontawesome.css" />
-    <link rel="stylesheet" href="assets/css/templatemo-plot-listing.css" />
+    <link rel="stylesheet" href="assets/css/templatemo-plot-foodListing.css" />
     <link rel="stylesheet" href="assets/css/animated.css" />
     <link rel="stylesheet" href="assets/css/owl.css" />
   </head>
@@ -38,7 +39,7 @@
       font-family: "NanumSquareNeo-Variable";
     }
     .selectRow {
-      position: absolute;
+      position: relative;
       left: 303px;
       width: 150px;
     }
@@ -49,7 +50,7 @@
     }
     .search {
       position: relative;
-      left: 780px;
+      left: 55%;
       width: 650px;
       height: 100px;
     }
@@ -70,6 +71,17 @@
       margin: 20px;
       width: max-content;
     }
+
+    .back-to-top {
+      opacity: 0.9;
+
+      padding: 20px;
+      position: fixed;
+      right: 5%;
+      bottom: 5%;
+      display: none;
+      z-index: 9999;
+    }
   </style>
   <script>
     let pageNo = 1;
@@ -80,12 +92,38 @@
 
     $(function () {
       getFoodData();
+
+      $("#reset").click(function () {
+        location.href = "food_listing.html";
+      });
+    });
+
+    //top 버튼 설정
+    $(function () {
+      // 보이기 | 숨기기
+      $(window).scroll(function () {
+        if ($(this).scrollTop() > 250) {
+          //250 넘으면 버튼이 보여지도록 설정
+          $(".back-to-top").fadeIn();
+        } else {
+          $(".back-to-top").fadeOut();
+        }
+      }); // 버튼 클릭시
+      $(".back-to-top").click(function () {
+        $("html, body").animate(
+          {
+            scrollTop: 0, // 0 까지 animation 이동
+          },
+          300, // 속도 지정
+        );
+        return false;
+      });
     });
 
     //음식점 정보 받기
     function getFoodData() {
       //필수 정보 MobileOS, MobileApp,serviceKey
-      let baseUrl = "http://apis.data.go.kr/B551011/KorService/areaBasedList?MobileOS=ETC&MobileApp=AppTest&serviceKey=cAKnXcHeeWN56X3sUwC0xqS8irJTLJNQqMoB0w5%2BMo6em7MpRpNt0yOIt9o3oPiJbLAZ3tF1wI6JVXddRjxupA%3D%3D&_type=json&areaCode=1";
+      let baseUrl = "http://apis.data.go.kr/B551011/KorService/areaBasedList?MobileOS=ETC&MobileApp=AppTest&serviceKey=cAKnXcHeeWN56X3sUwC0xqS8irJTLJNQqMoB0w5%2BMo6em7MpRpNt0yOIt9o3oPiJbLAZ3tF1wI6JVXddRjxupA%3D%3D&_type=json";
 
       // 페이지 번호
       baseUrl += "&pageNo=" + pageNo;
@@ -110,8 +148,6 @@
     let tourAr = null;
 
     function parsingFoodData(json) {
-      console.log(json);
-
       let tourAr = json.response.body.items.item;
 
       numOfRows = Number(json.response.body.numOfRows);
@@ -119,26 +155,31 @@
 
       $.each(tourAr, function (idx, item) {
         findStore = tourAr[idx].title;
-        console.log(findStore);
       });
 
       let output = `<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">`;
       $.each(tourAr, function (i, element) {
         //음식점 이미지
         if (element.firstimage == "" || element.firstimage == null) {
-          output += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=   "img/noimg.png" alt="...">`;
+          output += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=   "img/noimg.png">`;
           output += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${element.title}</h5>${element.addr1}</div>`;
           //상세페이지 이동
           output += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세페이지</a></div>`;
+            <div class="text-center">
+              <a href="www.naver.com" class="btn btn-outline-dark mt-auto" >상세페이지
+                </a>
+              </div>`;
           output += `</div></div></div>`;
         } else {
-          output += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=${element.firstimage} alt="...">`;
+          output += ` <div class="col mb-5"><div class="card h-100"><div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"><button type="button"class="btn btn-dark">찜</button></div> <img class="card-img-top" src=${element.firstimage}>`;
           //음식점 이름, 설명
           output += `<div class="card-body p-4"><div class="text-center"><h5 class="fw-bolder">${element.title}</h5>${element.addr1}</div>`;
           //상세페이지 이동
           output += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세페이지</a></div>`;
+            <div class="text-center">
+              <a href="www.naver.com" class="btn btn-outline-dark mt-auto" >상세페이지
+                </a>
+              </div>`;
           output += `</div></div></div>`;
         }
       });
@@ -159,7 +200,7 @@
         "http://apis.data.go.kr/B551011/KorService/searchKeyword?MobileOS=ETC&MobileApp=AppTest&serviceKey=cAKnXcHeeWN56X3sUwC0xqS8irJTLJNQqMoB0w5%2BMo6em7MpRpNt0yOIt9o3oPiJbLAZ3tF1wI6JVXddRjxupA%3D%3D&_type=json&areaCode=1&contentTypeId=39";
 
       // baseUrl2 += "&pageNo=" + pageNo;
-      baseUrl2 += "&numOfRows=" + numOfRows;
+      // baseUrl2 += "&numOfRows=" + numOfRows;
 
       //검색 키워드 넣기
       baseUrl2 += "&keyword=" + searchData;
@@ -246,10 +287,17 @@
       $("#nextPage").click(function () {
         totalPage = parseInt(totalCount / numOfRows) + 1;
         let remainderRows = totalCount - numOfRows * pageNo;
-        //다음 페이지로 넘기기
+        //다음 페이지로 넘기기, 넘길 때 자동 위로 가기 설정
         if (pageNo < totalPage) {
           pageNo++; // 1페이지 증가
           getFoodData();
+
+          $("html, body").animate(
+            {
+              scrollTop: 0, // 0 까지 animation 이동
+            },
+            100, // 속도 지정
+          );
         } else if (remainderRows < numOfRows) {
           numOfRows = remainderRows;
         }
@@ -313,7 +361,7 @@
         <div class="row">
           <div class="col-lg-8">
             <div class="top-text header-text">
-              <h6>Check Out Our Listings</h6>
+              <h6>나만의 숨은 맛집 탐방</h6>
               <h2>음식 정보 List Page</h2>
             </div>
           </div>
@@ -455,11 +503,17 @@
         </div>
       </div>
     </div>
+    <!-- 위로 올리기 버튼 -->
+    <div class="back-to-top on">
+      <a href="#" title="top" id="topBtn">TOP</a>
+    </div>
+
     <div>
       <div class="d-grid">
         <button type="button" class="btn btn-secondary" id="nextPage">다음 페이지</button>
       </div>
     </div>
+
     <footer>
       <div class="container">
         <div class="row">

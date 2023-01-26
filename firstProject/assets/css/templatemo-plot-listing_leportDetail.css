@@ -724,7 +724,7 @@ Banner Style
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  background-image: url(../images/index1.jpg);
+  background-image: url(../images/banner-bg.jpg);
   padding: 290px 0px 180px 0px;
   position: relative;
   overflow: hidden;
@@ -1343,7 +1343,7 @@ Page Heading
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  background-image: url(../images/heading-bg.jpg);
+  background-image: url(../images/leportsdetail.jpg);
   padding: 230px 0px 120px 0px;
   position: relative;
   overflow: hidden;
@@ -1409,7 +1409,7 @@ Category Post
   transform: translateY(-50%);
   font-size: 15px;
   font-weight: 400;
-  width: 100%;
+  width: 120%;
   display: inline;
 }
 
