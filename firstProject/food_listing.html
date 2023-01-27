@@ -166,7 +166,7 @@
           //상세페이지 이동
           output += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
             <div class="text-center">
-              <a href="www.naver.com" class="btn btn-outline-dark mt-auto" >상세페이지
+              <a href="food_detail.html?contentid=${element.contentid}" class="btn btn-outline-dark mt-auto" >상세페이지
                 </a>
               </div>`;
           output += `</div></div></div>`;
@@ -177,7 +177,7 @@
           //상세페이지 이동
           output += `</div> <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
             <div class="text-center">
-              <a href="www.naver.com" class="btn btn-outline-dark mt-auto" >상세페이지
+              <a href="food_detail.html?contentid=${element.contentid}" class="btn btn-outline-dark mt-auto" >상세페이지
                 </a>
               </div>`;
           output += `</div></div></div>`;
@@ -196,8 +196,7 @@
     function searchStore() {
       searchData = $("#searchText").val();
 
-      let baseUrl2 =
-        "http://apis.data.go.kr/B551011/KorService/searchKeyword?MobileOS=ETC&MobileApp=AppTest&serviceKey=cAKnXcHeeWN56X3sUwC0xqS8irJTLJNQqMoB0w5%2BMo6em7MpRpNt0yOIt9o3oPiJbLAZ3tF1wI6JVXddRjxupA%3D%3D&_type=json&areaCode=1&contentTypeId=39";
+      let baseUrl2 = "http://apis.data.go.kr/B551011/KorService/searchKeyword?MobileOS=ETC&MobileApp=AppTest&serviceKey=cAKnXcHeeWN56X3sUwC0xqS8irJTLJNQqMoB0w5%2BMo6em7MpRpNt0yOIt9o3oPiJbLAZ3tF1wI6JVXddRjxupA%3D%3D&_type=json&contentTypeId=39";
 
       // baseUrl2 += "&pageNo=" + pageNo;
       // baseUrl2 += "&numOfRows=" + numOfRows;
