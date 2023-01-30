@@ -11,6 +11,10 @@
 
     <!-- 카카오맵 -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e4f53adeb8bd52d1d767aedc9be57433&libraries=services"></script>
+
+    <!-- slick 써보기 -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
     <title>음식 Detail Page</title>
 
     <!-- Bootstrap core CSS -->
@@ -153,7 +157,7 @@
 
         console.log(contentId);
         getAddDetail(contentId); //영업시간 및 기타 정보
-        // getAddDetailIntro(contentId);
+        getImagesDetail(contentId);
       }
     });
     // 음식점 기본 정보
@@ -195,15 +199,15 @@
       let outputImg = ``;
 
       if (storeImg1 != "") {
-        outputImg += ` <a href=${storeImg1} target="_blank" class="view_image">  
+        outputImg += ` <a href=${storeImg1} target="_blank" class="view_image">
           <img src= ${storeImg1} width="1000" height="668"/></a>`;
         $("#bo_v_img").html(outputImg);
       } else if (storeImg2 != "") {
-        outputImg += ` <a href=${storeImg2} target="_blank" class="view_image">  
+        outputImg += ` <a href=${storeImg2} target="_blank" class="view_image">
           <img src= ${storeImg2} width="600" height="468"/></a>`;
         $("#bo_v_img").html(outputImg);
       } else {
-        outputImg += ` <a href="img/noimg.png" target="_blank" class="view_image">  
+        outputImg += ` <a href="img/noimg.png" target="_blank" class="view_image">
           <img src= "img/noimg.png"  width="600" height="468"/></a>`;
         $("#bo_v_img").html(outputImg);
       }
@@ -255,7 +259,32 @@
         },
       });
 
-      function parsingAddDetail(data) {}
+      function parsingAddDetail(data) {
+        let storeTime = data.response.body.items.item[0].opentimefood;
+        let storeRest = data.response.body.items.item[0].restdatefood;
+        $("#storeTime").html(`${storeTime} / ${storeRest}`);
+      }
+    }
+
+    //이미지만 따로 조회
+    function getImagesDetail(contentId) {
+      let baseUrl3 = "http://apis.data.go.kr/B551011/KorService/detailImage?MobileOS=ETC&MobileApp=AppTest&serviceKey=cAKnXcHeeWN56X3sUwC0xqS8irJTLJNQqMoB0w5%2BMo6em7MpRpNt0yOIt9o3oPiJbLAZ3tF1wI6JVXddRjxupA%3D%3D&_type=json&contentId=" + contentId;
+      baseUrl3 += "&imageYN=Y&subImageYN=Y$originimgurl";
+
+      $.ajax({
+        url: baseUrl3,
+        type: "GET",
+        dataType: "json",
+        async: false,
+        success: function (data) {
+          console.log(data);
+          parsingDetailImages(data);
+        },
+      });
+
+      function parsingDetailImages(data) {
+        console.log(data);
+      }
     }
 
     //top 버튼 설정
@@ -369,7 +398,7 @@
                       <div class="badge">운영시간</div>
                     </li>
                     <li>
-                      <div class="text">11:00 - 22:00 라스트 오더 21시 30분</div>
+                      <div class="text" id="storeTime"></div>
                     </li>
                   </ul>
                 </div>
