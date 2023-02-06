@@ -2,9 +2,9 @@ package weberichan;
 
 public class MobilePhone {
 	//속성 (멤버 변수/속성(은) 는 자동 초기화 된다.)
-	String brandName; // 초기값을 주지 않아도 에러가 나지 않는다.
-	String modelName;
-	int mainMemory;
+  private String brandName; // 초기값을 주지 않아도 에러가 나지 않는다.
+  private String modelName;
+  private int mainMemory;
 
 	//생성자
 	// 생성자도 오버로딩으로 만들 수 있다.
@@ -36,6 +36,42 @@ public class MobilePhone {
 	}
 	
 	//메서드
+	
+	//getter 메서드 만들기
+	String getBrandName() {
+		return this.brandName;
+	}
+	
+	String getModelName() {
+		return this.modelName;
+	}
+	String getMainMemory() {
+		return this.mainMemory+"GB";
+	}
+	
+	//setter
+	void setBrandName(String brandName) {
+		this.brandName= brandName;
+	}
+	void setModelName(String modelName) {
+		this.modelName=modelName;
+	}
+	boolean setMainMemory(int mainMemory) {
+		//메인 메모리의 용량이 1TB까지만 허용한다고 가정하고 만든다면,
+		//setter를 이런식으로 설정하는 것이 가능하다.
+		boolean  result = false;
+		if(mainMemory<=1024) {
+			this.mainMemory= mainMemory;		
+			result = true;
+		}else {
+			result = false;
+		}
+		return result ;
+		
+	}
+
+	
+	
 	public String toString() {
 		return"["+ this.getClass().getName()+this.hashCode()+"] :"+ this.brandName +
 ", modelName : "+this.modelName +
