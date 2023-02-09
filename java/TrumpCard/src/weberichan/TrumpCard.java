@@ -1,6 +1,16 @@
 package weberichan;
 
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Scanner;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 
 
 /**
@@ -10,8 +20,19 @@ import java.util.Scanner;
  * @Pakages : weberichan,
  * @Description :포커 카드 각각에 대한 객체
  */
-public class TrumpCard {
-
+//JFrame 상속 받기
+public class TrumpCard extends JFrame {
+	
+	//상속받은 태그로 생성자 생성
+	public TrumpCard(String title) {
+		super(title);
+		
+		this.setVisible(true);
+//		this.setSize(WIDTH, HEIGHT);
+		this.setSize(new Dimension(640, 480));
+	
+	}
+	
 	public static void main(String[] args) {
 
 		Dealer 주윤발 = new Dealer();
@@ -32,98 +53,62 @@ public class TrumpCard {
 			주윤발.pickCardAndRemoveArray();
 		}
 
-	
 		System.out.println(주윤발.displayCard());
 		
+		TrumpCard win = new TrumpCard("포커");
 		
 		}
-		
 		//cardDeck.length-1 짜리 배열을 만들고 뽑힌 카드는 복사
 		//0~ index-1 까지 반복해서 복사한 뒤 넣어주고
 		// index+1~cardDeck.length 까지 복사해서 넣어주면 된다.
 		//넣어준 배열을 반환 
 		//새로 만들 배열의 length을 기존 배열length에서 빼준다.
+
+	
+	//오버 로딩이 아니라 오버 라이딩..!
+	@Override 
+	//anotation : 컴파일러에게 아래의 메서드가 오버라이딩
+	// 되었음을 알려 주는 것. 
+	public void paint(Graphics g) { // 윈도우가 그려질 때 자동으로 호출되는 일종의 콜백 메서드)
 		
+		super.paint(g);
 		
-		
+		String imagePath="D:\\lecture\\java\\JS.png";
+	
+	g.drawOval(100,100, 50, 50);
+	
+	URL imgUrl = null;
+	try {
+		imgUrl = new URL("https://i1.sndcdn.com/artworks-2PEHkMSRjhiK0z4y-wWLicA-t500x500.jpg");
+	} catch (MalformedURLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		System.out.println("잘못된 URL 주소입니다");
+		System.exit(0);
+	}
+	BufferedImage img = null;// 출력할 이미지 url 초기화
+	
+	try {
+	img=ImageIO.read(imgUrl);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		System.out.println("이미지를 읽어오지 못했습니다.");
+		System.exit(0);
+	}
+			
+			
+//	g.drawImage(img, 40, 0, null);// 사진 출력
+	
+	File fPath = new File(imagePath);
+	try {
+		g.drawImage(ImageIO.read(fPath), 100, 100, null); //로컬에 저장된 링크로 불러오기
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	
+	}
 		
 	}
-
-	
-
-	
-
-		
-//		private static void outputGameMenu(){
-//			System.out.println("=========================================");
-//			System.out.println("==              포커 게임              ==");
-//			System.out.println("=========================================");
-//			System.out.println("==1. 딜러 생성(번호 생성)              ==");
-//			System.out.println("==2. 딜러 이름 생성                    ==");
-//			System.out.println("==3. 전체카드 보여주기                 ==");
-//			System.out.println("==4. 카드 섞기                         ==");
-//			System.out.println("==5. 한장 뽑기			               ==");
-//			System.out.println("==6. 종료                              ==");
-//			System.out.println("=========================================");
-//			System.out.println("메뉴 번호 입력 >>>");
-//		}
-//
-//		private Dealer createDealer() {
-//			Scanner noDeal = new Scanner(System.in);
-//			Scanner nameDeal = new Scanner(System.in);
-//			
-//			System.out.println("딜러 번호 입력>>>");
-//			int DealerNo = noDeal.nextInt();
-//			
-//			System.out.println("딜러 이름 입력>>>");
-//			String DealerName = nameDeal.nextLine();
-//			
-//			Dealer d1 = new Dealer(DealerNo, DealerName);
-//			System.out.println(d1.toString());
-//			return d1;
-//		}
-//		
-//		public static void main(String[] args) {
-//			
-//			TrumpCard TC = new TrumpCard();
-//			
-//			while (true) {
-//
-//				outputGameMenu();
-//				Scanner menuTc = new Scanner(System.in);
-//				Dealer dealer =null;
-//				int menu = menuTc.nextInt();
-//
-//				switch (menu) {
-//
-//				case 1:
-//					dealer = TC.createDealer();
-//					break;
-//				case 2:
-//			
-//					break;
-//				case 3:
-//					
-//					break;
-//				case 4:
-//				
-//					break;
-//				case 5:
-//				
-//					break;
-//				case 6:
-//					System.exit(menu);//  프로그램 종료
-//					break;
-//
-//				default:
-//					break;
-//				}
-//
-//			}
-//		
-		
-		
-	// 메인 함수 끝
-	
-
-
