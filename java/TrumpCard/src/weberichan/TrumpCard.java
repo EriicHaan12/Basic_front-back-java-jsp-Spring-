@@ -66,9 +66,8 @@ public class TrumpCard extends JFrame {
 
 	
 	//오버 로딩이 아니라 오버 라이딩..!
-	@Override 
-	//anotation : 컴파일러에게 아래의 메서드가 오버라이딩
-	// 되었음을 알려 주는 것. 
+	@Override  //anotation : 컴파일러에게 아래의 메서드가 오버라이딩 되었음을 알려 주는 것. 
+	
 	public void paint(Graphics g) { // 윈도우가 그려질 때 자동으로 호출되는 일종의 콜백 메서드)
 		
 		super.paint(g);
