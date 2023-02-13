@@ -60,16 +60,16 @@ commit;
 select * from video;
 
 -- 비디오 코드
-set @inputVideoCode = "MU20226666";
+set @inputVideoCode = "AC20030135";
 -- 입력한 비디오의 장르
 set @inputVideoGenre = (select genre_code from video where VIDEO_CODE = @inputVideoCode);
 -- 입력한 비디오코드의 비디오 개봉일 출력
 set @showDateVideo = (select RELEASE_DATE 날짜 from video where VIDEO_CODE = @inputVideoCode);
 select @showDateVideo;
 -- 빌린 날짜
-set @rentDate = "2022-09-11";
+set @rentDate = "2006-09-10";
 -- 반납 날짜
-set @returnDate ="2022-09-15"; -- 반납 한 경우
+set @returnDate ="2006-09-12"; -- 반납 한 경우
 set @returnDate=null;  -- 아직 반납 하지 않은 경우
 -- 빌린 날짜에서 개봉일 뺀 날짜 계산
 set @diffDateVideo = TIMESTAMPDIFF(day,@showDateVideo,date(@rentDate));
@@ -103,9 +103,9 @@ select @genreFee;
 
 -- 연체료 계산
 -- 반납일 - 반납 예정일 <=0 는 0  반납일- 반납 예정일 >0  는 반납일-반납 예정일 * 장르 연체료
-set @addLateFee = case when  TIMESTAMPDIFF(day,@returnDueDate,@returnDate)<=0   
+set @addLateFee = case when  @chkLate='N'   
 								then null 
-						when TIMESTAMPDIFF(day,@returnDueDate,@returnDate)>0   
+						when @chkLate = 'Y'
 								then TIMESTAMPDIFF(day,@returnDueDate,@returnDate) *@genreFee
 					end;
                     select TIMESTAMPDIFF(day, @returnDate,@returnDueDate);
@@ -117,9 +117,13 @@ select *from genre;
 -- 대여 기록 유모레, 한테 10개 넣기
 
 insert into rent(user_num, video_code, genre_code, rentdate, isreturn,add_late_fee, check_late, return_due_date,return_date)
- values(15,@inputVideoCode,@inputVideoGenre,@rentDate, @isReturn,@addLateFee,@chkLate,@returnDueDate,@returnDate);
+ values(16,@inputVideoCode,@inputVideoGenre,@rentDate, @isReturn,@addLateFee,@chkLate,@returnDueDate,@returnDate);
 
-select * from rent where USER_NUM= 15;
+
+select * from rent where USER_NUM= 16;
+
+
+
 
 
 update rent set return_date ="2023-02-12" where NUM = 79;
@@ -155,40 +159,71 @@ select * from genre;
  where g.genre_CODE= r.genre_code ;
  
  
- select * from checkSales;
+use gottclass6;
 
- -- 매출 지정 시작 날짜
- set @startChkDate= "2022-02-01";
- -- 매출 지정 마지막 날짜
- 
- set @endChkDate = "2023-02-01";
+select * from member;
 
--- 지정 기간 연체료 총합
- set @totalLateFee = (select sum(add_late_fee) from checkSales where return_date between @startChkDate and @endChkDate);
- select  @totalLateFee;
+select *from age_group_rent;
 
--- 지정 기간 대여료 총합
-set @totalRentalFee = (select sum(rental_fee) from checkSales where return_date between @startChkDate and @endChkDate);
- select @totalLateFee;
- 
- -- 지정 기간 매출 총합
- set @totalSales = @totalRentalFee+@totalLateFee;
- select @totalSales as 총매출;
- 
- select r.add_late_fee ,g.rental_fee
- from rent r inner join gerne g
- on  g.genre_CODE= r.genre_code
- where r.return_date between "2020-02-01" and "2023-02-01";
-  
- 
-select TIMESTAMPDIFF(day,"2022-06-16","2022-06-26") from dual;
+select * from removeUser;
 
--- 연도별 연체료 총합
-set @totalSumLateFee =(select sum(add_late_fee) from rent  where return_date  like "2022%");
--- 연도별 대여료 총합
-set @totalSumRentalFee = (select sum(g.rental_fee) 
-						from rent r inner join genre g 
-                        on g.GENRE_CODE= r.GENRE_CODE
-                        having r.RETURN_DATE like "2022%") ;
 
-select  @totalAddLateFee;
+ create or replace view checkAge
+ as
+select m.birthday,r.GENRE_CODE, r.video_code
+from member m , rent r
+where m.user_num = r.user_num ; 
+
+select * from checkAge;
+
+-- 생일 form 세팅
+set @birthDay =DATE_FORMAT('1993-08-11', '%Y-%m-%d');
+
+-- 현재 년도- 생일 연도
+set @Age=TIMESTAMPDIFF(year,age, '2023-01-01') ;
+
+select @resultYear;
+
+-- rent table에서 연령으로 데이터 뽑기
+
+create or replace view classifyAge
+ as
+select  case
+			when TIMESTAMPDIFF(year,birthday, '2023-01-01')>=0 and TIMESTAMPDIFF(year,birthday, '2023-01-01')<20 then'10대'
+			when TIMESTAMPDIFF(year,birthday, '2023-01-01')>=20 and TIMESTAMPDIFF(year,birthday, '2023-01-01')<30 then'20대'
+			when TIMESTAMPDIFF(year,birthday, '2023-01-01')>=30 and TIMESTAMPDIFF(year,birthday, '2023-01-01')<40 then '30대'
+			when TIMESTAMPDIFF(year,birthday, '2023-01-01')>=40 and TIMESTAMPDIFF(year,birthday, '2023-01-01')<50 then'40대'
+			when TIMESTAMPDIFF(year,birthday, '2023-01-01')>=50 then '노년층'
+			end as '연령' ,genre_code
+
+from checkAge;
+
+
+select * from classifyAge;
+select * from classifyAge where 연령 ="10대";
+select * from classifyAge where 연령 ="20대";
+select * from classifyAge where 연령 ="30대";
+select * from classifyAge where 연령 ="40대";
+select * from classifyAge where 연령 ="노년층";
+
+-- 특정 연령층의 선호 장르 top3
+select 연령, count(연령) as 대여횟수, genre_code as '20대 선호장르 top 3' from classifyAge group by genre_code having 연령 = "20대" order by 대여횟수 desc limit 3 ;
+
+-- 회원별 추천 장르 
+-- test는 15번 회원으로 
+select * from rent;
+select * from member;
+commit;
+
+
+
+select * from video;
+
+-- 장르별 인기비디오 top 5
+create or replace view rentVideoAsGenre
+as
+select  v.video_title, g.genre_code
+from video v, genre g, rent r
+where r.video_code = v.video_code and g.GENRE_CODE = r.GENRE_CODE;
+
+select * from rentVideoAsGenre;

@@ -12,9 +12,9 @@ class ParentA {
 	
 }
 
-class ParentD{
-	
-}
+//class ParentD{
+//	
+//}
 //자바에서는 다중 상속을 표현하는 문법 자체가 없다.syntax error
 //
 //class ETC extends ParentA ParentD{
@@ -50,16 +50,17 @@ public class InheritanceEx2Test  extends ParentA {
 	}else {
 		System.out.println("아니오");
 	}
-	if(objChild instanceof ParentD) {// objChild 가 ParentD의 객체이냐? (상속관계가 아니기 때문에 비교 자체가 불가)
+//	if(objChild instanceof ParentD) {
+		// objChild 가 ParentD의 객체이냐? (상속관계가 아니기 때문에 비교 자체가 불가)
 		
 		//만들어준 objChild 객체는 Child와 ParentA 
 		
-		
-		System.out.println("네");
-	}else {
-		System.out.println("아니오");
-	}
-	
+//		
+//		System.out.println("네");
+//	}else {
+//		System.out.println("아니오");
+//	}
+//	
 	
 	
 	}

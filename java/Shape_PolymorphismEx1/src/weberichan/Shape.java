@@ -5,7 +5,7 @@ public abstract class Shape {
 	private String name;
 	private String color;
 	
-	//new를 하면 안됨! 하게되면 현객체가 없어질때, 종료될 떄 같이 없어짐.
+	//new를 하면 안됨! 하게되면 현객체가 없어질때, 종료될 때 같이 없어짐.
 	private Point p;
 
 	
