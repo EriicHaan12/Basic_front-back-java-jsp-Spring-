@@ -37,10 +37,7 @@ insert into rent values(3,"SF20210087","SF",sysdate()-63,"N",null,"Y",sysdate()-
  update video set release_date= "2012-07-19"  where video_title="다크나이트 라이즈";
 
 
- 
- -- 블랙리스트 조회
- select * from member where OVERDUE>=100;
- update member set chk_black="Y" where user_name="홍찰찰";
+
  commit;
  
  select * from rent;
@@ -55,21 +52,21 @@ insert into rent values(3,"SF20210087","SF",sysdate()-63,"N",null,"Y",sysdate()-
 
 commit;
 
-
-
-select * from video;
+select * from member where user_num =20;
+select * from rent where video_code ="TH20183782";
+select * from rent where user_num =16;
 
 -- 비디오 코드
-set @inputVideoCode = "AC20030135";
+set @inputVideoCode = "AN19883333";
 -- 입력한 비디오의 장르
 set @inputVideoGenre = (select genre_code from video where VIDEO_CODE = @inputVideoCode);
 -- 입력한 비디오코드의 비디오 개봉일 출력
 set @showDateVideo = (select RELEASE_DATE 날짜 from video where VIDEO_CODE = @inputVideoCode);
 select @showDateVideo;
 -- 빌린 날짜
-set @rentDate = "2006-09-10";
+set @rentDate = "2023-01-01";
 -- 반납 날짜
-set @returnDate ="2006-09-12"; -- 반납 한 경우
+set @returnDate ="2020-01-02"; -- 반납 한 경우
 set @returnDate=null;  -- 아직 반납 하지 않은 경우
 -- 빌린 날짜에서 개봉일 뺀 날짜 계산
 set @diffDateVideo = TIMESTAMPDIFF(day,@showDateVideo,date(@rentDate));
@@ -78,6 +75,7 @@ select @diffDateVideo;
 set @returnDueDate =  case when @diffDateVideo>30 then  date_add( @rentDate, interval 3 day)
 							when @diffDateVideo<=30 then date_add( @rentDate, interval 2 day)
 						end;
+-- 예상 반납날짜
 select @returnDueDate;
 
 -- 반납 여부 확인
@@ -109,24 +107,24 @@ set @addLateFee = case when  @chkLate='N'
 								then TIMESTAMPDIFF(day,@returnDueDate,@returnDate) *@genreFee
 					end;
                     select TIMESTAMPDIFF(day, @returnDate,@returnDueDate);
-
-select @addLateFee; 
 select *from genre;
+select @addLateFee; 
+
 
 
 -- 대여 기록 유모레, 한테 10개 넣기
 
 insert into rent(user_num, video_code, genre_code, rentdate, isreturn,add_late_fee, check_late, return_due_date,return_date)
- values(16,@inputVideoCode,@inputVideoGenre,@rentDate, @isReturn,@addLateFee,@chkLate,@returnDueDate,@returnDate);
+ values(20,@inputVideoCode,@inputVideoGenre,@rentDate, @isReturn,@addLateFee,@chkLate,@returnDueDate,@returnDate);
 
 
-select * from rent where USER_NUM= 16;
+select * from rent where USER_NUM= 20;
+
+update rent set return_due_date ="2019-03-11" where num=176;
 
 
 
-
-
-update rent set return_date ="2023-02-12" where NUM = 79;
+update rent set genre_code ="Comed" where NUM = 193;
 commit;
 -- 배기양,이지금, 유모레, 이민하, 이구름, 고래, 김희망 한테 각각 3개씩 넣기
 
@@ -227,3 +225,73 @@ from video v, genre g, rent r
 where r.video_code = v.video_code and g.GENRE_CODE = r.GENRE_CODE;
 
 select * from rentVideoAsGenre;
+
+select * from video;
+
+
+
+
+
+
+-- 대여 테이블에서 video 타이틀과 장르 정보만 따로 뽑아 view로 만들기
+create or replace view rentVideoAsGenre
+as
+select  v.video_title, g.genre_code
+from video v, genre g, rent r
+where r.video_code = v.video_code and g.GENRE_CODE = r.GENRE_CODE ;
+
+select * from rentVideoAsGenre;
+
+-- 비디오 명으로 group by 묶어줘서 비디오별 대여 횟수 조회
+create or replace view viewVideoRank
+as
+select video_title, genre_code, count(video_title) as 대여횟수
+from rentVideoAsGenre
+group by video_title;
+
+select * from viewVideoRank;
+
+-- 랭킹 매겨주기
+select video_title, genre_code, 대여횟수, 
+(select count(*)+1 from viewVideoRank where 대여횟수>v.대여횟수) 랭킹
+from viewVideoRank v
+order by 랭킹 asc;
+
+
+
+-- 감독별 영화 조회
+
+select * from video where DIRECTOR="피터 잭슨";
+select * from video where DIRECTOR="미야자키 하야오";
+select * from video where DIRECTOR like "고어%";
+select * from video where DIRECTOR like "피터%";
+select * from video where DIRECTOR like "크리스토퍼%";
+
+
+select video_title,total_view, director
+from video 
+where director like "고어%"
+order by total_view desc
+;
+
+-- 한가지 장르를 가장 많이 빌려간 사람의 전화 번호 조회
+
+create or replace view checkRent
+as
+select user_num , GENRE_CODE from rent;
+select * from checkRent;
+
+select user_num, genre_CODE 
+from checkRent
+GROUP BY user_num, genre_CODE 
+HAVING COUNT (*) > 1;
+
+
+
+select *, count(user_num) as ok 
+from checkRent c where GENRE_CODE=c.GENRE_CODE group by user_num 
+having count(user_num) > 1;
+
+select user_num, genre_code 
+from rent
+where genre_code ="Fantasy";
