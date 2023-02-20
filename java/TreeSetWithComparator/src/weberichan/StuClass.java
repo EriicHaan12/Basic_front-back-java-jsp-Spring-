@@ -1,5 +1,6 @@
 package weberichan;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
@@ -13,7 +14,7 @@ public class StuClass {
 			super();
 			this.classNo = classNo;
 			//이곳을 DescendingByStudentName()으로 바꾸면 정렬 순서를 다시 바꿀 수 있다.
-			this.stuSet = new TreeSet<>(new AscendingWithByStudentScore());		
+			this.stuSet = new HashSet<>();		
 	}
 
 	public int getClassNo() {

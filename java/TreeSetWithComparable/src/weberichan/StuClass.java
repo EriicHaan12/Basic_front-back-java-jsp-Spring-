@@ -16,8 +16,6 @@ public class StuClass {
 		}
 
 
-
-
 	public int getClassNo() {
 		return classNo;
 	}
@@ -45,7 +43,6 @@ public class StuClass {
 			System.out.println(student.toString());
 		}
 	}
-
 
 	@Override
 	public String toString() {

@@ -1,6 +1,7 @@
 package weberichan;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 public class Student implements Comparable<Student> {
 	private String stuName;
@@ -38,6 +39,23 @@ public class Student implements Comparable<Student> {
 	public int compareTo(Student o) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	@Override
+	public int hashCode() {
+		return this.stuNo.hashCode();
+	}
+	@Override
+	public boolean equals(Object obj) {
+		boolean result = false;
+	
+		if(obj instanceof Student) {
+			Student tmp = (Student)obj;
+			if(this.stuNo.equals(tmp.stuNo)) {
+				result = true;
+			}
+		}
+		return result;
+		
 	}
 
 	
