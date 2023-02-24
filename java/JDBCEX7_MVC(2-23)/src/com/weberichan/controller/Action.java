@@ -1,8 +1,11 @@
 package com.weberichan.controller;
 
 import com.weberichan.controller.service.FriendManagementService;
+import com.weberichan.controller.service.ModifyFriendName;
+import com.weberichan.controller.service.ModifyMobile;
 import com.weberichan.controller.service.OutputEntireFriendsService;
 import com.weberichan.controller.service.SaveFriendService;
+import com.weberichan.controller.service.SelectFriendByName;
 
 public class Action {
 	
@@ -23,9 +26,17 @@ public class Action {
 		case 1:
 		result =new	OutputEntireFriendsService();
 		break;
-
 		case 2 : 
 			result = new SaveFriendService();
+			break;
+		case 3 : 
+			result = new SelectFriendByName();
+			break;
+		case 4 : 
+			result = new ModifyFriendName();
+			break;
+		case 5 : 
+			result = new ModifyMobile();
 			break;
 		
 		case 9 :

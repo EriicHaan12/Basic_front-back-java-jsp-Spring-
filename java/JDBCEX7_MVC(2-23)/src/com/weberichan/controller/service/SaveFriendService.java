@@ -15,6 +15,7 @@ public class SaveFriendService implements FriendManagementService {
 		System.out.println("친구 입력하러 가자!!");
 	
 		FriendsMgmDAO dao = FriendsMgmDAOImpl.getInstance();
+		
 		// 입력될 친구 데이터 가져온 부분...
 		FriendDTO friend =FriendDBInsert.getFriendData();
 //		System.out.println(friend.toString());
