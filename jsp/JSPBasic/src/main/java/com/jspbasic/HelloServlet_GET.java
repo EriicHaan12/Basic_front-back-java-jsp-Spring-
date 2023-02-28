@@ -3,6 +3,7 @@ package com.jspbasic;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -57,32 +58,49 @@ public class HelloServlet_GET extends HttpServlet {
 		
 		
 		//국어, 영어, 수학 , 총점, 평균을 유저가 확인 할 수 있는 웹 페이지로 출력
+		
+		
+		// 아래의 방식은 서블릿에서 직접 출력한 웹 문서를 만들어서 response 한 방식이다.
+		// 아 방식은 html+css+js 를 이용해 다양한 요구에 따른 view단을 만들어 응답하기가 쉽지 않다.
+		//(코딩하는 방식도 힘들다.)
 		//응답할 문서의 종류와 인코딩 방식을 설정
-		response.setContentType("text/html; charset = utf-8"); // 미리 response 로 응답 받을 객체의 타입을 지정해주는 법
+//		response.setContentType("text/html; charset = utf-8"); // 미리 response 로 응답 받을 객체의 타입을 지정해주는 법
+//		
+//		
+//	PrintWriter out = response.getWriter(); //출력할 수 있는 객체
+//	out.print("<!DOCTYPE html>"
+//			+ "<html >"
+//			+ "<head>"
+//			+ "<meta charset='UTF-8'>"
+//			+ "<title>성적표</title>"
+//			+ "</head>"
+//			+ "<body>"
+//			+ "<div>국어 :" + kor 
+//			+ "</div>"
+//			+ "<div>영어 :" + eng 
+//			+ "</div>"
+//			+ "<div>수학 :" + math 
+//			+ "</div>"
+//			+ "<div>총점 :" + tot 
+//			+ "</div>"
+//			+ "<div>평균 :" + avg 
+//			+ "</div>"
+//			+"</body></html>");
+//	
+//		out.flush();
+//		out.close();
 		
+		// 출력할 변수 바인딩(binding 데이터 묶음) 
+		request.setAttribute("kor", kor);
+		request.setAttribute("eng", eng);
+		request.setAttribute("math", math);
+		request.setAttribute("tot", tot);
+		request.setAttribute("avg", avg);
 		
-	PrintWriter out = response.getWriter(); //출력할 수 있는 객체
-	out.print("<!DOCTYPE html>"
-			+ "<html >"
-			+ "<head>"
-			+ "<meta charset='UTF-8'>"
-			+ "<title>성적표</title>"
-			+ "</head>"
-			+ "<body>"
-			+ "<div>국어 :" + kor 
-			+ "</div>"
-			+ "<div>영어 :" + eng 
-			+ "</div>"
-			+ "<div>수학 :" + math 
-			+ "</div>"
-			+ "<div>총점 :" + tot 
-			+ "</div>"
-			+ "<div>평균 :" + avg 
-			+ "</div>"
-			+"</body></html>");
+	RequestDispatcher rd = 	request.getRequestDispatcher("dataOutputFromServlet(2-28).jsp");
 	
-		out.flush();
-		out.close();
+	rd.forward(request, response); // 데이터 이동
+	
 	}
 
 	/**

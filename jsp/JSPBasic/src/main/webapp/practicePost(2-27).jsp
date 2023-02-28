@@ -29,7 +29,6 @@ function chkValidation(){
 		  isValid = true;
 		  	}else{
 			  alert("유효한 이름이 아닙니다. 다시 입력해주세요.");
-			  
 		  }
 		  if(idPattern.test(userId)){
 			  isValid = true;
