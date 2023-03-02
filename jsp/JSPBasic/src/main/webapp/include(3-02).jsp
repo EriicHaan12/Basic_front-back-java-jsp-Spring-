@@ -7,13 +7,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<%@ include file ="header(3-02).jsp" %>
 <h1>Hello, JSP</h1>
 
 <%
 String name = "진석햄";
 %>
 
+<%@ include file ="footer(3-02).jsp" %>
 
 </body>
 </html>

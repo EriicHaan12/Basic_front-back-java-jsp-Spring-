@@ -33,7 +33,7 @@
         <h1>회원 가입</h1>
     </div>
     <div class="container">
-        <form method="post" action="1-1_sub.html">
+        <form method="post" action="getParamNames.do">
             <div class="mb-3 mt-3">
                 <label for="userId">아이디:</label>
                 <input type="text" class="form-control" id="userId" placeholder="Enter your name" name="userId" />
