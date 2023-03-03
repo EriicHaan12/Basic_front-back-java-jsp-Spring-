@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,15 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<h1>Hello, JSP</h1>
-
-<%
-String name = "진석햄";
-
-out.print("로그인 한 유저 : " +	(String)session.getAttribute("loginMember"));
-%>
-
-
+	<jsp:include page="header(3-02).jsp"></jsp:include>
+	<div>본문</div>
+	<jsp:include page="footer(3-02).jsp"></jsp:include>
 </body>
 </html>

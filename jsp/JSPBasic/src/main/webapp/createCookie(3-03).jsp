@@ -8,14 +8,11 @@
 </head>
 <body>
 
-<h1>Hello, JSP</h1>
 
-<%
-String name = "진석햄";
+<form action="createCookie.do">
 
-out.print("로그인 한 유저 : " +	(String)session.getAttribute("loginMember"));
-%>
-
+<input type = "submit" value = "쿠키저장">
+</form>
 
 </body>
 </html>

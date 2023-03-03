@@ -4,17 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>세션 객체</title>
 </head>
 <body>
-
-<h1>Hello, JSP</h1>
-
-<%
-String name = "진석햄";
-
-out.print("로그인 한 유저 : " +	(String)session.getAttribute("loginMember"));
-%>
+<div>세션 id : <%= session.getId() %></div>
+<div>세션 유효 시간 : <%=session.getMaxInactiveInterval() %></div>
 
 
 </body>

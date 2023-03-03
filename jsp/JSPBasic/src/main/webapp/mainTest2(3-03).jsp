@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
-
 function getParameter(paraName) {
     // 쿼리스트링에서 넘겨 받은 paramName 을 찾아 그 변수의 값을 retrun
     // 만약 쿼리스트링에 paramName 이 없다면 null 을 return
@@ -26,31 +25,26 @@ function getParameter(paraName) {
     }
     return returnVal;
   }
+  
   window.onload= function(){
-	 let status =  getParameter("status");
-  if(status === "loginSuccess"){
-	  alert("로그인 성공!")
-  	}
+	  let status = getParameter("status");
+	  if(status ==="successLogin"){
+		  alert("로긴 승공!")
+	  }
   }
 
 </script>
 </head>
 <body>
-	<h1>mainTest</h1>
-	<div> 세션 아이디 : <%= session.getId() %></div>
-	
-	<a href="loginTest1(3-02).jsp">로그인 하러 가기</a>
-	<%
-		out.print("로그인 한 유저 : " +	(String)session.getAttribute("loginMember"));
-	
-	%>
-	<div><a href = "helloJSP.jsp">헬로우 jsp로 가기</a></div>
-	
-	<div>
-	
-	<form action="sessionLogout.do" method="get">
-	<input type="submit" value ="로그아웃">
-	</form>
-	</div>
+
+<h1>mainTest2</h1>
+<div>세선 아이디 : <%=session.getId() %></div>
+<a href="/loginTest2(3-03).jsp">로그인 하러 가기</a>
+
+
+<form action="sessiongLogout2.do" method="get">
+<input type="submit" value = "로그아웃"'>
+</form>
+
 </body>
 </html>
