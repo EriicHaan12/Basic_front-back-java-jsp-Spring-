@@ -27,7 +27,7 @@ public class SessionLoginPracticeServlet extends HttpServlet {
 		HttpSession ses = req.getSession();
 		
 		ses.setAttribute("loginUser",userId);
-		resp.sendRedirect("mainTest2(3-03).jsp?status=successLogin");
+		resp.sendRedirect("mainTest3(3-06).jsp?status=successLogin");
 	}
 	}
 
