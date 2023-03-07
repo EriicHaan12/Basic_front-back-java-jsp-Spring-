@@ -12,14 +12,14 @@
   </welcome-file-list>
   <!-- 서블릿 URL 매핑 연습-->
   <servlet>
-	  <servlet-name>abc</servlet-name>
+	  <servlet-name>d</servlet-name>
 	  <servlet-class>com.jspbasic.URLMappingServlet</servlet-class> <!-- 실제 매핑되는 서블릿 -->
   </servlet>
   
   <servlet-mapping>
-	  <servlet-name>abc</servlet-name> 
+	  <servlet-name>d</servlet-name> 
 	  <url-pattern>/hello</url-pattern>
-	  <!-- url mapping 주소 -->
+	  <!-- mapping 주소 -->
 	  
   </servlet-mapping>
   
