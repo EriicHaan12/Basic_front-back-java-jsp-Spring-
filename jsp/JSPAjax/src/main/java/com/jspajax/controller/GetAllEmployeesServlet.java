@@ -23,6 +23,7 @@ import com.erichan.dao.EmployeesDAOImpl;
 import com.erichan.vo.Employees;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jspajax.etc.OutputJSONForError;
 
 @WebServlet("/getAllemployees.do")
 public class GetAllEmployeesServlet extends HttpServlet {
@@ -47,21 +48,31 @@ public class GetAllEmployeesServlet extends HttpServlet {
 	String outputJson=	toJsonWihtJsonSimple(lst);
 		
 		
-		
 //		System.out.println(json2);
 		
 //		for (Employees e : lst) {
 //			System.out.println(e.toString());
 //		}
-		
+
 		out.print(outputJson);
 		
-		out.close();
 		
 		} catch (NamingException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			//NamingException : DB연결에 문제 날 경우, context 객체나 설정 오류 일때 에러가 남
+//			//SQLException : NamingException 보다 범위가 더 넓은 에러로 DB 문제일 수도 있고 SQL 문제일 수도 있다.
+//			
+//			// 데이터를 넘길 때 에러가 날경우 출력될 json 만들기
+//			JSONObject json  = new JSONObject();
+//			json.put("status", "fail");
+//			json.put("errorMsg", e.getMessage());
+//			String outputDate = new java.util.Date(System.currentTimeMillis()).toLocaleString(); 
+			
+			// 만든 클래스의 메서드를 출력
+			out.print(OutputJSONForError.outputJson(e));
+			
+			
 		}
+		out.close();
 	}
 
 	private String toJsonWihtJsonSimple(List<Employees> lst) {
@@ -82,35 +93,40 @@ public class GetAllEmployeesServlet extends HttpServlet {
 		//받은 데이터를 넣기 위한 빈배열 만들기
 		JSONArray employees =new JSONArray();
 		
-		for (Employees e : lst) {
-			// 각각의 데이터를 한 객체에다 넣어주기 위한 객체
-			JSONObject employee = new JSONObject();
+		// 데이터가 하나라도 있을 때 반복문을 돌리도록 설정
+		if(lst.size()>0) {
 			
-			employee.put("EMPLOYEE_ID", e.getEmployee_id()+""); 
-			// int 타입은 문자열로 바꿔줘야 되기 때문에 ""를 더해줘서 자연스레 문자열로 반환되도록 한다
-			employee.put("FIRST_NAME", e.getFirst_name());
-			employee.put("LAST_NAME", e.getLast_name());
-			employee.put("EMAIL", e.getEmail());
-			employee.put("PHONE_NUMBER", e.getPhone_number()+"");
-			
-			Date tempDate = e.getHire_date();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			
+			for (Employees e : lst) {
+				// 각각의 데이터를 한 객체에다 넣어주기 위한 객체
+				JSONObject employee = new JSONObject();
 				
-			employee.put("HIRE_DATE", sdf.format(tempDate)); 
+				employee.put("EMPLOYEE_ID", e.getEmployee_id()+""); 
+				// int 타입은 문자열로 바꿔줘야 되기 때문에 ""를 더해줘서 자연스레 문자열로 반환되도록 한다
+				employee.put("FIRST_NAME", e.getFirst_name());
+				employee.put("LAST_NAME", e.getLast_name());
+				employee.put("EMAIL", e.getEmail());
+				employee.put("PHONE_NUMBER", e.getPhone_number()+"");
+				
+				Date tempDate = e.getHire_date();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					
+				employee.put("HIRE_DATE", sdf.format(tempDate)); 
+				
+//				employee.put("HIRE_DATE", e.getHire_date().toLocaleString()); 
+				//Date 타입은 이렇게 반환 // 원래라면 Calendar 클래스를 이용해야함
+				employee.put("JOB_ID", e.getJob_id());
+				employee.put("SALARY", e.getSalary()+"");
+				employee.put("COMMISSION_PCT", e.getCommission_pct()+"");
+				employee.put("MANAGER_ID", e.getManager_id()+"");
+				employee.put("DEPARTMENT_ID", e.getDepartment_id()+"");
+				employee.put("DEPARTMENT_NAME", e.getDepartement_name()+"");
 			
-//			employee.put("HIRE_DATE", e.getHire_date().toLocaleString()); 
-			//Date 타입은 이렇게 반환 // 원래라면 Calendar 클래스를 이용해야함
-			employee.put("JOB_ID", e.getJob_id());
-			employee.put("SALARY", e.getSalary()+"");
-			employee.put("COMMISSION_PCT", e.getCommission_pct()+"");
-			employee.put("MANAGER_ID", e.getManager_id()+"");
-			employee.put("DEPARTMENT_ID", e.getDepartment_id()+"");
-			employee.put("DEPARTMENT_NAME", e.getDepartement_name()+"");
-		
-			//employees 라는 데이터를 담는 전체 배열에다가 각 데이터 employee 객체 데이터를 넣어주기
-			employees.add(employee);
+				//employees 라는 데이터를 담는 전체 배열에다가 각 데이터 employee 객체 데이터를 넣어주기
+				employees.add(employee);
+			}
 		}
+		
+		
 		
 		// 마지막 전체 json 안에 만든 employees 배열 넣어주기
 		json.put("employees", employees);

@@ -9,7 +9,9 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
+import com.erichan.vo.DepartmentVo;
 import com.erichan.vo.Employees;
+import com.erichan.vo.JobsVo;
 
 public class EmployeesDAOImpl implements EmployeesDAO {
 //싱글톤 
@@ -63,4 +65,54 @@ public class EmployeesDAOImpl implements EmployeesDAO {
 		return lst;
 	}
 
+	@Override
+	public List<JobsVo> selectAlljobs() throws NamingException, SQLException {
+System.out.println(getClass().getName()+ "VO 단");
+		
+		List<JobsVo> lst = new ArrayList<>();
+		
+		Connection con = DBConnection.dbConnect();
+		if(con !=null) {
+			String query ="select * from jobs";
+			PreparedStatement pstmt = con.prepareStatement(query);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				lst.add(new JobsVo(rs.getString("JOB_ID"),
+							rs.getString("JOB_TITLE"),
+							rs.getInt("MIN_SALARY"),
+							rs.getInt("MAX_SALARY")));  
+			}
+			
+			DBConnection.dbClose(rs, pstmt, con);
+		}
+		
+		return lst;
+	}
+
+	@Override
+	public List<DepartmentVo> selectAllDept() throws NamingException, SQLException {
+			System.out.println(getClass().getName()+ "DAO 단");
+		
+		List<DepartmentVo> lst = new ArrayList<>();
+		
+		Connection con = DBConnection.dbConnect();
+		if(con !=null) {
+			String query ="select * from departments";
+			PreparedStatement pstmt = con.prepareStatement(query);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				lst.add(new DepartmentVo(rs.getInt("DEPARTMENT_ID"),
+						rs.getString("DEPARTMENT_NAME"),
+						rs.getInt("MANAGER_ID"),
+						rs.getInt("LOCATION_ID")
+								));  
+				}
+			
+			DBConnection.dbClose(rs, pstmt, con);
+		}
+		
+		return lst;
+	}
 }
