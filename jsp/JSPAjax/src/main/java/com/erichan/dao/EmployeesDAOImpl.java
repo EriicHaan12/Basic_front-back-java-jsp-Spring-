@@ -1,5 +1,6 @@
 package com.erichan.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -114,5 +115,47 @@ System.out.println(getClass().getName()+ "VO 단");
 		}
 		
 		return lst;
+	}
+
+	@Override
+	public String insertEmp(Employees empDto) throws NamingException, SQLException {
+		String result =null;
+		
+		Connection con = DBConnection.dbConnect();
+		if(con!=null) {
+			
+			// 메세지를 담아줄  String 타입 쿼리문 생성 // pstmt 생성할 때랑 비슷...
+			String query = "{call PROC_SAVEEMP(?,?,?,?,?,?,?,?,?,?,?)}";
+			//저장 프로시저 함수를 호출, query 컴파일
+		CallableStatement cstmt = con.prepareCall(query);
+		// 매개변수로 준 ? 세팅
+		cstmt.setString(1, empDto.getFirst_name());
+		cstmt.setString(2, empDto.getLast_name());
+		cstmt.setString(3, empDto.getEmail());
+		cstmt.setString(4, empDto.getPhone_number());
+		cstmt.setDate(5, empDto.getHire_date());
+		cstmt.setString(6, empDto.getJob_id());
+		cstmt.setFloat(7, empDto.getSalary());
+		cstmt.setFloat(8, empDto.getCommission_pct());
+		cstmt.setInt(9, empDto.getManager_id());
+		cstmt.setInt(10, empDto.getDepartment_id());
+		// 마지막 매개 변수는 OUT 매개변수 이다. out 매개변수는 아래와 같이 작성한다.
+		//out 타입을 매개변수로 주기 위해서는 int 타입을 넣어야 하는데 
+		// java.sql.Types. 에서는 DB에서 쓰이는 모든 타입을 int로 반환 시킬수 있다.
+		// out 매개변수라고 등록 시키기
+		cstmt.registerOutParameter(11, java.sql.Types.VARCHAR);
+		
+		// 실행
+		cstmt.executeUpdate();
+		
+		// out 매개변수에서 반환되는 값을 가져오기
+		result = cstmt.getString(11);
+		
+		System.out.println(result);
+		
+		DBConnection.dbClose(cstmt, con);
+		}
+		
+		return result;
 	}
 }

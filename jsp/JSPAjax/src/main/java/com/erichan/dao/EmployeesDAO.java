@@ -20,7 +20,15 @@ public interface EmployeesDAO   {
 	
 	//모든 departments 정보를 얻어오는 메서드
 	List<DepartmentVo> selectAllDept() throws NamingException, SQLException;
+
+	
+	// 사원을 저장하는 메서드
+	
+	// 저장 프로시져에서 예외가 날 경우 'error'라는 문자열을 반환 시켜주기 위한 메서드
+	String insertEmp(Employees empDto)throws NamingException, SQLException;
 	
 }
+
+
 
 

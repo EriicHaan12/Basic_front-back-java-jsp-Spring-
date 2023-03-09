@@ -28,4 +28,9 @@ public class DBConnection {
 		pstmt.close();
 		con.close();
 	}
+	public static void dbClose(Statement pstmt, Connection con) throws SQLException {
+	
+		pstmt.close();
+		con.close();
+	}
 }

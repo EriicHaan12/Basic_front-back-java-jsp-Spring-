@@ -120,7 +120,6 @@
 				"EMAIL" : writeEmail,
 				"PHONE_NUMBER" : writePhoneNumber,
 				"HIRE_DATE" : writeHireDate,
-				"PHONE_NUMBER" :writePhoneNumber,
 				"JOB_ID" :writeJobId,
 				"SALARY" : writeSal,
 				"COMMISSION_PCT" : writeComm,
@@ -131,9 +130,40 @@
 		saveEmp(emp)
 	});
 	
+	//입력한 데이터들 저장하는 메소드
 	function saveEmp(emp){
-		console.log(emp);
+		console.log(emp); // 그냥 JSON은 객체로 인식
+		console.log( JSON.stringify(emp)); // JSON을 stringify 메서드로 바꿔 문자열로 인식되게 끔 함.
+		
+		$.ajax({
+			url : "saveEmp.do", 
+			type : "GET",
+			data: emp , //서블릿에 전송할 데이터
+			dataType : "json",
+			success : function(data) { 
+			if(data.status=="success"){
+				$("#writeModal").hide();
+				writeModalInit();
+				
+				getAllEmployees();
+				
+				} else if (data.status=="fail"){
+					alert("저장에 실패 했습니다.");
+				}
+			}
+		});
+		
 		};
+		// 저장됬을 때 모달 창의 입력칸 초기화
+		function writeModalInit(){
+			
+			$("#writeFristName").val('');
+			$("#writeLastName").val('');
+			$("#writeEmail").val('');
+			$("#writePhoneNumber").val('');
+			$("#writeHireDate").val('');	
+			 $("#writeComm").val('');
+		}
 		
 	
 
