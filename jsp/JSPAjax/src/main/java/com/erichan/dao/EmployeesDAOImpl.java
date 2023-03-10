@@ -2,6 +2,7 @@ package com.erichan.dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,7 +42,10 @@ public class EmployeesDAOImpl implements EmployeesDAO {
 		if(con !=null) {
 			String query ="select e.*, d.department_name "
 					+ "from employees e inner join departments d "
-					+ "on e.department_id = d.department_id";
+					+ "on e.department_id = d.department_id " 
+					+ " where quit_date is null";
+			
+			
 			PreparedStatement pstmt = con.prepareStatement(query);
 			ResultSet rs = pstmt.executeQuery();
 			
@@ -157,5 +161,26 @@ System.out.println(getClass().getName()+ "VO 단");
 		}
 		
 		return result;
+	}
+
+	@Override
+	public int deleteEmp(int empNo, Date now) throws NamingException, SQLException {
+		
+		int result =0;
+		Connection con = DBConnection.dbConnect();
+		if(con!=null) {
+		String query = "update employees set quit_date = ? where employee_id = ? ";
+		
+		PreparedStatement pstmt = con.prepareStatement(query);
+		
+		pstmt.setDate(1, now);
+		pstmt.setInt(2, empNo);
+		result = pstmt.executeUpdate();
+
+		DBConnection.dbClose(pstmt, con);
+		
+		}
+		return result;
+		
 	}
 }

@@ -35,7 +35,7 @@ public class EmpDAOImpl implements Emp_ScottDAO {
 			//DB로 부터 받은 데이터가 있다면
 			if(con !=null) {
 				dd
-				//여기서 부터 다시
+				//여기서 부터 다시	
 				String query = "select e.empno,e.ename,e.job,e.mgr,e2.ename,e.hiredate,e.sal,e.comm,e.deptno, d.dname\r\n"
 						+ "from emp e , emp e2, dept d\r\n"
 						+ "where e.empno = e2.empno and d.deptno=e.deptno; ";

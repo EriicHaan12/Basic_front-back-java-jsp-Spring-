@@ -1,5 +1,6 @@
 package com.erichan.dao;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -27,6 +28,9 @@ public interface EmployeesDAO   {
 	// 저장 프로시져에서 예외가 날 경우 'error'라는 문자열을 반환 시켜주기 위한 메서드
 	String insertEmp(Employees empDto)throws NamingException, SQLException;
 	
+	
+	//사원을 삭제하는 메서드(사번, 현재날짜)
+	int deleteEmp(int empNo, Date quitDate) throws NamingException, SQLException;
 }
 
 
