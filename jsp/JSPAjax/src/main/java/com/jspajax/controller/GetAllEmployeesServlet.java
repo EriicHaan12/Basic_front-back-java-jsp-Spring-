@@ -35,11 +35,16 @@ public class GetAllEmployeesServlet extends HttpServlet {
 		resp.setContentType("application/json; charset=utf-8"); // json 형식으로 응답 받기
 		 PrintWriter out= resp.getWriter();
 		 
+		  String searchName =  req.getParameter("searchName");
+		
+		  
+		 System.out.println(searchName);
+		 
 		EmployeesDAO dao = EmployeesDAOImpl.getInstance();
 		try {
 		
 			
-		List<Employees> lst = dao.selectAllEmp();
+		List<Employees> lst = dao.selectAllEmp(searchName);
 		//Gson 라이브러리를 이용한 json 변환하기.
 //	String outputJson=	toJsonWithGson(lst);
 		

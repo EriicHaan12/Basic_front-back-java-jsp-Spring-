@@ -44,7 +44,7 @@ exec proc_insertfriend('고둘기','010-0101-0123','잘되겠지?');
 exec proc_saveemp('hong','chalchal','aa@na.com','010-1478-5548','21/06/23',
 'IT_PROG',9000,0.4,100);
 
-----------------------------------------------
+---------------------------------------------- 사원 수정 3-10(미완)
 -- ?번 사원의 이름을 수정 할 때
 update employees set first_name=? where employee_id=?;
 --? 번 사원의 성을 수정할 때
@@ -58,14 +58,26 @@ update employees set email=?, phone_number=? where employee_id=?;
 
 -- 해법
 -- 1) 수정할 사원 정보를 데이터 입력 UI에 바인딩 시켜 준 후, 
-select * from employees where employee_id = ?;
+select e.*,d.department_name
+from employees e inner join departments d
+on e.department_id = d.department_id
+where quit_date is null and employee_id = ?;
+
+
+
+
+
 
 --2) 모든 컬럼의 값을 update 시켜준다.(이렇게 짜주면 쿼리문이 하나만 나오게 된다.)
 update employees set first_name=?,last_name=?, email=?,phone_number=?,hire_date=?,job_id=?,salary=?,
 commission_pct=?,manager_id=?,department_id=?
 where employee_id=?;
 
----------------------------
+
+
+
+
+---------------------------------
 -- 삭제 작업
 -- 1) 실제 delete 문을 사용해야 하는 경우
 -- 삭제하기 전에 삭제 될 사원을 다른 테이블(ex oldEmp)에 옮겨야 함
@@ -92,3 +104,9 @@ select * from employees;
 
 -- 넣어줄 쿼리문
 update employees set quit_date = ? where employee_id =?;
+
+-- 퇴사한 사원만 보여주는 쿼리문
+
+select * from employees where quit_date is null;
+
+-- ------------------------------------3-13

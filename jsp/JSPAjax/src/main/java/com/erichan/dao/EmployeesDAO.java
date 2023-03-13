@@ -12,7 +12,7 @@ import com.erichan.vo.JobsVo;
 
 public interface EmployeesDAO   {
 //모든 직원 정보를 얻어오는 메서드
-	public abstract List<Employees> selectAllEmp() throws NamingException, SQLException;
+	public abstract List<Employees> selectAllEmp(String searchName) throws NamingException, SQLException;
 
 	//모든 jobs 정보를 얻어오는 메서드
 	//jobs는 dto를 해줄 필요가 없으니 Vo로 칭해주자
@@ -31,6 +31,15 @@ public interface EmployeesDAO   {
 	
 	//사원을 삭제하는 메서드(사번, 현재날짜)
 	int deleteEmp(int empNo, Date quitDate) throws NamingException, SQLException;
+
+//수정할 때 사번으로 해당 사번의 사원 정보를 얻어오는 메서드
+Employees selectEmployeeByEmpNo(int empNo)  throws NamingException, SQLException;
+
+
+// 사원 정보를 수정하는 메서드
+int updateEmployee(Employees dto)throws NamingException, SQLException;
+
+
 }
 
 

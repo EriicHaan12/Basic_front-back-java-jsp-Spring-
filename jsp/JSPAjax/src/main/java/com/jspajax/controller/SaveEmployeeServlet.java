@@ -23,13 +23,14 @@ import com.jspajax.etc.OutputJSONForError;
 public class SaveEmployeeServlet extends HttpServlet {
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		
 		resp.setContentType("application/json; charset=utf-8"); // json 형식으로 응답 받기
 		PrintWriter out = resp.getWriter();
 		
 		//request로 부터 넘어온 데이터를 데이터 타입 변경하여 얻어옴 (내가 얻어올 DTO 타입으로...)
-		String fristName = req.getParameter("FIRST_NAME");
+		String firstName = req.getParameter("FIRST_NAME");
 		String lastName = req.getParameter("LAST_NAME");
 		String email = req.getParameter("EMAIL");
 		String phoneNumber = req.getParameter("PHONE_NUMBER");
@@ -41,14 +42,14 @@ public class SaveEmployeeServlet extends HttpServlet {
 
 		float salary = Float.parseFloat(req.getParameter("SALARY"));
 
-		float cpmmissionPct = Float.parseFloat(req.getParameter("COMMISSION_PCT"));
+		float commissionPct = Float.parseFloat(req.getParameter("COMMISSION_PCT"));
 		int managerId = Integer.parseInt(req.getParameter("MANAGER_ID"));
 		int departmentId = Integer.parseInt(req.getParameter("DEPARTMENT_ID"));
 
 		// 저장 할 데이터를 DTO 객체로 만들어 DAO 단으로 전송
 		// 사번과 부서명 insert 할 데이터가 아니므로 초기값(0,null)으로 넣어준다.
-		Employees emp = new Employees(0, fristName, lastName, email, phoneNumber, hireDate, jobId, salary,
-				cpmmissionPct, managerId, departmentId, null);
+		Employees emp = new Employees(0, firstName, lastName, email, phoneNumber, hireDate, jobId, salary,
+				commissionPct, managerId, departmentId, null);
 		System.out.println(emp.toString());
 		
 		//저장 프로시저(Stored Procedure)를 사용하지 않는다면,,
@@ -72,12 +73,14 @@ public class SaveEmployeeServlet extends HttpServlet {
 			json.put("outputDate", outputDate);
 				
 			out.print(json.toJSONString());
+			
 		}else if(result.equals("error")) {
 			JSONObject json  = new JSONObject();
 			json.put("status", "fail");
 			String outputDate = new java.util.Date(System.currentTimeMillis()).toLocaleString();
 			json.put("outputDate", outputDate);
 //			out.print(OutputJSONForError.outputJson());
+			
 		}
 		
 	} catch (NamingException | SQLException e) {
