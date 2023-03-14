@@ -74,7 +74,7 @@ commission_pct=?,manager_id=?,department_id=?
 where employee_id=?;
 
 
-
+commit;
 
 
 ---------------------------------
@@ -110,3 +110,17 @@ update employees set quit_date = ? where employee_id =?;
 select * from employees where quit_date is null;
 
 -- ------------------------------------3-13
+-- 사원 이름으로 검색 
+
+
+select e.*,d.department_name
+from employees e inner join departments d
+on e.department_id = d.department_id
+where quit_date is null
+order by e.employee_id asc;
+
+
+
+select e.*, d.department_name 
+from employees e inner join departments d on e.department_id = d.department_id 
+where quit_date is null order by e.EMPLOYEE_ID asc;

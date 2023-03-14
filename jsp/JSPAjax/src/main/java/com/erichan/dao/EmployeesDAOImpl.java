@@ -32,22 +32,35 @@ public class EmployeesDAOImpl implements EmployeesDAO {
 	
 	
 	@Override
-	public List<Employees> selectAllEmp(String searchName) 
+	public List<Employees> selectAllEmp(String searchName, String sortBy) 
 			throws NamingException, SQLException {
 		System.out.println(getClass().getName()+ "DAO 단");
 		
 		List<Employees> lst = new ArrayList<>();
 		
 		Connection con = DBConnection.dbConnect();
+		
+	System.out.println(sortBy);
+		
 		if(con !=null) {
+			
+			if(sortBy.equals("hiredate")) {
+				sortBy="e.HIRE_DATE";
+			} else if(sortBy.equals("firstName")) {
+				sortBy ="e.FIRST_NAME";
+			}else {
+				sortBy="e.EMPLOYEE_ID";
+			}
+			System.out.println(sortBy);
 			String query ="select e.*, d.department_name "
 					+ "from employees e inner join departments d "
 					+ "on e.department_id = d.department_id " 
-					+ " where quit_date is null ";
-				//	+ "order by e.employee_id asc";
+					+ " where quit_date is null "
+					+ "order by "+ sortBy + "asc";
+			
 			
 			PreparedStatement pstmt = null;
-		
+			System.out.println(query);
 			if(searchName == null) {
 			pstmt = con.prepareStatement(query);						
 			}else if(searchName !=null) {

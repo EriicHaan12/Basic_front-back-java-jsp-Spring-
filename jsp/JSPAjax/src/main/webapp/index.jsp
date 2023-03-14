@@ -22,8 +22,8 @@
 	let inputSal = 0;
 	let inputManagerId = "";
 	let inputDeptId = "";
-
-	let sortBy="";
+	let searchName = "";
+	let sortBy="empNo";
 	let allEmpData = null;
 	let allDeptData = null;
 	//manager 및 department select할 때 insert 하기 위한 전역변수
@@ -39,6 +39,7 @@
 						
 						
 						// 정렬 기준 선택
+						
 	
 
 						$(".writeIcon").click(function() {
@@ -58,14 +59,25 @@
 						// 사원 이름으로 검색시 
 						//or keyup
 						$(".searchName").change(function() {
-							let searchName = $(this).val();
-							console.log($(this).val());
+							 searchName = $(this).val();
+							console.log(searchName);
 							if (searchName.length > 1) { // 두자 이상일 때 검색 시작하도록 
 
 								getAllEmployees(searchName);
 							}
+							
 						});
 						
+						
+						// 정렬 기준 선택
+						$(".orderMethod").change(function(){
+						if(	$("input[name=orderMethod]:checked")){
+							sortBy =$("input[name=orderMethod]:checked").val()
+					
+							getAllEmployees(searchName,sortBy);
+							}
+							console.log(sortBy)
+						})
 						
 						});
 						
@@ -94,7 +106,7 @@
 									console.log(data);
 									if (data.status == "success") {
 										alert("!");
-										getAllEmployees(); // 데이터 갱신 시켜주기 위해서
+										getAllEmployees(searchName,sortBy); // 데이터 갱신 시켜주기 위해서
 										$("#removeModal").hide();
 
 									} else if (data.status == "fail") {
@@ -159,7 +171,7 @@
 								success : function(data) {
 									console.log(data);
 									if (data.status == "success") {
-										getAllEmployees();
+										getAllEmployees(searchName,sortBy);
 										$("#modifyModal").hide();
 
 									} else if (data.status == "fail") {
@@ -304,7 +316,7 @@
 
 										$("#writeModal").hide();
 										writeModalInit();
-										getAllEmployees();
+										getAllEmployees(searchName,sortBy);
 
 									} else if (data.status == "fail") {
 										alert("저장에 실패 했습니다.");
@@ -386,18 +398,24 @@
 	}
 	
 	
-	
-		
-		
-	
+
 
 	// 모든 직원 데이터를 얻어오는 함수
-	function getAllEmployees(searchName) {
+	function getAllEmployees(searchName, sortBy) {
+	
 		let url = "getAllemployees.do";
+		url+="?";
+		
 		if (searchName != null) {
-			url += "?searchName=" + searchName;
-			console.log(searchName);
+			url += "searchName="+searchName +"&";	
 		}
+		if(sortBy !=null){
+			
+			url+="orderBy="+sortBy;
+		
+		}
+		console.log(url);
+		
 		$.ajax({
 			url : url, // 데이터가 송수신될 서버의 주소 // 서블릿 파일의 매핑 주소를 쓰면 된다.
 			type : "GET", // 통신 방식 (GET, POST, PUT, DELETE)
@@ -497,7 +515,7 @@
 		});
 	}
 	// 모든 직원 데이터 파싱하여 출력하는 함수
-	function outputEntireEmployees(json, sn, orderNum) {
+	function outputEntireEmployees(json, sn) {
 		let output = "<div class ='row' >"
 		$("#outputCnt").html("데이터 : " + json.count + "개");
 		$("#outputDate").html("출력 일시 : " + json.output);

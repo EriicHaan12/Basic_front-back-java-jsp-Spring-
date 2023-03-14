@@ -12,7 +12,7 @@ import com.erichan.vo.JobsVo;
 
 public interface EmployeesDAO   {
 //모든 직원 정보를 얻어오는 메서드
-	public abstract List<Employees> selectAllEmp(String searchName) throws NamingException, SQLException;
+	public abstract List<Employees> selectAllEmp(String searchName, String sortBy) throws NamingException, SQLException;
 
 	//모든 jobs 정보를 얻어오는 메서드
 	//jobs는 dto를 해줄 필요가 없으니 Vo로 칭해주자

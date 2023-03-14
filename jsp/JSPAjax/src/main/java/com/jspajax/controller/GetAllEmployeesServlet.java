@@ -36,15 +36,16 @@ public class GetAllEmployeesServlet extends HttpServlet {
 		 PrintWriter out= resp.getWriter();
 		 
 		  String searchName =  req.getParameter("searchName");
+		String sortBy = req.getParameter("orderBy");
 		
-		  
+		  System.out.println(sortBy);
 		 System.out.println(searchName);
 		 
 		EmployeesDAO dao = EmployeesDAOImpl.getInstance();
 		try {
 		
 			
-		List<Employees> lst = dao.selectAllEmp(searchName);
+		List<Employees> lst = dao.selectAllEmp(searchName, sortBy);
 		//Gson 라이브러리를 이용한 json 변환하기.
 //	String outputJson=	toJsonWithGson(lst);
 		
