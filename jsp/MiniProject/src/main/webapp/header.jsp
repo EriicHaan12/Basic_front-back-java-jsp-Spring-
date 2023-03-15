@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,10 +12,11 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
-	<c:set var="contextPath" value="<%=request.getContextPath() %>"/>
+	<c:set var="contextPath" value="<%=request.getContextPath()%>" />
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="${contextPath}/index.jsp">Home</a>
@@ -25,8 +26,10 @@
 			</button>
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="member/register.jsp">회원가입</a></li>
-					<li class="nav-item"><a class="nav-link" href="member/login.jsp">로그인</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="member/register.jsp">회원가입</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="member/login.jsp">로그인</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
 				</ul>
 			</div>

@@ -10,6 +10,7 @@ import com.mini.controller.MemberFactory;
 
 public interface MemberService {
 
-	MemberFactory execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException;
+	MemberFactory execute(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException;
 
 }

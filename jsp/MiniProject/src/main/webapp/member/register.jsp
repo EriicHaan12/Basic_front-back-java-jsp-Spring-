@@ -1,12 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>회원 가입 페이지</title>
-
-
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="../js/commonJs.js"></script>
 <style>
 fieldset {
 	padding: 10px;
@@ -28,6 +31,12 @@ legend {
 </style>
 
 <script>
+	$(document).ready(function(){
+		if(getParameter("status")=="fail"){
+			alert("회원가입 실패");
+		}
+	});
+
         // 회원 가입 버튼을 아래의 조건에 따라 유효성 검사를 하고,
         // 유효하면 1-1_sub.html 페이지에 데이터를 전송하자
         // 아이디 : 4자 이상 8자 이하 필수(소문자로 저장)
@@ -205,6 +214,7 @@ legend {
 
 </head>
 <body>
+<c:set var="contextPath" value="<%=request.getContextPath()%>" />
 	<jsp:include page="../header.jsp"></jsp:include>
 
 	<div class="container">
@@ -300,8 +310,8 @@ legend {
 			</div>
 
 			<div style="margin-top: 20px; text-align: center;">
-				<button type="submit" class="btn btn-success"
-					onclick="return registerValid();">회원가입</button>
+				<button type="submit" class="btn btn-success">회원가입</button>
+				<!-- 현재 유효성 검사가 잘 되지 않기 때문에 onclick을 삭제 시킴 -->
 				<button type="reset" class="btn btn-warning">취소</button>
 			</div>
 		</form>

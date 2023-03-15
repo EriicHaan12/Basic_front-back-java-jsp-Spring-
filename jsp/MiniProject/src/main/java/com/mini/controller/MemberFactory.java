@@ -4,6 +4,11 @@ import com.mini.service.MemberService;
 
 public class MemberFactory  {
 private static MemberFactory instance = null;
+private boolean isRedirect;// redirect 할 것인지 말것인지 구분해주기 위한 변수
+//default 는 false이다
+private String whereIsgo; // 만약 redirect 한다면 어느 페이지로 이동할 것인지 구분해주기 위한 변수
+
+
 
 //싱글톤
 private MemberFactory() {}
@@ -13,6 +18,24 @@ public static MemberFactory getInstance() {
 		instance = new MemberFactory();
 	}
 	return instance;
+}
+
+//
+public boolean isRedirect() {
+	return isRedirect;
+}
+
+public void setRedirect(boolean isRedirect) {
+	this.isRedirect = isRedirect;
+}
+
+
+public String getWhereIsgo() {
+	return whereIsgo;
+}
+
+public void setWhereIsgo(String whereIsgo) {
+	this.whereIsgo = whereIsgo;
 }
 
 /**

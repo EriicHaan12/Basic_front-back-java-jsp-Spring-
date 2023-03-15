@@ -38,7 +38,11 @@ private void doService(HttpServletRequest req, HttpServletResponse resp)throws S
 	MemberService service =	mf.getService(command);
 	
 	if(service!=null) {
-		service.execute(req, resp);
+		// 받아온 MemberFactory클래스의 mf를 service의 response에 넘겨주기
+		mf= service.execute(req, resp);
+	}
+	if(mf.isRedirect()) { // 
+		resp.sendRedirect(mf.getWhereIsgo());// 페이지를 지정해준 whereIsgo로 보내주기
 	}
 
 } 

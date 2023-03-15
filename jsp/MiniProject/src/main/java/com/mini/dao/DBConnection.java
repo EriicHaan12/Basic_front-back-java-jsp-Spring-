@@ -18,9 +18,9 @@ public class DBConnection {
 		//디렉토리 서비스에 의해 context.xml파일의 객체를 얻어와 (JNDI에 의해)
 		DataSource ds = (DataSource) envContext.lookup("jdbc/mySQL");  // 이부분도 context와 동일하게 바꿔준다.
 		// 아래 이름의 태그를 찾아 그 부분으로 부터 Connection 객체를 얻어온다는 의미
-		Connection conn = ds.getConnection();
-		System.out.println(conn.toString());
-		return conn;
+		Connection con = ds.getConnection();
+		System.out.println(con.toString());
+		return con;
 	}
 	
 	public static void dbClose(ResultSet rs, Statement pstmt, Connection con) throws SQLException {
