@@ -41,10 +41,12 @@ private void doService(HttpServletRequest req, HttpServletResponse resp)throws S
 		// 받아온 MemberFactory클래스의 mf를 service의 response에 넘겨주기
 		mf= service.execute(req, resp);
 	}
-	if(mf.isRedirect()) { // 
+	if( mf.isRedirect()) { // 
 		resp.sendRedirect(mf.getWhereIsgo());// 페이지를 지정해준 whereIsgo로 보내주기
 	}
 
+	return;
+	
 } 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)

@@ -1,6 +1,10 @@
 package com.mini.controller;
 
+import com.mini.service.DuplicateUserIdService;
+import com.mini.service.LoginMemberService;
+import com.mini.service.LogoutMemberService;
 import com.mini.service.MemberService;
+import com.mini.service.RegisterMemberService;
 
 public class MemberFactory  {
 private static MemberFactory instance = null;
@@ -50,8 +54,10 @@ public MemberService getService(String command) {
 		service = new LoginMemberService();
 	}else if(command.equals("/member/register.mem")) {
 		service = new RegisterMemberService();
-	}
-	
+	}else if(command.equals("/member/duplicateUserId.mem")) {
+		service= new DuplicateUserIdService();
+	}else if(command.equals("/member/logout.mem"))
+		service = new LogoutMemberService();
 	return service;
 }
 

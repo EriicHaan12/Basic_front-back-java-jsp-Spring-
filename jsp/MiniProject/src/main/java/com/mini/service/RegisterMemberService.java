@@ -1,4 +1,4 @@
-package com.mini.controller;
+package com.mini.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,10 +20,10 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 
+import com.mini.controller.MemberFactory;
 import com.mini.dao.MemberDAO;
 import com.mini.dao.MemberDAOImpl;
 import com.mini.error.CommonException;
-import com.mini.service.MemberService;
 import com.mini.voDto.MemberDTO;
 
 public class RegisterMemberService implements MemberService {
@@ -186,9 +186,11 @@ public class RegisterMemberService implements MemberService {
 		}
 		
 		// 만약 base64 문자열로 파일을 DB에 넣고 싶다면...
-		
-		String strUpFilePath= realPath + File.separator + userImg; // 업로드된 파일의 경로
-		makeFileToBase64String(strUpFilePath,realPath,userImg);
+		if(userImg!="") { //이미지를 업로드 하지 않는다면 "" 즉 아무것도 안올라가도록
+			String strUpFilePath= realPath + File.separator + userImg; // 업로드된 파일의 경로
+//			makeFileToBase64String(strUpFilePath,realPath,userImg);
+		}
+
 		
 		
 		
@@ -228,7 +230,7 @@ public class RegisterMemberService implements MemberService {
 				//forward 
 				// 프로그래머가 코드를 잘못 입력 하였을 경우
 				CommonException ce =new CommonException(e.getMessage(), 99);
-					
+					//throw ce; 강제로 예외를 발생 시킴
 					ce.setErrorMsg(e.getMessage());
 					ce.setStackTrace(e.getStackTrace());
 					
@@ -240,10 +242,12 @@ public class RegisterMemberService implements MemberService {
 					//페이지를 이동시키기(fowarding 시켜주기 ) 떄문에 return을 해줄 필요가 없다
 					
 			}else if(e instanceof SQLException) {
-				// 유저가 회원정보 입력 떄 잘못 입력 하였을 경우 처리 하는 에러
+				// 유저가 회원정보 입력 때 잘못 입력 하였을 경우 나는 에러
+				//SQL Exception 은 대부분 실제 유저의 입력 오류로 인한 예외
 				
 				mf.setRedirect(true);// 에러가 떴을 때 에러가 떴다는 상태를 쿼리스트링으로 보내주기 위해
-				mf.setWhereIsgo("../index.jsp?status=fail");
+				mf.setWhereIsgo("../register.jsp?status=fail"); // 다시 회원가입하라고 register.jsp 페이지로 이동시켜주기
+				//(대신쿼리 스트링을 status=fail을 달아서 보내준다, 이후 회원가입이 실패했다는 사실을 유저에게 알리기 위해)
 				return mf;
 			}
 		
