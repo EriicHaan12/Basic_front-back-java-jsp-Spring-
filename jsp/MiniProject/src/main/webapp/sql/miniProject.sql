@@ -77,10 +77,13 @@ add constraint memberpoint_why_fk foreign key(why) references pointpolicy(why);
 -- alter table memberpoint
 -- add constraint memberpoint_howmuch_fk foreign key(howmuch) references pointpolicy(howmuch);
 
-
+select * from member;
 select * from hjw.pointpolicy;
 select * from memberpoint;
 select * from pointpolicy;
 insert into pointpolicy values('게시판답글쓰기','1');
 
 insert into memberpoint(who,why,howmuch) values('aa112','로그인','10');
+
+
+select *from hjw.memberpoint;

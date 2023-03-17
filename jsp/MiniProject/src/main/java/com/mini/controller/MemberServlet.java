@@ -2,6 +2,7 @@ package com.mini.controller;
 
 import java.io.IOException;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,9 +40,14 @@ private void doService(HttpServletRequest req, HttpServletResponse resp)throws S
 	
 	if(service!=null) {
 		// 받아온 MemberFactory클래스의 mf를 service의 response에 넘겨주기
-		mf= service.execute(req, resp);
+		try {
+			mf= service.execute(req, resp);
+		} catch (ServletException | IOException | MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	if( mf.isRedirect()) { // 
+	if(mf!=null &&mf.isRedirect()) { // 
 		resp.sendRedirect(mf.getWhereIsgo());// 페이지를 지정해준 whereIsgo로 보내주기
 	}
 

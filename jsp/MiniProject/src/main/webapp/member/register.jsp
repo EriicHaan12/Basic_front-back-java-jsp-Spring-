@@ -161,7 +161,8 @@ function validImg(){
 		let	idValid = idCheck();
 		let pwd1Valid = validPwd1();
 		let pwd2Valid = validPwd2();
-		let emailValid = validEmail();
+		let emailValid = validEmail(); // 이메일 유효성 검사
+		let isUsedMail = $("#isUsedMail").val();
 		let mobileValid = validMobile();
 		let imgValid = validImg();
 		
@@ -173,7 +174,7 @@ function validImg(){
 				isAgree=true;
 		}
 		
-			if(idValid && pwd1Valid && pwd2Valid && emailValid && mobileValid && imgValid &&isAgree){
+			if(idValid && pwd1Valid && pwd2Valid && emailValid && mobileValid && imgValid &&isAgree &&isUsedMail =="Y"){
 				allCheckOk= true;
 				}else{
 					allCheckOk = false;
@@ -192,7 +193,11 @@ function validImg(){
             outputError("이메일 주소형식이 아니에요", $("#email"),"on","red");
         } else {
             isValid = true;
+            // 띄워준 에러 메세지 지우기
             clearError($("#email"));
+            // 
+            $(".comfirmMailDiv").show(200);
+            
         }
 
         return isValid;
@@ -250,8 +255,6 @@ function validImg(){
 	   	return isValid;
 	   	}
 	   	  
-	       
-	       
 	       function clearError(tagObj){
 	    	   let errTag = $(tagObj).next();
 	    	   $(errTag).html('');
@@ -273,9 +276,50 @@ function validImg(){
 	           
 	       }
 
-	
+	function sendeMail(){
+		let mailAddr=$("#email").val();
+		$.ajax({
+			url : "sendMail.mem", 
+			type : "post", // 통신 방식 (GET, POST, PUT, DELETE)
+			data : {"mailAddr" : mailAddr
+			}, // 서블릿에 전송할 데이터
+			dataType : "json", //
+			success : function(data) { //
+				console.log(data);
 
+				if (data.status == "success") {
+					alert("메일을 발송 했습니다");
+				} else if(data.status=="fail"){
+					alert("다시 시도해 주세요.");
+				}
+				
+			}
+		});
+	}
 
+	function confrimCode(){
+		let uic = $("#userInputCode").val();
+		$.ajax({
+			url : "confirmCode.mem", 
+			type : "post", // 통신 방식 (GET, POST, PUT, DELETE)
+			data : {"uic" : uic
+			}, // 서블릿에 전송할 데이터
+			dataType : "json", //
+			success : function(data) { //
+				console.log(data);
+
+				if (data.status == "success") {
+					alert("사용 가능한 메일 입니다");
+					$("#isUsedMail").val("Y");
+				} else if(data.status=="fail"){
+					alert("메일 주소를 다시 확인 해주세요");
+				}
+				
+			}
+		});
+		
+		
+	}
 
         // 비밀번호 : 4자 이상 12자 이하 필수(비밀번호 확인과 동일할것)
         // 이름 : 필수 항목
@@ -325,6 +369,20 @@ function validImg(){
 					class="form-control" id="email" placeholder="Enter your 2매일"
 					name="email" />
 				<div class='errMsg'></div>
+				<!-- 이메일의 유효성 검사를 마치고 인증코드를 받아 제대로 넣었을 때 마찬가지로 -->
+				<input type="hidden" id="isUsedMail" value="N">
+				
+				<!--  이메일 인증 시 나올 div 태그 -->
+				<!-- 하나의 form 태그에는 하나의 submit 버튼이 있어야한다. -->
+				<div class="comfirmMailDiv" style="display:none;">
+				<button type="button" class="btn btn-success" onclick="return sendeMail();" >이메일 발송</button>
+				<input type="text"  id="userInputCode" 
+				placeholder="이메일로 발송된 코드 입력..." name="userInputCode">
+					<button type="button" class="btn btn-success" onclick="return confrimCode();" >확인</button>
+				
+				</div>
+				
+				
 			</div>
 
 			<div class="mb-3 mt-3">

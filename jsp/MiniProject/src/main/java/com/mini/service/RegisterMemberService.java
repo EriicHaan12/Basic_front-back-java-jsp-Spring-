@@ -208,6 +208,12 @@ public class RegisterMemberService implements MemberService {
 		try {
 			
 		if(	dao.insertMember(member)==1) { // 회원가입이 잘되었을 경우
+				
+			// memberpoint 테이블에 회원가입 점수 부여 insert 
+			// 하지만 트랜잭션 처리를 위해 COnnection 객체가 서비스 단에 없기 떄문에 
+			
+			// DAO 단에서 insertMember를 호출 해줘야만 한다 (어쩔수 없이...)
+			
 			mf.setRedirect(true);// 잘되면 redirect 해서 index로 보내기 위한 코드
 			mf.setWhereIsgo("../index.jsp?status=success");
 			

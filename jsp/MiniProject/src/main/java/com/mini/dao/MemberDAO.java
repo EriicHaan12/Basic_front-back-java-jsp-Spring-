@@ -1,5 +1,6 @@
 package com.mini.dao;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.naming.NamingException;
@@ -16,5 +17,10 @@ public interface MemberDAO {
 	
 	//로그인
 	MemberDTO loginUser(LoginDTO dto)throws NamingException, SQLException;
+	
+	
+	// 포인트 점수 부여
+	// 커넥션을 따로 열고 닫으면 insert를 할 때랑 다른 객체로 인식 되기 때문에 insert 때 얼어준 connection을 같이 받아준다.
+	int addPoint(String userId, String why, Connection con )throws NamingException, SQLException;
 	
 }

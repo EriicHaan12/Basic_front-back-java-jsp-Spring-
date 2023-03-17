@@ -65,7 +65,29 @@ public class MemberDAOImpl implements MemberDAO{
 				pstmt.setString(8,dto.getMemo());
 			}
 			
+			// 회원가입과 포인트 부여가 트랜잭션 처리가 되어야함
+			
+			// 트랜잭션 밑작업
+			con.setAutoCommit(false); // 자동으로 commit 되는것을 막아야한다. commit 되는것을 되돌리는 방법이 없기 때문
+			
 			result = pstmt.executeUpdate(); // int타입으로 반환 executeUpdate
+			
+			
+			
+			if(result ==1) {
+				//회원가입한 유저에게 포인트 부여
+			int result2 = addPoint(dto.getUserId(),"회원가입", con);
+			
+			if(result2==1) {
+				con.commit(); // 이 떄 커밋 시켜주기
+			}else {
+				con.rollback(); // insert는 잘됬지만 포인트 부여쪽에서 error가 났다면 rollback
+				}
+			
+			}
+			
+			// 트랜잭션이 끝났기 때문에 다시 setAutoCommit을 다시 default로 돌려준다. 
+			con.setAutoCommit(true);
 			DBConnection.dbClose(pstmt, con);
 		}
 		
@@ -123,5 +145,30 @@ public class MemberDAOImpl implements MemberDAO{
 		}
 		
 		return member;
+	}
+	@Override
+	public int addPoint(String userId, String why ,Connection con) throws NamingException, SQLException {
+		int result = 0;
+		
+		System.out.println("포인트 부여 하는곳 ");
+		// insert와 함께 트랜잭션을 쓰기 위해 따로 Connection을 열어주지 않는다
+	//	Connection con = DBConnection.dbConnect();
+		if(con != null) {
+			String query = " insert into memberpoint(who, why, howmuch) "
+					+ "values(?, ?, (select howmuch from pointpolicy where why =?))";
+			PreparedStatement pstmt = null;
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1,userId);
+			pstmt.setString(2,why);
+			pstmt.setString(3,why);
+			
+			result = pstmt.executeUpdate();
+			
+			System.out.println("포인트 부여 결과 : " + result);
+			
+			//열어주지 않았기 때문에 닫는것도 주석처리
+			//DBConnection.dbClose(pstmt, con);
+		}
+		return result;
 	}
 }
