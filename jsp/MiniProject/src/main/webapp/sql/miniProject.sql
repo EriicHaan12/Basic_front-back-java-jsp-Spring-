@@ -79,11 +79,57 @@ add constraint memberpoint_why_fk foreign key(why) references pointpolicy(why);
 
 select * from member;
 select * from hjw.pointpolicy;
+-- 맴버 포인트 조회
 select * from memberpoint;
 select * from pointpolicy;
-insert into pointpolicy values('게시판답글쓰기','1');
+insert into pointpolicy values('게시물 신고','-10');
 
 insert into memberpoint(who,why,howmuch) values('aa112','로그인','10');
 
-
+select *from hjw.member;
 select *from hjw.memberpoint;
+
+-- 유저에게 포인트를 부여하는 쿼리문
+insert into memberpoint(who,why,howmuch) 
+values(?,'회원가입',(select howmuch from pointpolicy where why ='회원가입'));
+
+-- 로그인 기록 관리 테이블 생성
+CREATE TABLE `latestloginlog` (
+  `who` varchar(8) NOT NULL,
+  `latestLoginDate` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`who`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- member, lastestloginlog 관계 지정
+alter table latestloginlog
+add constraint member_userIlatestloginlogd_fk foreign key (who) references member(userId);
+
+
+-- 처음 로그인한 것이 아니고, 로그인 하고 날짜가 바뀌었으면 0 보다 크게 설정 
+-- 처음 로그인한것이 아니고, 날짜가 바뀐 것이 아니면 0;
+
+select* from latestloginlog;
+
+-- 처음 로그인한 사람의 로그인 기록을 남기는 쿼리문
+insert into latestloginlog(who) values(?);
+
+-- 기존 로그인한 기족이 있는 사람 update 하는 쿼리문
+update latestloginlog set latestLoginDate =now() where who = ?;
+ 
+
+
+-- 최근 로그인 한 것이 날짜가 바뀌었는가?
+
+select * from hjw.latestloginlog;
+-- 회원 가입 후 처음 로그인 하면 null 
+-- 과거 로그인 했던 기록이 언제 였는지(없다면 -1)
+select ifnull(a.diff,-1)as datediff from(select datediff(now(), (select latestlogindate from latestloginlog where who='hanoo2')) as diff)a ;
+
+select datediff(now(), (select latestlogindate from latestloginlog where who='hanoo2')) as diff;
+-- select TIMESTAMPDIFF(day, now(), (select latestlogindate from latestloginlog where who='aa112')  ) as diff;
+
+
+
+-- 유저 아이디로 회원 정보 불러오기
+
+select * from member where userId =? ;

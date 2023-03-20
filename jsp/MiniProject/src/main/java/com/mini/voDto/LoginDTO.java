@@ -5,11 +5,9 @@ public class LoginDTO {
 	private String userId;
 	private String pwd;
 	
-	
 	public String getUserId() {
 		return userId;
 	}
-
 	public String getPwd() {
 		return pwd;
 	}

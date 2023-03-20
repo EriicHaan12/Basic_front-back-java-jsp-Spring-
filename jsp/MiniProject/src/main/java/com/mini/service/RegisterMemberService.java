@@ -196,7 +196,7 @@ public class RegisterMemberService implements MemberService {
 		
 		// DAO으로 전송하기 위해
 		MemberDTO member = new MemberDTO(userId, userPwd, userEmail, userMobile, userGender, hobbies, job, dbUserImg,
-				memo);
+				memo, null);
 
 		System.out.println(member.toString());
 

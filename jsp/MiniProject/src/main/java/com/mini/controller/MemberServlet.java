@@ -42,7 +42,7 @@ private void doService(HttpServletRequest req, HttpServletResponse resp)throws S
 		// 받아온 MemberFactory클래스의 mf를 service의 response에 넘겨주기
 		try {
 			mf= service.execute(req, resp);
-		} catch (ServletException | IOException | MessagingException e) {
+		} catch (ServletException | IOException  e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -9,7 +9,8 @@
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
 	<div class="container">
-		<jsp:include page="footer(3-02).jsp"></jsp:include>
+		<h1>index.jsp</h1>
 	</div>
+	<jsp:include page="footer(3-02).jsp"></jsp:include>
 </body>
 </html>	

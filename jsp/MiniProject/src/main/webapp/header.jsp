@@ -41,11 +41,13 @@
 					<c:choose>
 						<c:when test="${sessionScope.loginMember!= null }">
 							<!-- 로그인 성공 -->
-							<li class="nav-item"><a class="nav-link" href="logout.mem">로그아웃</a></li>
+							<li class="nav-item"><a class="nav-link" href="${contextPath }/member/logout.mem">로그아웃</a></li>
 							
-							<li class="nav-item"><a class="nav-link" href=""><img
+							<li class="nav-item"><a class="nav-link" href="${contextPath }/member/myPage.mem?userId=${sessionScope.loginMember.userId}"><img
 							class="userImg" src="${contextPath}/${sessionScope.loginMember.userImg}"/> ${sessionScope.loginMember.userId}		
 							</a></li>
+							
+							<li class="nav-item"><a class="nav-link" href="${contextPath }/admin/admin.jsp">관리자페이지</a></li>
 						</c:when>
 						
 						<c:otherwise>

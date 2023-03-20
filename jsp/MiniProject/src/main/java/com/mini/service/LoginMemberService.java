@@ -34,8 +34,8 @@ public class LoginMemberService implements MemberService {
 		
 	//강사님께 여쭤보기
 		try {
-			 MemberDTO loginMember =  MemberDAOImpl.getinstance().loginUser(dto);
-			 if(loginMember!= null) { // 로그인 성공
+			MemberDTO loginMember=  MemberDAOImpl.getinstance().loginWithTransaction(dto);
+			 if(loginMember != null) { // 로그인 성공
 				 System.out.println("로그인 성공!");
 				 
 				 //로그인한 유저의 정보를 세션객체에 바인딩
@@ -43,8 +43,8 @@ public class LoginMemberService implements MemberService {
 				 
 				 ses.setAttribute("loginMember",loginMember); 
 				 
-				 System.out.println("세션으로 넘겨 받은 객체 : " + ses.toString());
-				 req.getRequestDispatcher("../index.jsp").forward(req, resp); // 파인딩 된 객체 페이지 이동(포워딩)
+				 System.out.println("세션으로 넘겨받은 ses : " + ses.toString());
+				 req.getRequestDispatcher("../index.jsp").forward(req, resp); // 바인딩 된 객체 페이지 이동(포워딩)
 				// 성공했을 때는 객체를 데이터를 넘겨주고
 				 
 			 }else {
