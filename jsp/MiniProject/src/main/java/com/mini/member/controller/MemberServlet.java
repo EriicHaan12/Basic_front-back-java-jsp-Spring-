@@ -1,4 +1,4 @@
-package com.mini.controller;
+package com.mini.member.controller;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mini.service.MemberService;
+import com.mini.member.service.MemberService;
 
 @WebServlet("*.mem")// .mem 으로 끝나는 모든 매핑 주소에 대해 현재의 서블릿이 동작한다는 것을 의미.
 public class MemberServlet extends HttpServlet {
@@ -22,7 +22,8 @@ public class MemberServlet extends HttpServlet {
 	
 	// 내가 만든 doService 으로 doGet, doPost(즉, GET방식으로 호출하든, POST 방식으로 호출하든 
 	// 호출 받은 데이터 모두 doService 메소드로 받기)
-private void doService(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException{
+private void doService(HttpServletRequest req, HttpServletResponse resp)
+		throws ServletException, IOException{
 	System.out.println(this.getServletName()+"동작");
 	System.out.println("요청한 페이지 :" + req.getRequestURL());
 	System.out.println("요청한 URL :" + req.getRequestURI());

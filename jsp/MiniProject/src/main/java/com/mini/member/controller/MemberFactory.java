@@ -1,13 +1,13 @@
-package com.mini.controller;
+package com.mini.member.controller;
 
-import com.mini.service.ConfirmCodeService;
-import com.mini.service.DuplicateUserIdService;
-import com.mini.service.LoginMemberService;
-import com.mini.service.LogoutMemberService;
-import com.mini.service.MemberService;
-import com.mini.service.MyPageMemberService;
-import com.mini.service.RegisterMemberService;
-import com.mini.service.SendMailService;
+import com.mini.member.service.ConfirmCodeService;
+import com.mini.member.service.DuplicateUserIdService;
+import com.mini.member.service.LoginMemberService;
+import com.mini.member.service.LogoutMemberService;
+import com.mini.member.service.MemberService;
+import com.mini.member.service.MyPageMemberService;
+import com.mini.member.service.RegisterMemberService;
+import com.mini.member.service.SendMailService;
 
 public class MemberFactory {
 	private static MemberFactory instance = null;

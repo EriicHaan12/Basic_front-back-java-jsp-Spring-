@@ -1,4 +1,4 @@
-package com.mini.service;
+package com.mini.member.service;
 
 import java.io.IOException;
 
@@ -6,7 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mini.controller.MemberFactory;
+import com.mini.member.controller.MemberFactory;
 
 public interface MemberService {
 

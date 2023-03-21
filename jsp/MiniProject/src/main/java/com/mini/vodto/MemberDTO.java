@@ -1,4 +1,4 @@
-package com.mini.voDto;
+package com.mini.vodto;
 
 public class MemberDTO {
 	// VO로 만들려고 했지만
@@ -95,6 +95,8 @@ public class MemberDTO {
 	public void setIsAdmin(String isAdmin) {
 		this.isAdmin = isAdmin;
 	}
+
+
 
 	public MemberDTO(String userId, String userPwd, String userEmail, String userMobile, String userGender,
 			String hobbies, String job, String userImg, String memo, String isAdmin) {

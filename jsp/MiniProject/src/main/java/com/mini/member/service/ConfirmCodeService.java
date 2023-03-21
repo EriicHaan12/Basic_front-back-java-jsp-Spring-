@@ -1,4 +1,4 @@
-package com.mini.service;
+package com.mini.member.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 
 import com.google.gson.JsonObject;
-import com.mini.controller.MemberFactory;
+import com.mini.member.controller.MemberFactory;
 
 public class ConfirmCodeService implements MemberService {
 

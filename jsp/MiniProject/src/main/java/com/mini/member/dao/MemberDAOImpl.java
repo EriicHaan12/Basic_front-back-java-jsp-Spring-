@@ -1,4 +1,4 @@
-package com.mini.dao;
+package com.mini.member.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,9 +9,9 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
-import com.mini.voDto.LoginDTO;
-import com.mini.voDto.MemberDTO;
-import com.mini.voDto.MemberPoinVo;
+import com.mini.vodto.LoginDTO;
+import com.mini.vodto.MemberDTO;
+import com.mini.vodto.MemberPointVo;
 
 public class MemberDAOImpl implements MemberDAO {
 
@@ -116,7 +116,6 @@ public class MemberDAOImpl implements MemberDAO {
 
 		return result;
 	}
-
 	@Override
 	public MemberDTO loginUser(LoginDTO dto, Connection con) throws NamingException, SQLException {
 
@@ -132,19 +131,17 @@ public class MemberDAOImpl implements MemberDAO {
 			pstmt.setString(2, dto.getPwd());
 
 			ResultSet rs = pstmt.executeQuery();
-
+/////////
 			while (rs.next()) {
 				member = new MemberDTO(rs.getString("userId"), rs.getString("userPwd"), rs.getString("userEmail"),
 						rs.getString("userMobile"), rs.getString("userGender"), rs.getString("hobbies"),
-						rs.getString("job"), rs.getString("userImg"), rs.getString("memo"),rs.getString("isAdmin"));
+						rs.getString("job"), rs.getString("userImg"), rs.getString("memo"), rs.getString("isAdmin"));
 
 			}
 			// DBConnection.dbClose(rs, pstmt, con);
 		}
-
 		return member;
 	}
-
 	@Override
 	public int addPoint(String userId, String why, Connection con) throws NamingException, SQLException {
 		int result = 0;
@@ -170,7 +167,6 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 		return result;
 	}
-
 	/**
 	 * result = -1 (null : 처음 로그인) -> 추후에 insert result = 0 (같은 일자에 로그인한 기록이 있는 유저)
 	 * -> 추후에 update result = 1 (최근 로그인 한 날짜가 오늘이 아닌 유저) -> 추후에 update
@@ -285,29 +281,24 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public List<MemberPoinVo> getMemberPoint(String userId) throws NamingException, SQLException {
-		List<MemberPoinVo> lst = new ArrayList<>();
-		MemberPoinVo mpv = null;
+	public List<MemberPointVo> getMemberPoint(String userId) throws NamingException, SQLException {
+		List<MemberPointVo> lst = new ArrayList<>();
+		MemberPointVo mpv = null;
 		Connection con = DBConnection.dbConnect();
 		if (con != null) {
 			String query = "select * from memberpoint where who = ? order by no desc";
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setString(1, userId);
 			ResultSet rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				lst.add(new MemberPoinVo(
-								rs.getInt("no"), 
-								rs.getString("who"), 
-								rs.getTimestamp("when"), 
-								rs.getString("why"),
-								rs.getInt("howmuch")));
-		
+
+			while (rs.next()) {
+				lst.add(new MemberPointVo(rs.getInt("no"), rs.getString("who"), rs.getTimestamp("when"),
+						rs.getString("why"), rs.getInt("howmuch")));
 			}
-		
-		DBConnection.dbClose(rs, pstmt, con);
-	
+
+			DBConnection.dbClose(rs, pstmt, con);
+
 		}
 		return lst;
-		}
+	}
 }

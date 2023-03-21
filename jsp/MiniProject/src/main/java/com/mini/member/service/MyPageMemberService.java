@@ -1,4 +1,4 @@
-package com.mini.service;
+package com.mini.member.service;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mini.controller.MemberFactory;
-import com.mini.dao.MemberDAO;
-import com.mini.dao.MemberDAOImpl;
-import com.mini.voDto.MemberDTO;
-import com.mini.voDto.MemberPoinVo;
+import com.mini.member.controller.MemberFactory;
+import com.mini.member.dao.MemberDAO;
+import com.mini.member.dao.MemberDAOImpl;
+import com.mini.vodto.MemberDTO;
+import com.mini.vodto.MemberPointVo;
 
 public class MyPageMemberService implements MemberService {
 
@@ -43,7 +43,7 @@ public class MyPageMemberService implements MemberService {
 				
 				System.out.println("memberInfo : " + memberInfo.toString());
 				
-				List<MemberPoinVo> mpv = dao.getMemberPoint(userId);
+				List<MemberPointVo> mpv = dao.getMemberPoint(userId);
 				
 				
 				req.setAttribute("memberInfo", memberInfo);

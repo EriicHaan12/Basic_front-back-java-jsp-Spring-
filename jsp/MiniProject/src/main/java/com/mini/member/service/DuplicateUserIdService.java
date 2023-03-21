@@ -1,4 +1,4 @@
-package com.mini.service;
+package com.mini.member.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 
 import com.google.gson.JsonObject;
-import com.mini.controller.MemberFactory;
-import com.mini.dao.MemberDAOImpl;
 import com.mini.error.CommonException;
+import com.mini.member.controller.MemberFactory;
+import com.mini.member.dao.MemberDAOImpl;
 
 public class DuplicateUserIdService implements MemberService {
 

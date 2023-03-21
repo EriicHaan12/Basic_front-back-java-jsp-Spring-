@@ -31,10 +31,9 @@ legend {
 	padding: 10px;
 }
 
-#memberImgPreview{
-width: 70px;
+#memberImgPreview {
+	width: 70px;
 }
-
 </style>
 
 <script>
@@ -361,7 +360,7 @@ function validImg(){
 			<div class="mb-3">
 				<label for="pwd2">Password Confirm:</label> <input type="password"
 					class="form-control" id="pwd2" placeholder="Enter password" />
-			<div class='errMsg'></div>
+				<div class='errMsg'></div>
 			</div>
 
 			<div class="mb-3 mt-3">
@@ -371,18 +370,20 @@ function validImg(){
 				<div class='errMsg'></div>
 				<!-- 이메일의 유효성 검사를 마치고 인증코드를 받아 제대로 넣었을 때 마찬가지로 -->
 				<input type="hidden" id="isUsedMail" value="N">
-				
+
 				<!--  이메일 인증 시 나올 div 태그 -->
 				<!-- 하나의 form 태그에는 하나의 submit 버튼이 있어야한다. -->
-				<div class="comfirmMailDiv" style="display:none;">
-				<button type="button" class="btn btn-success" onclick="return sendeMail();" >이메일 발송</button>
-				<input type="text"  id="userInputCode" 
-				placeholder="이메일로 발송된 코드 입력..." name="userInputCode">
-					<button type="button" class="btn btn-success" onclick="return confrimCode();" >확인</button>
-				
+				<div class="comfirmMailDiv" style="display: none;">
+					<button type="button" class="btn btn-success"
+						onclick="return sendeMail();">이메일 발송</button>
+					<input type="text" id="userInputCode"
+						placeholder="이메일로 발송된 코드 입력..." name="userInputCode">
+					<button type="button" class="btn btn-success"
+						onclick="return confrimCode();">확인</button>
+
 				</div>
-				
-				
+
+
 			</div>
 
 			<div class="mb-3 mt-3">
@@ -396,7 +397,7 @@ function validImg(){
 				<legend>성별</legend>
 				<div class="form-check">
 					<input type="radio" class="form-check-input" id="radio1"
-						name="gender" value="f" checked/> <label class="form-check-label"
+						name="gender" value="f" checked /> <label class="form-check-label"
 						for="radio1">여성</label>
 				</div>
 				<div class="form-check">
@@ -436,12 +437,12 @@ function validImg(){
 
 			<div class="form-check">
 				<label class="form-check-label" for="memberImg">이미지 : </label> <input
-					type="file" id="memberImg" name="memberImg"/>
-					
-					<div>
-					<img id = "memberImgPreview"/>
-					</div>
-					
+					type="file" id="memberImg" name="memberImg" />
+
+				<div>
+					<img id="memberImgPreview" />
+				</div>
+
 			</div>
 
 			<div class="form-check">

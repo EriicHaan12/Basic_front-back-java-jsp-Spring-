@@ -1,4 +1,4 @@
-package com.mini.service;
+package com.mini.member.service;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mini.controller.MemberFactory;
-import com.mini.dao.MemberDAOImpl;
 import com.mini.error.CommonException;
-import com.mini.voDto.LoginDTO;
-import com.mini.voDto.MemberDTO;
+import com.mini.member.controller.MemberFactory;
+import com.mini.member.dao.MemberDAOImpl;
+import com.mini.vodto.LoginDTO;
+import com.mini.vodto.MemberDTO;
 
 
 public class LoginMemberService implements MemberService {
@@ -32,7 +32,6 @@ public class LoginMemberService implements MemberService {
 		
 		System.out.println(dto.toString());
 		
-	//강사님께 여쭤보기
 		try {
 			MemberDTO loginMember=  MemberDAOImpl.getinstance().loginWithTransaction(dto);
 			 if(loginMember != null) { // 로그인 성공
@@ -42,9 +41,10 @@ public class LoginMemberService implements MemberService {
 				 HttpSession ses =  req.getSession();
 				 
 				 ses.setAttribute("loginMember",loginMember); 
-				 
+					mf.setRedirect(true);
+					mf.setWhereIsgo("../index.jsp");
 				 System.out.println("세션으로 넘겨받은 ses : " + ses.toString());
-				 req.getRequestDispatcher("../index.jsp").forward(req, resp); // 바인딩 된 객체 페이지 이동(포워딩)
+				// req.getRequestDispatcher("../index.jsp").forward(req, resp); // 바인딩 된 객체 페이지 이동(포워딩)
 				// 성공했을 때는 객체를 데이터를 넘겨주고
 				 
 			 }else {

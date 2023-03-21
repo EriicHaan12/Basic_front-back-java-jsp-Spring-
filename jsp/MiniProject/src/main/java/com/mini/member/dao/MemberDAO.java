@@ -1,4 +1,4 @@
-package com.mini.dao;
+package com.mini.member.dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -6,9 +6,9 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
-import com.mini.voDto.LoginDTO;
-import com.mini.voDto.MemberDTO;
-import com.mini.voDto.MemberPoinVo;
+import com.mini.vodto.LoginDTO;
+import com.mini.vodto.MemberDTO;
+import com.mini.vodto.MemberPointVo;
 
 public interface MemberDAO {
 	//회원 가입 
@@ -40,6 +40,6 @@ public interface MemberDAO {
 	MemberDTO getMemberInfo(String userId)throws NamingException, SQLException;
 	
 	//한 유저의 포인트 내역 가져오기
-	List<MemberPoinVo> getMemberPoint(String userId)throws NamingException, SQLException;
+	List<MemberPointVo> getMemberPoint(String userId)throws NamingException, SQLException;
 	
 }

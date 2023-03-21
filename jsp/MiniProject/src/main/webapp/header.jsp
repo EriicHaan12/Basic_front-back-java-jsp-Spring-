@@ -36,23 +36,28 @@
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link"
 						href="member/register.jsp">회원가입</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">게시판</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="board/listAll.bo">게시판</a></li>
 
 					<c:choose>
 						<c:when test="${sessionScope.loginMember!= null }">
 							<!-- 로그인 성공 -->
-							<li class="nav-item"><a class="nav-link" href="${contextPath }/member/logout.mem">로그아웃</a></li>
-							
-							<li class="nav-item"><a class="nav-link" href="${contextPath }/member/myPage.mem?userId=${sessionScope.loginMember.userId}"><img
-							class="userImg" src="${contextPath}/${sessionScope.loginMember.userImg}"/> ${sessionScope.loginMember.userId}		
-							</a></li>
-							
-							<li class="nav-item"><a class="nav-link" href="${contextPath }/admin/admin.jsp">관리자페이지</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="${contextPath }/member/logout.mem">로그아웃</a></li>
+
+							<li class="nav-item"><a class="nav-link"
+								href="${contextPath }/member/myPage.mem?userId=${sessionScope.loginMember.userId}"><img
+									class="userImg"
+									src="${contextPath}/${sessionScope.loginMember.userImg}" />
+									${sessionScope.loginMember.userId} </a></li>
+
+							<li class="nav-item"><a class="nav-link"
+								href="${contextPath }/admin/admin.jsp">관리자페이지</a></li>
 						</c:when>
-						
+
 						<c:otherwise>
 							<li class="nav-item"><a class="nav-link"
-								href="member/login.jsp">로그인</a></li>
+								href="${contextPath }/member/login.jsp">로그인</a></li>
 						</c:otherwise>
 					</c:choose>
 				</ul>
