@@ -52,7 +52,7 @@ public class EmpDAOImpl implements Emp_ScottDAO {
 								rs.getInt("MGR"),
 								r
 						
-						))
+						));
 			}
 			
 			}
