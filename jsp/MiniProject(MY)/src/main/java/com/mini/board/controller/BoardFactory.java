@@ -1,7 +1,9 @@
 package com.mini.board.controller;
 
 import com.mini.board.service.BoardListService;
+import com.mini.board.service.BoardReplyService;
 import com.mini.board.service.BoardService;
+import com.mini.board.service.BoardTopListService;
 import com.mini.board.service.BoardViewService;
 import com.mini.board.service.BoardWriteService;
 
@@ -46,6 +48,10 @@ public class BoardFactory {
 			service = new BoardWriteService();
 		} else if (command.equals("/board/viewBoard.bo")) {
 			service = new BoardViewService();
+		}else if (command.equals("/board/reply.bo")) {
+			service = new BoardReplyService();
+		}else if(command.equals("/board/showTopBoard.bo")) {
+			service = new BoardTopListService();
 		}
 		return service;
 	}

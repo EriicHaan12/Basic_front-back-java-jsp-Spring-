@@ -6,7 +6,7 @@
 	<display-name>JSPAjax</display-name>
 	<!-- 시작 페이지 등록 -->
 	<welcome-file-list>
-	<!--  welcome 파일이란 기본적으로 실행 시킬 파일 -->
+		<!-- welcome 파일이란 기본적으로 실행 시킬 파일 -->
 		<!-- <welcome-file>index.html</welcome-file> -->
 		<!-- <welcome-file>index.htm</welcome-file> -->
 		<welcome-file>index.jsp</welcome-file>
@@ -21,14 +21,13 @@
 		<res-type>javax.sql.DataSource</res-type>
 		<res-auth>Container</res-auth>
 	</resource-ref>
-	
-	
-	
+
+
+
 	<!-- 한글설정 필터추가 -->
 	<filter>
-	<!--  필터 객체를 (org.apache.catalina.filters.SetCharacterEncodingFilter) 를 set Character Encoding 으로 생성,
-	인코딩 방식을 utf-8로 설정
-	 -->
+		<!-- 필터 객체를 (org.apache.catalina.filters.SetCharacterEncodingFilter) 를 
+			set Character Encoding 으로 생성, 인코딩 방식을 utf-8로 설정 -->
 		<filter-name>Set Character Encoding</filter-name>
 		<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
 		<init-param>
@@ -36,12 +35,12 @@
 			<param-value>utf-8</param-value>
 		</init-param>
 	</filter>
-<!-- 위에서 만든 필터 객체(set Character Encoding)를 현재 컨텍스트의 모든 페이지에 적용 -->
+	<!-- 위에서 만든 필터 객체(set Character Encoding)를 현재 컨텍스트의 모든 페이지에 적용 -->
 	<filter-mapping>
 		<filter-name>Set Character Encoding</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<!-- 한글설정 END -->
-	
-	
+
+
 </web-app>

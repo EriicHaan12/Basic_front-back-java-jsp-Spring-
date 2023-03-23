@@ -15,75 +15,95 @@ public class BoardVo {
 	private int ref;
 	private int step;
 	private int refOrder;
-	
-	
-	
+
 	public int getNo() {
 		return no;
 	}
+
 	public void setNo(int no) {
 		this.no = no;
 	}
+
 	public String getWriter() {
 		return writer;
 	}
+
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	public Timestamp getPostDate() {
 		return postDate;
 	}
+
 	public void setPostDate(Timestamp postDate) {
 		this.postDate = postDate;
 	}
+
 	public String getContent() {
 		return content;
 	}
+
 	public void setContent(String content) {
 		this.content = content;
 	}
+
 	public String getImgFile() {
 		return imgFile;
 	}
+
 	public void setImgFile(String imgFile) {
 		this.imgFile = imgFile;
 	}
+
 	public int getReadCount() {
 		return readCount;
 	}
+
 	public void setReadCount(int readCount) {
 		this.readCount = readCount;
 	}
+
 	public int getLikeCount() {
 		return likeCount;
 	}
+
 	public void setLikeCount(int likeCount) {
 		this.likeCount = likeCount;
 	}
+
 	public int getRef() {
 		return ref;
 	}
+
 	public void setRef(int ref) {
 		this.ref = ref;
 	}
+
 	public int getStep() {
 		return step;
 	}
+
 	public void setStep(int step) {
 		this.step = step;
 	}
+
 	public int getRefOrder() {
 		return refOrder;
 	}
+
 	public void setRefOrder(int refOrder) {
 		this.refOrder = refOrder;
 	}
+
 	public BoardVo(int no, String writer, String title, Timestamp postDate, String content, String imgFile,
 			int readCount, int likeCount, int ref, int step, int refOrder) {
 		super();
@@ -99,14 +119,12 @@ public class BoardVo {
 		this.step = step;
 		this.refOrder = refOrder;
 	}
+
 	@Override
 	public String toString() {
 		return "BoardVo [no=" + no + ", writer=" + writer + ", title=" + title + ", postDate=" + postDate + ", content="
 				+ content + ", imgFile=" + imgFile + ", readCount=" + readCount + ", likeCount=" + likeCount + ", ref="
 				+ ref + ", step=" + step + ", refOrder=" + refOrder + "]";
 	}
-
-	
-	
 
 }

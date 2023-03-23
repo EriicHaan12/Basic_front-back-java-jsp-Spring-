@@ -36,7 +36,9 @@ public class BoardDAOImpl implements BoardDAO {
 		Connection con = DBConnection.dbConnect();
 
 		if (con != null) {
-			String q = "select * from board order by no desc";
+			// String q = "select * from board order by no desc";
+			// 답글 기능 추가 이 후 쿼리문 수정
+			String q = "select* from board order by ref desc, reforder asc";
 			PreparedStatement pstmt = con.prepareStatement(q);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -50,6 +52,33 @@ public class BoardDAOImpl implements BoardDAO {
 
 		return lst;
 	}
+	
+	
+
+	@Override
+	public List<BoardVo> selectTopListBoard() throws NamingException, SQLException {
+		List<BoardVo> lst = new ArrayList<>();
+
+		Connection con = DBConnection.dbConnect();
+
+		if (con != null) {
+		
+			String q = "select * from board order by readcount desc limit 3";
+			PreparedStatement pstmt = con.prepareStatement(q);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				lst.add(new BoardVo(rs.getInt("no"), rs.getString("writer"), rs.getString("title"),
+						rs.getTimestamp("postDate"), rs.getString("content"), rs.getString("imgFile"),
+						rs.getInt("readCount"), rs.getInt("likeCount"), rs.getInt("ref"), rs.getInt("step"),
+						rs.getInt("refOrder")));
+			}
+			DBConnection.dbClose(rs, pstmt, con);
+		}
+		return lst;
+	}
+	
+	
+	
 
 	@Override
 	public int getNextRef() throws NamingException, SQLException {
@@ -330,7 +359,7 @@ public class BoardDAOImpl implements BoardDAO {
 				// 조회 한지 하루가 지났고,
 				if (insertResult == 1 && updateResult == 1) {
 					con.commit();
-					result =1;
+					result = 1;
 				} else {
 					con.rollback();
 				}
@@ -340,12 +369,12 @@ public class BoardDAOImpl implements BoardDAO {
 
 				if (updateResult1 == 1 && updateResult2 == 1) {
 					con.commit();
-					result =1;
+					result = 1;
 				} else {
 					con.rollback();
 				}
-			}else {
-				result =1;
+			} else {
+				result = 1;
 			}
 
 		}
@@ -360,5 +389,87 @@ public class BoardDAOImpl implements BoardDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public int updateReplyPost(BoardVo reply, Connection con) throws NamingException, SQLException {
+
+		// 트랜잭션 처리
+		int result = -1;
+		// Connection con = DBConnection.dbConnect();
+		// con.setAutoCommit(false); // 트랜잭션 시작
+
+		if (con != null) {
+			String q = "update board set reforder = reforder+1 where ref =? and reforder > ?";
+			PreparedStatement pstmt = con.prepareStatement(q);
+
+			pstmt.setInt(1, reply.getRef());
+			pstmt.setInt(2, reply.getRefOrder());
+
+			// con.setAutoCommit(true);
+			// DBConnection.dbClose(pstmt, con);
+			result = pstmt.executeUpdate();
+
+			// 그대로 result 가 -1 이 나올 경우는 SQL EXECEPTION 일 때 뿐이다.
+
+		}
+		return result;
+	}
+
+	@Override
+	public int insertReplyPost(BoardVo reply, Connection con) throws NamingException, SQLException {
+
+		int result = 0;
+
+		if (con != null) {
+			String q = "insert into board(writer, title, content,ref,step,reforder) values(?,?,?,?,?,?)";
+			PreparedStatement pstmt = con.prepareStatement(q);
+
+			pstmt.setString(1, reply.getWriter());
+			pstmt.setString(2, reply.getTitle());
+			pstmt.setString(3, reply.getContent());
+
+			pstmt.setInt(4, reply.getRef());
+			pstmt.setInt(5, reply.getStep() + 1);
+			pstmt.setInt(6, reply.getRefOrder() + 1);
+
+			result = pstmt.executeUpdate();
+		}
+		return result;
+	}
+
+	@Override
+	public int transactionProcessForReplyPost(BoardVo reply) throws NamingException, SQLException {
+		int result = 0;
+
+		Connection con = DBConnection.dbConnect();
+		con.setAutoCommit(false);// 트랜잭션 시작 지점
+
+		if (con != null) {
+			// 조회 한지 하루가 지났는지 유효성 검사
+			int updateResult = updateReplyPost(reply, con);
+			if (updateResult >= 0) { // sqlexception 이 일어나지 않을 경우
+
+				int insertResult = insertReplyPost(reply, con);
+
+				if (insertResult == 1) {
+
+					int addPoint = MemberDAOImpl.getinstance().addPoint(reply.getWriter(), "게시판답글쓰기", con);
+
+					if (addPoint == 1) {
+						con.commit();
+						result = 1; // 정상 작동 되었을 때
+					} else {
+						con.rollback();
+					}
+
+				}
+				// else {//여기서는 수행된것이 없어서 rollback 시킬 것도 없다.}
+			}
+		}
+		con.setAutoCommit(true); // 트랜잭션 종료;
+		DBConnection.dbClose(con);
+		return result;
+	}
+
 
 }

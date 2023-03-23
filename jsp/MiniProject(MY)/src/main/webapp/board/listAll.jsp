@@ -30,12 +30,16 @@ function goBoardDetail(no){
 .paging {
 	clear: both;
 }
+
+.replyImg {
+	width: 15px;
+}
 </style>
 
 
 </head>
 <body>
-
+	<c:set var="contextPath" value="<%=request.getContextPath()%>" />
 	<c:if test="${requestScope.boardList ==null}">
 		<c:redirect url="listAll.bo"></c:redirect>
 	</c:if>
@@ -54,18 +58,29 @@ function goBoardDetail(no){
 						<th>작성 날짜</th>
 						<th>조회수</th>
 						<th>추천수</th>
+						<th>ref</th>
+						<th>step</th>
+						<th>refOrder</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="board" items="${requestScope.boardList }">
 						<tr onclick="goBoardDetail(${board.no });">
-									
+
 							<td>${board.no }</td>
-							<td>${board.title }</td>
+							<td><c:if test="${board.step>0 }">
+									<c:forEach var="i" begin="1" end="${board.step }" step="1">
+										<img src="${contextPath }/images/reply.png" class="replyImg" />
+									</c:forEach>
+								</c:if> ${board.title }
+							</td>
 							<td>${board.writer }</td>
 							<td>${board.postDate }</td>
 							<td>${board.readCount }</td>
 							<td>${board.likeCount }</td>
+							<td>${board.ref }</td>
+							<td>${board.step }</td>
+							<td>${board.refOrder}</td>
 						</tr>
 					</c:forEach>
 				</tbody>

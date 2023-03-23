@@ -1,5 +1,6 @@
 package com.mini.board.dao;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,7 +12,10 @@ import com.mini.vodto.ReadCountProcess;
 public interface BoardDAO {
 	// 게시물 전체 리스트 얻어오는 메서드
 	List<BoardVo> selectEntireBoard() throws NamingException, SQLException;
-
+	
+	// 인기 게시물 리스트 얻어오는 메서드
+	List<BoardVo> selectTopListBoard()throws NamingException, SQLException;
+	
 	// 다음 ref 값을 얻어오는 메서드
 		int getNextRef()throws NamingException, SQLException;
 
@@ -37,7 +41,6 @@ public interface BoardDAO {
 	 */
 	int withinOndayOrNot(String ipAddr, int boardNo)throws NamingException, SQLException;
 	
-	
 	// withinOndayOrNot 이후 조회수 증가 시키기
 	int updateReadCount(int no)throws NamingException, SQLException;
 	
@@ -50,5 +53,14 @@ public interface BoardDAO {
 	// 조회수 증가 트랜잭션 작업
 	int transactionProcessForReadCount(ReadCountProcess rcp)throws NamingException, SQLException;
 	
+	// 작성될 게시글이 답글인지 아닌지 판단 후 update 해주기 (답글이 끼어들기 할 공간을 만들어주기) -- 트랜잭션 처리
+	int updateReplyPost(BoardVo reply,Connection con)throws NamingException, SQLException;
+	
+	// 답글을  board테이블에 등록
+	int insertReplyPost(BoardVo reply,Connection con)throws NamingException, SQLException;
+	
+	
+	// 답글을 처리 트랜잭션 처리
+	int transactionProcessForReplyPost(BoardVo reply)throws NamingException, SQLException;
 
 }
