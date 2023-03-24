@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
+import com.mini.etc.PagingInfo;
 import com.mini.member.dao.DBConnection;
 import com.mini.member.dao.MemberDAOImpl;
 import com.mini.vodto.BoardVo;
@@ -53,6 +54,32 @@ public class BoardDAOImpl implements BoardDAO {
 		return lst;
 	}
 	
+	@Override
+	public List<BoardVo> selectEntireBoard(PagingInfo pi) throws NamingException, SQLException {
+
+		List<BoardVo> lst = new ArrayList<>();
+
+		Connection con = DBConnection.dbConnect();
+
+		if (con != null) {
+			// String q = "select * from board order by no desc";
+			// 답글 기능 추가 이 후 쿼리문 수정
+			String q = "select* from board order by ref desc, reforder asc limit ?,? ";
+			PreparedStatement pstmt = con.prepareStatement(q);
+			pstmt.setInt(1, pi.getStartRowIndex());
+			pstmt.setInt(2, pi.getViewPostCntPerPage());
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				lst.add(new BoardVo(rs.getInt("no"), rs.getString("writer"), rs.getString("title"),
+						rs.getTimestamp("postDate"), rs.getString("content"), rs.getString("imgFile"),
+						rs.getInt("readCount"), rs.getInt("likeCount"), rs.getInt("ref"), rs.getInt("step"),
+						rs.getInt("refOrder")));
+			}
+			DBConnection.dbClose(rs, pstmt, con);
+		}
+
+		return lst;
+	}
 	
 
 	@Override
@@ -62,7 +89,7 @@ public class BoardDAOImpl implements BoardDAO {
 		Connection con = DBConnection.dbConnect();
 
 		if (con != null) {
-		
+
 			String q = "select * from board order by readcount desc limit 3";
 			PreparedStatement pstmt = con.prepareStatement(q);
 			ResultSet rs = pstmt.executeQuery();
@@ -76,9 +103,6 @@ public class BoardDAOImpl implements BoardDAO {
 		}
 		return lst;
 	}
-	
-	
-	
 
 	@Override
 	public int getNextRef() throws NamingException, SQLException {
@@ -471,5 +495,25 @@ public class BoardDAOImpl implements BoardDAO {
 		return result;
 	}
 
+	@Override
+	public int getTotalPostCnt(String tableName) throws NamingException, SQLException {
+
+		int result = -1;
+
+		Connection con = DBConnection.dbConnect();
+		if (con != null) {
+			String q = "select count(*)as cnt from "+ tableName;
+			PreparedStatement pstmt = con.prepareStatement(q);
+
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				result = rs.getInt("cnt");
+			}
+			DBConnection.dbClose(rs, pstmt, con);
+		}
+
+		return result;
+	}
 
 }
