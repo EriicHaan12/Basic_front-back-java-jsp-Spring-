@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
+import com.mini.etc.PagingInfo;
 import com.mini.vodto.LoginDTO;
 import com.mini.vodto.MemberDTO;
 import com.mini.vodto.MemberPointVo;
@@ -116,6 +117,7 @@ public class MemberDAOImpl implements MemberDAO {
 
 		return result;
 	}
+
 	@Override
 	public MemberDTO loginUser(LoginDTO dto, Connection con) throws NamingException, SQLException {
 
@@ -142,6 +144,7 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 		return member;
 	}
+
 	@Override
 	public int addPoint(String userId, String why, Connection con) throws NamingException, SQLException {
 		int result = 0;
@@ -167,6 +170,7 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 		return result;
 	}
+
 	/**
 	 * result = -1 (null : 처음 로그인) -> 추후에 insert result = 0 (같은 일자에 로그인한 기록이 있는 유저)
 	 * -> 추후에 update result = 1 (최근 로그인 한 날짜가 오늘이 아닌 유저) -> 추후에 update
@@ -281,14 +285,17 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public List<MemberPointVo> getMemberPoint(String userId) throws NamingException, SQLException {
+	public List<MemberPointVo> getMemberPoint(String userId, PagingInfo pi) throws NamingException, SQLException {
 		List<MemberPointVo> lst = new ArrayList<>();
 		MemberPointVo mpv = null;
 		Connection con = DBConnection.dbConnect();
 		if (con != null) {
-			String query = "select * from memberpoint where who = ? order by no desc";
+			String query = "select * from memberpoint where who = ? order by no desc limit ?, ? ";
 			PreparedStatement pstmt = con.prepareStatement(query);
 			pstmt.setString(1, userId);
+			pstmt.setInt(2, pi.getStartRowIndex());
+			pstmt.setInt(3, pi.getViewPostCntPerPage());
+
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -300,5 +307,26 @@ public class MemberDAOImpl implements MemberDAO {
 
 		}
 		return lst;
+	}
+
+	@Override
+	public int getTotalPointCnt(String userId) throws NamingException, SQLException {
+		int cnt = -1;
+		Connection con = DBConnection.dbConnect();
+		if (con != null) {
+			String query = "select count(*) as cnt from memberPoint where who= ? ";
+			PreparedStatement pstmt = null;
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userId);
+
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				cnt = rs.getInt("cnt");
+
+			}
+			DBConnection.dbClose(pstmt, con);
+		}
+
+		return cnt;
 	}
 }

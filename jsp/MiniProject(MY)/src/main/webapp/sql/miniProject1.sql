@@ -307,5 +307,43 @@ select count(*)as cnt from board;
 select * from board order by ref desc, reforder asc limit 0, 3;
 
 
--- 페이징 블럭 만들기(페이지 번호를 몇개씩 보여줄 것인가)
+-- 페이징 블럭 만들기(pagination에 페이지 번호를 몇개씩 보여줄 것인가)
+-- 쉽게 이해하자면  ui 에 누를 수 있는 페이지 버튼 갯수
+-- 1) 1개의 블럭에 몇개 페이지를 둘것인가(pageCntPerBlock) : 3  (페이징 블럭) 
+-- 전체 페이징 블럭 갯수 : 전체 페이지 수 / pageCntPerBlock
+-- 나누어 떨어지지 않으면 +1 = 7(전체페이지수)/3(pageCntPerBlock) = 
+-- 2(2이지만 나누어 떨어지지 않으므로) 최종 결과는 3 
 
+-- 2) 현재 페이지가 속한 페이징 블럭: 현재 페이지 번호 / 페이징 블럭(만약 나누어 떨어지지 않으면 올림 해준다.)
+-- ex) 현재 2페이지에 있으면 -> 2/3 (나누어 떨어지지 않으면 올림 해준다.) -> 1번 블럭
+-- ex) 현재 6페이지 -> 6/3 -> 2번 블럭
+
+-- 3) 현재 페이징 블럭 시작 번호 : ((현재 페이징 블럭 -1 )* 페이징 블럭)+1
+-- ex) 2번 블럭 : ((2-1)*3) +1 = 4
+
+-- 현재 페이징 블럭의 끝번호: (현재 페이징 블럭 시작번호 + pageCntPerBlock)-1
+-- 2번 블럭 => (4+3)-1 = 6
+
+-- 게시판 검색 -------------------------------------------------------------------------
+select * from pointpolicy;
+select * from memberpoint;
+update pointpolicy set why ="게시판답글달기" where why = "게시판답글쓰기";
+select * from board;
+select * from board where title like '%시%' order by ref desc, reforder asc limit 0, 5;
+
+
+-- 제목으로 검색
+select * from board where title like '%?%' order by ref desc, reforder asc limit ?, ?;
+
+-- 작성자 검색
+select * from board where wrtier like '%시%' order by ref desc, reforder asc limit ?, ?;
+
+-- 작성자 검색
+-- select * from board where content like %?% order by ref desc, reforder asc limit ?, ?;
+select count(*) from board where content like "%ㅇㅇ%";
+
+-- 제목 +내용 검색
+select * from board where title like "%?%" or content like "%?%" order by ref desc, reforder asc limit ?, ?;
+
+-- 멤버 포인트 개편
+select * from memberpoint where who =? order by no desc limit ?, ?;

@@ -23,6 +23,7 @@ public class MyPageMemberService implements MemberService {
 			throws ServletException, IOException {
 		
 		
+		
 		//유저 아이디
 		// 파라메터에서 넘겨받기
 		//String userId =req.getParameter("userId");
@@ -43,13 +44,18 @@ public class MyPageMemberService implements MemberService {
 				
 				System.out.println("memberInfo : " + memberInfo.toString());
 				
-				List<MemberPointVo> mpv = dao.getMemberPoint(userId);
 				
 				
+			//	List<MemberPointVo> mpv = dao.getMemberPoint(userId); // 포인트 내역 가져오기
+				
+				// 회원 정보와 포인트 내역을 request에 바인딩
 				req.setAttribute("memberInfo", memberInfo);
-				req.setAttribute("memberPoint", mpv);
+				//req.setAttribute("memberPoint", mpv);
 				// 페이지 이동
+				
 				req.getRequestDispatcher("myPage.jsp").forward(req, resp);
+				
+			
 				
 			} catch (NamingException | SQLException e) {
 				

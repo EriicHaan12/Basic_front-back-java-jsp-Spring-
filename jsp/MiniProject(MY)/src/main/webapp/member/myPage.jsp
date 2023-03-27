@@ -17,11 +17,61 @@
 <script type="text/javascript">
 	function showBasic() {
 		$(".card").show();
-		//$(".memberPoint").hide();
+		$(".memberPoint").hide();
 	}
 
-	function showPoint() {
+	function showPoint(pageNo) {
 		$(".card").hide();
+		$.ajax({
+			url : "getMemPoint.mem",
+			type : "get",
+			data : {
+				"userId" : '${memberInfo.userId}',
+				"pageNo" : pageNo
+			},
+			dataType : "json", //
+			success : function(data) { //
+				console.log(data);
+
+				if (data.status == "success") {
+					parsePoints(data);
+				} else if (data.status == "fail") {
+					alert("잠시 후, 다시 시도해주세요");
+				}
+			}
+		});
+
+		$(".memberPoint").show();
+	}
+	let totalPoint = 0;
+	function parsePoints(json) {
+		let output = "<table class='table table-striped'><thead><tr><th>적립 일시</th>";
+		output += "<th>적립 사유</th><th>적립금</th>";
+		output += "</thead><tbody>";
+		$.each(json.memberPoints, function(i, item) {
+			output += "<tr>";
+			output += "<td>" + item.when + "</td>";
+			output += "<td>" + item.why + "</td>";
+			output += "<td>" + item.howmuch + "</td>";
+			output += "</tr>";
+			totalPoint+=item.howmuch
+		});
+	console.log(totalPoint);
+		output += "</tbody></table>";
+
+		$(".outputMp").html(output);
+
+		let pageOutput = "<ul class='pagination'>";
+	
+		//pagenation +=" <li class='page-item'><a class='page-link' href='#'>Previous</a></li>";
+		for (let i = json.startNumOfCurrentPagingBlock; i < json.endNumOfCurrentPagingBlock; i++) {
+		pageOutput += "<li class='page-item'><a class='page-link' href='#' onclick='showPoint("+ i + ");'>" + i + "</a></li>";
+		}
+		//pagenation +=" <li class='page-item'><a class='page-link' href='#'>Next</a></li>";
+		pageOutput += "</ul>";
+
+		$(".mpPageNation").html(pageOutput);
+		
 		$(".memberPoint").show();
 	}
 </script>
@@ -49,7 +99,6 @@
 							src="${contextPath }/${memberInfo.userImg }"
 							alt="${memberInfo.userId }">
 					</div>
-
 					<div class="card-body">
 						<h4 class="card-title">${memberInfo.userId }</h4>
 						<p class="card-text">
@@ -59,46 +108,27 @@
 						<div class="userHobbies">${memberInfo.hobbies }</div>
 						<div class="job">${memberInfo.job }</div>
 						<div class="memo">${memberInfo.memo }</div>
-						</p>
+
 						<a href="#" class="btn btn-primary">See Profile</a>
+						</p>
 					</div>
 				</div></li>
 
 			<li class="nav-item"><a class="nav-link memberPoint" href="#"
 				onclick="showPoint();">포인트적립내역</a>
-				<div class="memberPoint"></div>
 
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>적립 일시</th>
-							<th>적립 사유</th>
-							<th>적립금</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="mp" items="${memberPoint }">
-						<!-- 유저가 보유한 총포인트를 계산 하기 위한 변수 -->
-							<c:set var= "totalPoint" value="${totalPoint + mp.howmuch}"/>
-							<tr>
-								<td>${mp.when }</td>
-								<td>${mp.why }</td>
-								<td>${mp.howmuch }</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+				<div class="outputMp"></div>
+
+				<div class="mpPageNation"></div>
 
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-3">
-							<p>현재 보유 포인트</p>
+						<h4>현재 보유 포인트</h4>
 						</div>
 						<div class="col-9">
-							<p>
-							${totalPoint}
-							   </p>
-							   
+							<p>${totalPoint}</p>
+
 						</div>
 					</div>
 				</div></li>

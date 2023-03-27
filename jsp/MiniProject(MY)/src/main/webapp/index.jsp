@@ -28,6 +28,7 @@
 					console.log(data);
 					}else{
 						alert("데이터를 불러오지 못했습니다..");		
+					inValid =false;
 					}	
 				}
 			});
@@ -70,7 +71,6 @@
 					<tbody>
 						<c:forEach var="board" items="${requestScope.boardList }">
 							<tr onclick="goBoardDetail(${board.no });">
-
 								<td>${board.no }</td>
 								<td><c:if test="${board.step>0 }">
 										<c:forEach var="i" begin="1" end="${board.step }" step="1">

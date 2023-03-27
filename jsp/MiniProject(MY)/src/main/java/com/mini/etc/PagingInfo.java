@@ -84,7 +84,7 @@ public class PagingInfo {
 			this.PageBlockOfCurrentPage = pageNo / this.pageCntPerBlock;
 		} else {
 			// double 타입만 받는 math.ceil을 위해 형변환 해주고, 원래 int로 반환해주기위해 한번더 형변환
-			this.PageBlockOfCurrentPage = (int) Math.ceil((double)pageNo / this.pageCntPerBlock);
+			this.PageBlockOfCurrentPage = (int)Math.ceil((double)pageNo / this.pageCntPerBlock);
 		}
 	}
 
@@ -92,16 +92,16 @@ public class PagingInfo {
 		return startNumOfCurrentPagingBlock;
 	}
 
-	public void setStartNumOfCurrentPagingBlock(int pageBlockOfCurrentPage) {
+	public void setStartNumOfCurrentPagingBlock(int PageBlockOfCurrentPage) {
 		// 현재 페이징 블럭 시작 번호 : ((현재 페이징블럭 - 1) * pageCntPerBlock)+ 1
-		this.startNumOfCurrentPagingBlock = ((pageBlockOfCurrentPage - 1) * this.pageCntPerBlock) + 1;
+		this.startNumOfCurrentPagingBlock = ((PageBlockOfCurrentPage - 1) * this.pageCntPerBlock) + 1;
 	}
 
 	public int getendNumOfCurrentPagingBlock() {
 		return endNumOfCurrentPagingBlock;
 	}
 
-	public void setEndNumOfCurrentPagingBlock(int startNumOfCurrentPagingBlock) {
+	public void setEndNumOfCurrentPagingBlock( int startNumOfCurrentPagingBlock) {
 		// 현재 페이징 블럭 끝 번호 : (현재 페이징 블럭 시작 번호 + pageCntPerBlock)-1
 		this.endNumOfCurrentPagingBlock = (startNumOfCurrentPagingBlock + this.pageCntPerBlock) - 1;
 

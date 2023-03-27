@@ -14,6 +14,7 @@ import com.mini.member.dao.DBConnection;
 import com.mini.member.dao.MemberDAOImpl;
 import com.mini.vodto.BoardVo;
 import com.mini.vodto.ReadCountProcess;
+import com.mini.vodto.SearchCriteria;
 
 public class BoardDAOImpl implements BoardDAO {
 
@@ -53,7 +54,8 @@ public class BoardDAOImpl implements BoardDAO {
 
 		return lst;
 	}
-	
+
+	// 페이지네이션 처리
 	@Override
 	public List<BoardVo> selectEntireBoard(PagingInfo pi) throws NamingException, SQLException {
 
@@ -80,7 +82,46 @@ public class BoardDAOImpl implements BoardDAO {
 
 		return lst;
 	}
+
+	// 검색어 처리
+	@Override
+	public List<BoardVo> selectEntireBoard(PagingInfo pi, SearchCriteria sc)
+			throws NamingException, SQLException {
+
+		List<BoardVo> lst = new ArrayList<>();
+
+		Connection con = DBConnection.dbConnect();
 	
+		if (con != null) {
+			String q = "select * from board where";
+			if (sc.getSearchType().equals("title")) {
+				// ?를 쓸 때는 like 를 쓸 때 %를 감싸줄 필요가 없다.
+				q += " title like ? order by ref desc, reforder asc limit ?, ?";
+
+			} else if (sc.getSearchType().equals("writer")) {
+				q += " writer like ? order by ref desc, reforder asc limit ?, ? ";
+
+			} else if (sc.getSearchType().equals("content")) {
+				q += " content like ? order by ref desc, reforder asc limit ?, ?";
+			}
+			PreparedStatement pstmt = con.prepareStatement(q);
+			pstmt.setString(1, "%"+ sc.getSearchWord() +"%");
+			pstmt.setInt(2, pi.getStartRowIndex());
+			pstmt.setInt(3, pi.getViewPostCntPerPage());
+
+		
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				lst.add(new BoardVo(rs.getInt("no"), rs.getString("writer"), rs.getString("title"),
+						rs.getTimestamp("postDate"), rs.getString("content"), rs.getString("imgFile"),
+						rs.getInt("readCount"), rs.getInt("likeCount"), rs.getInt("ref"), rs.getInt("step"),
+						rs.getInt("refOrder")));
+			}
+			DBConnection.dbClose(rs, pstmt, con);
+		}
+
+		return lst;
+	}
 
 	@Override
 	public List<BoardVo> selectTopListBoard() throws NamingException, SQLException {
@@ -477,7 +518,7 @@ public class BoardDAOImpl implements BoardDAO {
 
 				if (insertResult == 1) {
 
-					int addPoint = MemberDAOImpl.getinstance().addPoint(reply.getWriter(), "게시판답글쓰기", con);
+					int addPoint = MemberDAOImpl.getinstance().addPoint(reply.getWriter(), "게시판답글달기", con);
 
 					if (addPoint == 1) {
 						con.commit();
@@ -502,7 +543,7 @@ public class BoardDAOImpl implements BoardDAO {
 
 		Connection con = DBConnection.dbConnect();
 		if (con != null) {
-			String q = "select count(*)as cnt from "+ tableName;
+			String q = "select count(*) as cnt from " + tableName;
 			PreparedStatement pstmt = con.prepareStatement(q);
 
 			ResultSet rs = pstmt.executeQuery();
@@ -513,6 +554,37 @@ public class BoardDAOImpl implements BoardDAO {
 			DBConnection.dbClose(rs, pstmt, con);
 		}
 
+		return result;
+	}
+
+	// 위에꺼는 순전히 전체글 갯수 가져오기, 이거는 검색어 검색시 얻어올 게시글 갯수 가져오기
+	@Override
+	public int getTotalPostCnt(String tableName, SearchCriteria sc) throws NamingException, SQLException {
+		int result = -1;
+
+		Connection con = DBConnection.dbConnect();
+
+		if (con != null) {
+			String q = "select count(*) as cnt from " + tableName + " where";
+			if (sc.getSearchType().equals("title")) {
+				// ?를 쓸 때는 like 를 쓸 때 %를 감싸줄 필요가 없다.
+				q += " title like ?";
+
+			} else if (sc.getSearchType().equals("writer")) {
+				q += " writer like ?";
+
+			} else if (sc.getSearchType().equals("content")) {
+				q += " content like ?";
+			}
+			PreparedStatement pstmt = con.prepareStatement(q);
+			pstmt.setString(1, "%" + sc.getSearchWord() + "%");
+
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				result = rs.getInt("cnt");
+			}
+			DBConnection.dbClose(rs, pstmt, con);
+		}
 		return result;
 	}
 

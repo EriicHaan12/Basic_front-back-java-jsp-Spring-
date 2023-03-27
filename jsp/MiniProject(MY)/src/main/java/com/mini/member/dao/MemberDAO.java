@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
+import com.mini.etc.PagingInfo;
 import com.mini.vodto.LoginDTO;
 import com.mini.vodto.MemberDTO;
 import com.mini.vodto.MemberPointVo;
@@ -40,6 +41,8 @@ public interface MemberDAO {
 	MemberDTO getMemberInfo(String userId)throws NamingException, SQLException;
 	
 	//한 유저의 포인트 내역 가져오기
-	List<MemberPointVo> getMemberPoint(String userId)throws NamingException, SQLException;
+	List<MemberPointVo> getMemberPoint(String userId, PagingInfo pi)throws NamingException, SQLException;
+
+	int getTotalPointCnt(String userId)throws NamingException, SQLException;
 	
 }

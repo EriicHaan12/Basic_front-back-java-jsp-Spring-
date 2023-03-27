@@ -42,6 +42,40 @@ function getVpc(){
 		});
 	});
 	
+	function searchValid(){
+		// 검색어가 입력 되지 않거나, sql injection 공격 요소가 있다면 검색이 되지 않도록
+		
+		let sw = $("#searchWord").val();
+		if(sw.length==0){
+		alert("검색어를 입력하세요!");	
+		return false;
+			
+		}
+		let expText = /[%=><]/; //DB에서의 조건 연산자들
+		if(expText.test(sw)==true){
+			alert("특수문자를 입력 할 수 없습니다.");
+			return false;
+		}
+	
+	 const sql = new Array(	
+		"or", "select", "insert", "update","delete","create","alter", "drop","exec",
+		"union","fetch","declare","truncate");
+	 
+		let regEx = "";
+		for(let i = 0; i<sql.length;i++){
+			// 정규표현식을 만들기 (객체 생성)
+			// "gi" 를 붙여 주면 쿼리문 중 어디에서든 이라는 뜻으로, 써주게 되면 쿼리문,쿼리스트링이 쓰인 어디에서든 
+			// 찾고자 하는 파라메터를 찾을 수 있다.
+			regEx= new RegExp(sql[i],"gi");
+			if(regEx.test(sw)==true){
+				alert("입력한 특정 문자로 검색 할 수 없습니다.");
+				return false;
+			}
+		}
+	 
+	 return true;
+	}
+	
 </script>
 <style>
 .board {
@@ -126,16 +160,24 @@ function getVpc(){
 				<button type="button" class="btn btn-secondary writeBtn"
 					onclick="location.href='writeBoard.jsp';">글쓰기</button>
 			</div>
-			${requestScope.pagingInfo }
-			<br/>
+
+			<form class="searchBoard" action="listAll.bo">
+				<select name="searchType">
+					<option value="title">제목</option>
+					<option value="writer">글쓴이</option>
+					<option value="content">내용</option>
+				</select> <input type="text" name="searchWord" id="searchWord" />
+				<button type="submit" onclick="return searchValid();">검색</button>
+			</form>
+			${requestScope.pagingInfo } <br />
 			<hr>
-		requestScope.pagingInfo=  ${requestScope.pagingInfo}
+			requestScope.pagingInfo= ${requestScope.pagingInfo}
 			<div class="paging">
 				<ul class="pagination pagination-sm">
 					<c:if
-						test="${requestScope.pagingInfo.startNumOfCurrentPagingBlock > 1}">
+						test="${requestScope.pagingInfo.pageNo > 1}">
 						<li class="page-item"><a class="page-link"
-							href="listAll.bo?pageNo=${param.pageNo - 1}&viewPost=${param.viewPost}">Previous</a></li>
+							href="listAll.bo?pageNo=${param.pageNo - 1}&viewPost=${param.viewPost}&searchType=${param.searchType}&searchWord=${param.searchWord}">Previous</a></li>
 					</c:if>
 					<c:forEach var="i"
 						begin="${requestScope.pagingInfo.startNumOfCurrentPagingBlock }"
@@ -144,23 +186,26 @@ function getVpc(){
 						<c:choose>
 							<c:when test="${requestScope.pagingInfo.pageNo ==i }">
 								<li class="page-item active"><a class="page-link"
-									href="listAll.bo?pageNo=${i}&viewPost=${param.viewPost}">${i}
+									href="listAll.bo?pageNo=${i}&viewPost=${param.viewPost}&searchType=${param.searchType}&searchWord=${param.searchWord}">${i}
 								</a></li>
 							</c:when>
 
 							<c:otherwise>
 								<li class="page-item"><a class="page-link"
-									href="listAll.bo?pageNo=${i}&viewPost=${param.viewPost}">${i}
+									href="listAll.bo?pageNo=${i}&viewPost=${param.viewPost}
+									&searchType=${param.searchType}&searchWord=${param.searchWord}">${i}
 								</a></li>
 							</c:otherwise>
 						</c:choose>
 
 					</c:forEach>
-					<c:if test="${param.pageNo < requestScope.pagingInfo.endNumOfCurrentPagingBlock}">
+					<c:if
+						test="${param.pageNo <= requestScope.pagingInfo.endNumOfCurrentPagingBlock}">
 						<li class="page-item"><a class="page-link"
-							href="listAll.bo?pageNo=${param.pageNo + 1}&viewPost=${param.viewPost}">Next</a></li>
+							href="listAll.bo?pageNo=${param.pageNo + 1}&viewPost=${param.viewPost}&searchType=${param.searchType}
+							&searchWord=${param.searchWord}">Next</a></li>
 					</c:if>
-					
+
 				</ul>
 			</div>
 		</div>

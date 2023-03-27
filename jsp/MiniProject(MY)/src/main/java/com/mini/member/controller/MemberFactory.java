@@ -2,6 +2,7 @@ package com.mini.member.controller;
 
 import com.mini.member.service.ConfirmCodeService;
 import com.mini.member.service.DuplicateUserIdService;
+import com.mini.member.service.GetMemberPointService;
 import com.mini.member.service.LoginMemberService;
 import com.mini.member.service.LogoutMemberService;
 import com.mini.member.service.MemberService;
@@ -64,6 +65,8 @@ public class MemberFactory {
 			service = new ConfirmCodeService();
 		} else if (command.equals("/member/myPage.mem")) { // 마이페이지 이동
 			service = new MyPageMemberService();
+		}else if(command.equals("/member/getMemPoint.mem")) {
+			service = new GetMemberPointService();
 		}
 		return service;
 	}

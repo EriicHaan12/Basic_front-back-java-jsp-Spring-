@@ -16,6 +16,7 @@ import com.mini.board.dao.BoardDAOImpl;
 import com.mini.error.CommonException;
 import com.mini.etc.PagingInfo;
 import com.mini.vodto.BoardVo;
+import com.mini.vodto.SearchCriteria;
 
 public class BoardListService implements BoardService {
 
@@ -23,6 +24,26 @@ public class BoardListService implements BoardService {
 	public BoardFactory action(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		BoardFactory bf = BoardFactory.getInstance();
 
+		
+		//검색어 타입 지정
+		String searchType = "";
+		if(req.getParameter("searchType")!=null &&!req.getParameter("searchType").equals("")) {
+			searchType= req.getParameter("searchType");
+		}
+		
+		// 검색어 req에서 넘겨 받기 
+		String searchWord = "";
+		if(req.getParameter("searchWord")!=null &&!req.getParameter("searchWord").equals("")) {
+			searchWord= req.getParameter("searchWord");
+		}
+		
+		
+		SearchCriteria sc = new SearchCriteria(searchType, searchWord);
+		System.out.println(sc.toString());
+		
+		
+		
+		
 		// 페이지 번호 처리
 		int pageNo = -1;
 		if (req.getParameter("pageNo") == null || req.getParameter("pageNo").equals("")) {
@@ -45,12 +66,23 @@ public class BoardListService implements BoardService {
 		try {
 
 			// 페이지 번호, 전체 글의 갯수로... 페이징 처리를 해서.
-			PagingInfo pi = getPagingInfo(pageNo, viewPostCntPerPage, dao);
+			PagingInfo pi = getPagingInfo(pageNo, viewPostCntPerPage, dao, sc);
 
 			// 페이징 처리한 쿼리문이 실행되도록 dao 단을 호출
 			// 현재 페이지에 보여줄 글을 담아온다.
-
-			List<BoardVo> lst = dao.selectEntireBoard(pi);
+			
+			List<BoardVo> lst = null;
+		// 검색어타입을 지정하지 않았을 때
+			if(!sc.getSearchType().equals("")) { // 검색어가 있을 때 
+				// 넘겨 받은 pi, sc를 dao 단으로 넘겨주기
+				lst = dao.selectEntireBoard(pi, sc);		
+				// 검색어를 입력하지 않았을 때					
+			} else if ( sc.getSearchWord().equals("") || sc.getSearchWord()==null) {// 검색어가 없을 때
+				lst= dao.selectEntireBoard(pi);
+			}	
+			
+			
+		
 
 			req.setAttribute("boardList", lst);
 			req.setAttribute("pagingInfo", pi);
@@ -95,7 +127,7 @@ public class BoardListService implements BoardService {
 	}
 
 	//
-	private PagingInfo getPagingInfo(int pageNo, int viewPostCntPerPage, BoardDAO dao)
+	private PagingInfo getPagingInfo(int pageNo, int viewPostCntPerPage, BoardDAO dao, SearchCriteria sc)
 			throws NamingException, SQLException {
 		PagingInfo pi = new PagingInfo();
 
@@ -103,14 +135,24 @@ public class BoardListService implements BoardService {
 		pi.setViewPostCntPerPage(viewPostCntPerPage);
 
 		pi.setPageNo(pageNo); // 현재 페이지번호
-		pi.setTotalPostCnt(dao.getTotalPostCnt("board")); // 전체 글의 갯수
+		
+		if(!sc.getSearchType().equals("")) { // 검색어가 있을 때 -> 검색어로 검색한 글의 갯수를 가져와줘야함 
+		pi.setTotalPostCnt(dao.getTotalPostCnt("board",sc));
+			
+			// 검색어를 입력하지 않았을 때					
+		} else if ( sc.getSearchWord().equals("") || sc.getSearchWord()==null) {// 검색어가 없을 때->전체 글의 갯수
+			pi.setTotalPostCnt(dao.getTotalPostCnt("board")); 
+		}
+		
+		
+	
 
 		pi.setTotalPageCnt(pi.getTotalPostCnt(), pi.getViewPostCntPerPage());
 		pi.setStartRowIndex(pi.getPageNo());
 
 		// 페이징 블럭 처리를 위한 필요한 변수들 setting
 		// 현재 페이지가 속한 페이지 번호
-		pi.setPageBlockOfCurrentPage(pi.getPageNo());
+		pi.setPageBlockOfCurrentPage();
 
 		// 현재 페이징 블럭 시작번호
 		pi.setStartNumOfCurrentPagingBlock(pi.getPageBlockOfCurrentPage());
