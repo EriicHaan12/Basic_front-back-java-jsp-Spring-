@@ -116,7 +116,7 @@ public class PagingInfo {
 				+ totalPageCnt + ", startRowIndex=" + startRowIndex + ", totalPostCnt=" + totalPostCnt
 				+ ", pageCntPerBlock=" + pageCntPerBlock + ", PageBlockOfCurrentPage=" + PageBlockOfCurrentPage
 				+ ", startNumOfCurrentPagingBlock=" + startNumOfCurrentPagingBlock + ", endNumOfCurrentPagingBlock="
-				+ endNumOfCurrentPagingBlock + "]";
+				+ endNumOfCurrentPagingBlock + "!]";
 	}
 
 }
